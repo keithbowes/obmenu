@@ -56,7 +56,8 @@ class App:
 		self.arbol.get_widget("window1").set_title("Obmenu: %s %s" % (self.menu_path, s))
 	
 	# Auxiliary function for model.foreach()
-	def _change_id(self, model, path, it,(old_id, new_id)):
+	def _change_id(self, model, path, it, _iter):
+		(old_id, new_id) = _iter
 		mid = model.get_value(it,5)
 		if mid == old_id:
 			model.set(it, 5, new_id)
@@ -473,13 +474,13 @@ class App:
 		elif len(sys.argv) == 1:
 			self.menu_path = os.getenv("HOME") + "/.config/openbox/menu.xml"
 		else:
-			print "Error: Wrong number of arguments"
-			print "Usage: obmenu /path/to/menu.xml"
-			print "\tOr just obmenu, to edit the default file"
+			print("Error: Wrong number of arguments")
+			print("Usage: obmenu /path/to/menu.xml")
+			print("\tOr just obmenu, to edit the default file")
 			return
 			
 		if not os.path.isfile(self.menu_path):
-			print "Error: \"%s\" not found" % self.menu_path
+			print("Error: \"%s\" not found" % self.menu_path)
 			return
 		
 		self.unsaved_menu = False
@@ -497,8 +498,8 @@ class App:
 		elif os.path.isfile("/usr/share/obmenu/obmenu.glade"):
 			self.gladefile = "/usr/share/obmenu/obmenu.glade"
 		else:
-			print "ERROR: obmenu.glade not found!"
-			print "       check that everything was installed all right"
+			print("ERROR: obmenu.glade not found!")
+			print("       check that everything was installed all right")
 			sys.exit(1)
 		
 		# Set the basics for GTK

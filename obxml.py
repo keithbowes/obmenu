@@ -172,7 +172,7 @@ class ObMenu:
 	def printXml(self):
 		for line in self.dom.toprettyxml("\t","\n","utf-8").splitlines():
 			if line.strip() != "":
-				print line
+				print(line)
 	
 	def getXml(self):
 		res = ""
@@ -354,5 +354,5 @@ class ObMenu:
 					self.replaceId(old_id, new_id, item)
 
 if __name__ == "__main__":
-	print "This is a module. Use obmenu instead."
+	print("This is a module. Use obmenu instead.")
 	exit(0)
