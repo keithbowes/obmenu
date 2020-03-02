@@ -80,10 +80,10 @@ class App:
 		self.auto_change = False
 
 	def confirm(self, message):
-		dlg = Gtk.MessageDialog(None,0,Gtk.MessageType.WARNING, Gtk.ButtonsType.YES_NO, message)
+		dlg = Gtk.MessageDialog(message_type=Gtk.MessageType.WARNING, buttons=Gtk.ButtonsType.YES_NO, text=message)
 		res = dlg.run()
 		dlg.destroy()
-		if res == -8: return True
+		if res == Gtk.ResponseType.YES: return True
 		else: return False
 
 	def ask_for_path(self, title, op):
