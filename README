@@ -10,7 +10,6 @@ PORT:
 This is a port of the original obmenu to update it for Python 3/GTK 3 and to
 allow it to work with Waybox.  What's left to do:
 
-- Get the menus to work again
 - Port the pipemenus to Python 3 as well
 
 Future plans:

@@ -38,7 +38,7 @@
 	      <property name="label" translatable="yes">_File</property>
 	      <property name="use_underline">True</property>
 
-	      <child>
+	      <child type="submenu">
 		<object class="GtkMenu" id="menuitem1_menu">
 
 		  <child>
@@ -102,7 +102,7 @@
 	      <property name="label" translatable="yes">_Edit</property>
 	      <property name="use_underline">True</property>
 
-	      <child>
+	      <child type="submenu">
 		<object class="GtkMenu" id="menuitem2_menu">
 
 		  <child>
@@ -162,7 +162,7 @@
 	      <property name="label" translatable="yes">_Add</property>
 	      <property name="use_underline">True</property>
 
-	      <child>
+	      <child type="submenu">
 		<object class="GtkMenu" id="menuitem3_menu">
 
 		  <child>
@@ -225,7 +225,7 @@
 	      <property name="label" translatable="yes">_Help</property>
 	      <property name="use_underline">True</property>
 
-	      <child>
+	      <child type="submenu">
 		<object class="GtkMenu" id="menuitem4_menu">
 
 		  <child>
