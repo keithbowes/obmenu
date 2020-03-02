@@ -1,6 +1,4 @@
-<?xml version="1.0" standalone="no"?> <!--*- mode: xml -*-->
-<!DOCTYPE glade-interface SYSTEM "http://glade.gnome.org/glade-2.0.dtd">
-
+<?xml version="1.0" encoding="UTF-8"?>
 <interface>
 
 <object class="GtkWindow" id="window1">
@@ -20,7 +18,7 @@
   <property name="type_hint">GDK_WINDOW_TYPE_HINT_NORMAL</property>
   <property name="gravity">GDK_GRAVITY_NORTH</property>
   <property name="focus_on_map">True</property>
-  <signal name="delete_event" handler="exit" last_modification_time="Thu, 15 Dec 2005 14:07:33 GMT"/>
+  <signal name="delete_event" handler="exit"/>
 
   <child>
     <object class="GtkVBox" id="vbox4">
@@ -46,8 +44,8 @@
                       <property name="visible">True</property>
                       <property name="label">gtk-new</property>
                       <property name="use_stock">True</property>
-                      <signal name="activate" handler="new_clicked" last_modification_time="Thu, 15 Dec 2005 13:23:16 GMT"/>
-                      <accelerator key="N" modifiers="GDK_CONTROL_MASK" signal="activate"/>
+                      <signal name="activate" handler="new_clicked"/>
+                      <accelerator key="n" modifiers="GDK_CONTROL_MASK" signal="activate"/>
                     </object>
                   </child>
 
@@ -56,8 +54,8 @@
                       <property name="visible">True</property>
                       <property name="label">gtk-open</property>
                       <property name="use_stock">True</property>
-                      <signal name="activate" handler="open_clicked" last_modification_time="Thu, 15 Dec 2005 13:44:10 GMT"/>
-                      <accelerator key="O" modifiers="GDK_CONTROL_MASK" signal="activate"/>
+                      <signal name="activate" handler="open_clicked"/>
+                      <accelerator key="s" modifiers="GDK_CONTROL_MASK" signal="activate"/>
                     </object>
                   </child>
 
@@ -66,8 +64,8 @@
                       <property name="visible">True</property>
                       <property name="label">gtk-save</property>
                       <property name="use_stock">True</property>
-                      <signal name="activate" handler="save_clicked" last_modification_time="Thu, 15 Dec 2005 13:45:31 GMT"/>
-                      <accelerator key="S" modifiers="GDK_CONTROL_MASK" signal="activate"/>
+                      <signal name="activate" handler="save_clicked"/>
+                      <accelerator key="s" modifiers="GDK_CONTROL_MASK" signal="activate"/>
                     </object>
                   </child>
 
@@ -76,8 +74,8 @@
                       <property name="visible">True</property>
                       <property name="label">gtk-save-as</property>
                       <property name="use_stock">True</property>
-                      <signal name="activate" handler="save_as_clicked" last_modification_time="Thu, 15 Dec 2005 13:45:31 GMT"/>
-                      <accelerator key="S" modifiers="GDK_CONTROL_MASK|GDK_SHIFT_MASK" signal="activate"/>
+                      <signal name="activate" handler="save_as_clicked"/>
+                      <accelerator key="s" modifiers="GDK_CONTROL_MASK|GDK_SHIFT_MASK" signal="activate"/>
                     </object>
                   </child>
 
@@ -92,8 +90,8 @@
                       <property name="visible">True</property>
                       <property name="label">gtk-quit</property>
                       <property name="use_stock">True</property>
-                      <signal name="activate" handler="mnu_quit" last_modification_time="Tue, 20 Dec 2005 15:52:52 GMT"/>
-                      <accelerator key="Q" modifiers="GDK_CONTROL_MASK" signal="activate"/>
+                      <signal name="activate" handler="mnu_quit"/>
+                      <accelerator key="q" modifiers="GDK_CONTROL_MASK" signal="activate"/>
                     </object>
                   </child>
                 </object>
@@ -115,7 +113,7 @@
                       <property name="visible">True</property>
                       <property name="label" translatable="yes">Move _up</property>
                       <property name="use_underline">True</property>
-                      <signal name="activate" handler="up_clicked" last_modification_time="Thu, 15 Dec 2005 12:31:32 GMT"/>
+                      <signal name="activate" handler="up_clicked"/>
                       <accelerator key="Up" modifiers="GDK_CONTROL_MASK" signal="activate"/>
                     </object>
                   </child>
@@ -125,7 +123,7 @@
                       <property name="visible">True</property>
                       <property name="label" translatable="yes">Move dow_n</property>
                       <property name="use_underline">True</property>
-                      <signal name="activate" handler="down_clicked" last_modification_time="Thu, 15 Dec 2005 12:31:32 GMT"/>
+                      <signal name="activate" handler="down_clicked"/>
                       <accelerator key="Down" modifiers="GDK_CONTROL_MASK" signal="activate"/>
                     </object>
                   </child>
@@ -141,7 +139,7 @@
                       <property name="visible">True</property>
                       <property name="use_stock">True</property>
                       <property name="label">gtk-delete</property>
-                      <signal name="activate" handler="mnu_remove" last_modification_time="Wed, 21 Dec 2005 00:11:01 GMT"/>
+                      <signal name="activate" handler="mnu_remove"/>
                     </object>
                   </child>
                 </object>
@@ -163,7 +161,7 @@
                       <property name="visible">True</property>
                       <property name="label" translatable="yes">Menu</property>
                       <property name="use_underline">True</property>
-                      <signal name="activate" handler="menu_clicked" last_modification_time="Thu, 15 Dec 2005 12:31:32 GMT"/>
+                      <signal name="activate" handler="menu_clicked"/>
                       <accelerator key="m" modifiers="GDK_CONTROL_MASK" signal="activate"/>
                     </object>
                   </child>
@@ -173,7 +171,7 @@
                       <property name="visible">True</property>
                       <property name="label" translatable="yes">Item</property>
                       <property name="use_underline">True</property>
-                      <signal name="activate" handler="item_clicked" last_modification_time="Thu, 15 Dec 2005 12:31:32 GMT"/>
+                      <signal name="activate" handler="item_clicked"/>
                       <accelerator key="i" modifiers="GDK_CONTROL_MASK" signal="activate"/>
                     </object>
                   </child>
@@ -183,8 +181,8 @@
                       <property name="visible">True</property>
                       <property name="label" translatable="yes">Separator</property>
                       <property name="use_underline">True</property>
-                      <signal name="activate" handler="separator_clicked" last_modification_time="Thu, 15 Dec 2005 12:31:32 GMT"/>
-                      <accelerator key="s" modifiers="GDK_CONTROL_MASK" signal="activate"/>
+                      <signal name="activate" handler="separator_clicked"/>
+                      <accelerator key="r" modifiers="GDK_CONTROL_MASK" signal="activate"/>
                     </object>
                   </child>
 
@@ -193,7 +191,7 @@
                       <property name="visible">True</property>
                       <property name="label" translatable="yes">Pipemenu</property>
                       <property name="use_underline">True</property>
-                      <signal name="activate" handler="pipe_clicked" last_modification_time="Thu, 15 Dec 2005 16:41:22 GMT"/>
+                      <signal name="activate" handler="pipe_clicked"/>
                       <accelerator key="p" modifiers="GDK_CONTROL_MASK" signal="activate"/>
                     </object>
                   </child>
@@ -203,7 +201,7 @@
                       <property name="visible">True</property>
                       <property name="label" translatable="yes">Link</property>
                       <property name="use_underline">True</property>
-                      <signal name="activate" handler="link_clicked" last_modification_time="Thu, 15 Dec 2005 16:41:22 GMT"/>
+                      <signal name="activate" handler="link_clicked"/>
                       <accelerator key="l" modifiers="GDK_CONTROL_MASK" signal="activate"/>
                     </object>
                   </child>
@@ -226,7 +224,7 @@
                       <property name="visible">True</property>
                       <property name="label" translatable="yes">_About</property>
                       <property name="use_underline">True</property>
-                      <signal name="activate" handler="show_about" last_modification_time="Thu, 15 Dec 2005 12:31:32 GMT"/>
+                      <signal name="activate" handler="show_about"/>
                     </object>
                   </child>
                 </object>
@@ -256,7 +254,7 @@
               <property name="visible_horizontal">True</property>
               <property name="visible_vertical">True</property>
               <property name="is_important">False</property>
-              <signal name="clicked" handler="save_clicked" last_modification_time="Sun, 13 Nov 2005 15:41:19 GMT"/>
+              <signal name="clicked" handler="save_clicked"/>
             </object>
             <packing>
               <property name="expand">False</property>
@@ -286,7 +284,7 @@
               <property name="visible_horizontal">True</property>
               <property name="visible_vertical">True</property>
               <property name="is_important">True</property>
-              <signal name="clicked" handler="menu_clicked" last_modification_time="Wed, 16 Nov 2005 14:10:01 GMT"/>
+              <signal name="clicked" handler="menu_clicked"/>
             </object>
             <packing>
               <property name="expand">False</property>
@@ -303,7 +301,7 @@
               <property name="visible_horizontal">True</property>
               <property name="visible_vertical">True</property>
               <property name="is_important">True</property>
-              <signal name="clicked" handler="item_clicked" last_modification_time="Sun, 13 Nov 2005 22:56:47 GMT"/>
+              <signal name="clicked" handler="item_clicked"/>
             </object>
             <packing>
               <property name="expand">False</property>
@@ -320,7 +318,7 @@
               <property name="visible_horizontal">True</property>
               <property name="visible_vertical">True</property>
               <property name="is_important">True</property>
-              <signal name="clicked" handler="separator_clicked" last_modification_time="Sun, 13 Nov 2005 22:56:34 GMT"/>
+              <signal name="clicked" handler="separator_clicked"/>
             </object>
             <packing>
               <property name="expand">False</property>
@@ -349,7 +347,7 @@
               <property name="visible_horizontal">True</property>
               <property name="visible_vertical">True</property>
               <property name="is_important">False</property>
-              <signal name="clicked" handler="up_clicked" last_modification_time="Sun, 13 Nov 2005 16:51:42 GMT"/>
+              <signal name="clicked" handler="up_clicked"/>
             </object>
             <packing>
               <property name="expand">False</property>
@@ -365,7 +363,7 @@
               <property name="visible_horizontal">True</property>
               <property name="visible_vertical">True</property>
               <property name="is_important">False</property>
-              <signal name="clicked" handler="down_clicked" last_modification_time="Sun, 13 Nov 2005 22:02:09 GMT"/>
+              <signal name="clicked" handler="down_clicked"/>
             </object>
             <packing>
               <property name="expand">False</property>
@@ -394,7 +392,7 @@
               <property name="visible_horizontal">True</property>
               <property name="visible_vertical">True</property>
               <property name="is_important">False</property>
-              <signal name="clicked" handler="remove_clicked" last_modification_time="Sun, 13 Nov 2005 22:26:27 GMT"/>
+              <signal name="clicked" handler="remove_clicked"/>
             </object>
             <packing>
               <property name="expand">False</property>
@@ -437,8 +435,8 @@
                   <property name="fixed_height_mode">False</property>
                   <property name="hover_selection">False</property>
                   <property name="hover_expand">False</property>
-                  <signal name="cursor_changed" handler="on_treeview1" last_modification_time="Wed, 09 Nov 2005 14:54:10 GMT"/>
-                  <signal name="key_press_event" handler="tree_key_pressed" last_modification_time="Wed, 28 Dec 2005 18:36:06 GMT"/>
+                  <signal name="cursor_changed" handler="on_treeview1"/>
+                  <signal name="key_press_event" handler="tree_key_pressed"/>
                 </object>
               </child>
             </object>
@@ -586,7 +584,7 @@
                   <property name="has_frame">True</property>
                   <property name="invisible_char">*</property>
                   <property name="activates_default">False</property>
-                  <signal name="changed" handler="label_changed" last_modification_time="Wed, 09 Nov 2005 14:43:38 GMT"/>
+                  <signal name="changed" handler="label_changed"/>
                 </object>
                 <packing>
                   <property name="left_attach">1</property>
@@ -610,7 +608,7 @@
                   <property name="has_frame">True</property>
                   <property name="invisible_char">*</property>
                   <property name="activates_default">False</property>
-                  <signal name="changed" handler="id_changed" last_modification_time="Tue, 06 Dec 2005 17:52:45 GMT"/>
+                  <signal name="changed" handler="id_changed"/>
                 </object>
                 <packing>
                   <property name="left_attach">1</property>
@@ -633,7 +631,7 @@
           </items>
                   <property name="add_tearoffs">False</property>
                   <property name="focus_on_click">True</property>
-                  <signal name="changed" handler="action_changed" last_modification_time="Wed, 09 Nov 2005 14:43:38 GMT"/>
+                  <signal name="changed" handler="action_changed"/>
                 </object>
                 <packing>
                   <property name="left_attach">1</property>
@@ -664,7 +662,7 @@
                       <property name="has_frame">True</property>
                       <property name="invisible_char">*</property>
                       <property name="activates_default">False</property>
-                      <signal name="changed" handler="execute_changed" last_modification_time="Wed, 09 Nov 2005 14:43:38 GMT"/>
+                      <signal name="changed" handler="execute_changed"/>
                     </object>
                     <packing>
                       <property name="padding">0</property>
@@ -682,7 +680,7 @@
                       <property name="use_underline">True</property>
                       <property name="relief">GTK_RELIEF_NORMAL</property>
                       <property name="focus_on_click">True</property>
-                      <signal name="clicked" handler="search_clicked" last_modification_time="Fri, 16 Dec 2005 13:37:36 GMT"/>
+                      <signal name="clicked" handler="search_clicked"/>
                     </object>
                     <packing>
                       <property name="padding">0</property>
