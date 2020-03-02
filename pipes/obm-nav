@@ -35,9 +35,9 @@ files = []
 for itm in os.listdir(sys.argv[1]):
 	if itm[0] != ".":
 		if os.path.isdir(sys.argv[1] + "/" + itm):
-			dirs.append(unicode(itm, "utf-8", errors='ignore'))
+			dirs.append(str(itm, "utf-8", errors='ignore'))
 		else:
-			files.append(unicode(itm, "utf-8", errors='ignore'))
+			files.append(str(itm, "utf-8", errors='ignore'))
 menu.createItem(None, "open", "Execute", "%s \"%s\"" % (sys.argv[2], sys.argv[1]))
 menu.createItem(None, "terminal", "Execute", "sh -c \"cd \\\"%s\\\"; %s\"" % (sys.argv[1], sys.argv[3]))
 if not len(dirs) == 0 or not len(files) == 0:

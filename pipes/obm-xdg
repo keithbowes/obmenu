@@ -219,7 +219,7 @@ class XdgMenu:
 				elif title == "":
 						accuracy = 1
 						title = name
-		return unicode(title.strip() ,"utf-8")
+		return str(title.strip() ,"utf-8")
 	
 	def parseDesktopFile(self, filename, language):
 		title = ""
@@ -276,7 +276,7 @@ class XdgMenu:
 				if cats[-1] == "":
 					cats.pop(-1)
 		item = {
-			"name": unicode(title.strip() ,"utf-8"),
+			"name": str(title.strip() ,"utf-8"),
 			"exec": exe.strip(),
 			"categories": cats,
 			"filename": filename,
@@ -491,7 +491,7 @@ if __name__ == "__main__":
 					break
 			if not new:
 				cache = open(cachefile)
-				print cache.read()
+				print(cache.read())
 				cache.close()
 				sys.exit()
 				

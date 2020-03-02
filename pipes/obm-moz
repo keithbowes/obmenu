@@ -22,7 +22,7 @@
 #
 
 import obxml, sys, os
-from HTMLParser import HTMLParser
+from html.parser import HTMLParser
 from optparse import OptionParser
 
 class MozParser(HTMLParser, obxml.ObMenu):
@@ -52,7 +52,7 @@ class MozParser(HTMLParser, obxml.ObMenu):
 		
 		d = data.strip()
 		if d != "":
-			self.data = unicode(d,"utf-8")
+			self.data = str(d,"utf-8")
 			
 	def handle_starttag(self, tag, attrs):
 		if self.finished: return
@@ -177,7 +177,7 @@ if __name__ == "__main__":
 		f.close()
 		if last == opts and os.path.isfile(cachefile) and os.path.getmtime(filename) < os.path.getmtime(cachefile):
 			cache = open(cachefile)
-			print cache.read()
+			print(cache.read())
 			cache.close()
 			sys.exit()
 			

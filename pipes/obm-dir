@@ -27,12 +27,12 @@ def alfabetiza(lista):
 	
 	for each in lista:
 		k = each[0].lower()
-		if not dic.has_key(k):
+		if k not in dic:
 			dic[k] = [each]
 		else:
 			dic[k].append(each)
 			
-	for key in dic.keys():
+	for key in list(dic.keys()):
 		dic[key].sort()
 		
 	return dic
@@ -45,7 +45,7 @@ def clasifica(lista, humbral):
 		n = 0
 		primera = ""
 		alf = alfabetiza(lista)
-		ids = alf.keys()
+		ids = list(alf.keys())
 		ids.sort()
 		for k in ids:
 			if primera == "": primera = k
@@ -65,7 +65,7 @@ menu.newPipe()
 
 if len(sys.argv) == 3:
 	vmenu = clasifica(
-		[unicode(each, "utf-8", errors='ignore') for each in os.listdir(sys.argv[1])],10)
+		[str(each, "utf-8", errors='ignore') for each in os.listdir(sys.argv[1])],10)
 else:
 	menu.createItem(None, "ERROR: Wrong number of arguments:", "Execute", "true")
 	menu.createItem(None, "%s /path/to/directory command" % (sys.argv[0]), "Execute", "true")
