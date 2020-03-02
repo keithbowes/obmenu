@@ -258,7 +258,7 @@
 	  <child>
 	    <object class="GtkToolButton" id="toolbutton13">
 	      <property name="visible">True</property>
-	      <!-- property name="tooltip" translatable="yes">Save the menu</property -->
+	      <property name="tooltip-text" translatable="yes">Save the menu</property>
 	      <property name="stock_id">gtk-save</property>
 	      <property name="visible_horizontal">True</property>
 	      <property name="visible_vertical">True</property>
@@ -351,7 +351,7 @@
 	  <child>
 	    <object class="GtkToolButton" id="toolbutton18">
 	      <property name="visible">True</property>
-	      <!-- property name="tooltip" translatable="yes">Move up</property -->
+	      <property name="tooltip-text" translatable="yes">Move up</property>
 	      <property name="stock_id">gtk-go-up</property>
 	      <property name="visible_horizontal">True</property>
 	      <property name="visible_vertical">True</property>
@@ -367,7 +367,7 @@
 	  <child>
 	    <object class="GtkToolButton" id="toolbutton19">
 	      <property name="visible">True</property>
-	      <!--property name="tooltip" translatable="yes">Move down</property -->
+	      <property name="tooltip-text" translatable="yes">Move down</property>
 	      <property name="stock_id">gtk-go-down</property>
 	      <property name="visible_horizontal">True</property>
 	      <property name="visible_vertical">True</property>
@@ -396,7 +396,7 @@
 	  <child>
 	    <object class="GtkToolButton" id="toolbutton17">
 	      <property name="visible">True</property>
-	      <!-- property name="tooltip" translatable="yes">Removes a menu or an item</property -->
+	      <property name="tooltip-text" translatable="yes">Removes a menu or an item</property>
 	      <property name="stock_id">gtk-remove</property>
 	      <property name="visible_horizontal">True</property>
 	      <property name="visible_vertical">True</property>
