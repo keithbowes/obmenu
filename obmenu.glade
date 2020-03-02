@@ -726,7 +726,7 @@ Exit</property -->
 </object>
 
 <object class="GtkAboutDialog" id="aboutdialog1">
-  <property name="visible">True</property>
+  <property name="visible">False</property>
   <property name="destroy_with_parent">True</property>
   <property name="name" translatable="yes">Openbox Menu Editor</property>
   <property name="comments" translatable="yes">Thank you for using this sofware.
@@ -751,7 +751,7 @@ Exit</property -->
   <property name="website_label" translatable="yes">Website</property>
   <property name="authors">Manuel Colmenero &lt;m.kolme@gmail.com&gt;</property>
   <property name="translator_credits" translatable="yes" comments="TRANSLATORS: Replace this string with your names, one name per line.">translator-credits</property>
-  <property name="logo">mnu48.png</property>
+  <property name="logo">icons/mnu48.png</property>
 </object>
 
 </interface>
