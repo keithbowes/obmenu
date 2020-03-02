@@ -46,8 +46,8 @@ class App:
 	
 	def deleteTree(self):
 		# treemodel.iter(label, type, [action], [execute], parent, [menu-id])
-		self.treemodel=Gtk.TreeStore(gobject.TYPE_STRING, gobject.TYPE_STRING,
-				gobject.TYPE_STRING, gobject.TYPE_STRING, gobject.TYPE_STRING, gobject.TYPE_STRING)
+		self.treemodel=Gtk.TreeStore(GObject.TYPE_STRING, GObject.TYPE_STRING,
+				GObject.TYPE_STRING, GObject.TYPE_STRING, GObject.TYPE_STRING, GObject.TYPE_STRING)
 		self.treeview.set_model(self.treemodel)
 		
 	# Sets the state of "menu modified"
@@ -56,7 +56,7 @@ class App:
 		self.sth_changed = op
 		if op: s = "(*)"
 		else: s = ""
-		self.arbol.get_widget("window1").set_title("Obmenu: %s %s" % (self.menu_path, s))
+		self.builder.get_object("window1").set_title("Obmenu: %s %s" % (self.menu_path, s))
 	
 	# Auxiliary function for model.foreach()
 	def _change_id(self, model, path, it, _iter):
@@ -506,23 +506,23 @@ class App:
 			sys.exit(1)
 		
 		# Set the basics for GTK
-		self.arbol = self.builder.add_objects_from_file(self.gladefile, "window1")
+		self.builder.add_from_file(self.gladefile)
 		
-		self.treeview=self.arbol.get_widget("treeview1")
-		self.label_entry = self.arbol.get_widget("entry1")
-		self.action_entry = self.arbol.get_widget("combobox1")
-		self.execute_entry = self.arbol.get_widget("entry2")
-		self.execute_srch = self.arbol.get_widget("button1")
-		self.id_entry = self.arbol.get_widget("entry3")
+		self.treeview = self.builder.get_object("treeview1")
+		self.label_entry = self.builder.get_object("entry1")
+		self.action_entry = self.builder.get_object("combobox1")
+		self.execute_entry = self.builder.get_object("entry2")
+		self.execute_srch = self.builder.get_object("button1")
+		self.id_entry = self.builder.get_object("entry3")
 		
 
 		# treemodel.iter(label, type, [action], [execute], parent, [menu-id])
-		self.treemodel=Gtk.TreeStore(gobject.TYPE_STRING, gobject.TYPE_STRING,
-				gobject.TYPE_STRING, gobject.TYPE_STRING, gobject.TYPE_STRING, gobject.TYPE_STRING)
+		self.treemodel=Gtk.TreeStore(GObject.TYPE_STRING, GObject.TYPE_STRING,
+				GObject.TYPE_STRING, GObject.TYPE_STRING, GObject.TYPE_STRING, GObject.TYPE_STRING)
 		self.treeview.set_model(self.treemodel)
 		
 		# Signals
-		self.arbol.signal_autoconnect ({
+		self.builder.connect_signals ({
 			"new_clicked": self.new,
 			"open_clicked": self.open,
 			"save_clicked": self.save,
