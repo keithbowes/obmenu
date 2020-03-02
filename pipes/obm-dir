@@ -64,8 +64,11 @@ menu = obxml.ObMenu()
 menu.newPipe()
 
 if len(sys.argv) == 3:
+	_menu = []
+	for each in os.listdir(sys.argv[1]):
+		_menu += [each]
 	vmenu = clasifica(
-		[str(each, "utf-8", errors='ignore') for each in os.listdir(sys.argv[1])],10)
+		_menu,10)
 else:
 	menu.createItem(None, "ERROR: Wrong number of arguments:", "Execute", "true")
 	menu.createItem(None, "%s /path/to/directory command" % (sys.argv[0]), "Execute", "true")
