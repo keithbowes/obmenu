@@ -25,12 +25,14 @@ from gi.repository import Gtk, GObject
 
 class App:
 	def reconfigureOpenbox(self):
-		lines = os.popen("ps aux").read().splitlines()
-		ob = os.popen("which openbox").read().strip()
-		for line in lines:
-			if ob in " ".join(line.split()[10:]):
-				os.kill(int(line.split()[1]), 12)
-				break
+		# Waybox doesn't need reconfigured
+		if not os.getenv("WAYLAND_DISPLAY"):
+			lines = os.popen("ps aux").read().splitlines()
+			ob = os.popen("which openbox").read().strip()
+			for line in lines:
+				if ob in " ".join(line.split()[10:]):
+					os.kill(int(line.split()[1]), 12)
+					break
 
 	# Recursively creates the treeview model
 	def createTree(self, padre, menuid):
@@ -86,15 +88,17 @@ class App:
 
 	def ask_for_path(self, title, op):
 		if op == 0:
-			action = Gtk.FILE_CHOOSER_ACTION_OPEN
+			action = Gtk.FileChooserAction.OPEN
 		else:
-			action = Gtk.FILE_CHOOSER_ACTION_SAVE
-		dlg = Gtk.FileChooserDialog(title,None,action,(Gtk.STOCK_OK, 1, Gtk.STOCK_CANCEL, 3))
+			action = Gtk.FileChooserAction.SAVE
+		dlg = Gtk.FileChooserDialog(title=title, action=action)
+		dlg.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
+		dlg.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
 		dlg.set_default_response(1)
 		res = dlg.run()
 		flnm = dlg.get_filename()
 		dlg.destroy()
-		if res == 1: return flnm
+		if res == Gtk.ResponseType.OK: return flnm
 
 	#  New file clicked
 	def new(self, bt):
