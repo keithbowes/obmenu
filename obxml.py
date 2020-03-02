@@ -164,19 +164,19 @@ class ObMenu:
 	
 	def saveMenu(self, filename):
 		output = open(filename, "w")
-		for line in self.dom.toprettyxml("\t","\n","utf-8").splitlines():
+		for line in self.dom.toprettyxml("\t","\n").splitlines():
 			if line.strip() != "":
 				output.write("%s\n" %(line))
 		output.close()
 	
 	def printXml(self):
-		for line in self.dom.toprettyxml("\t","\n","utf-8").splitlines():
+		for line in self.dom.toprettyxml("\t","\n").splitlines():
 			if line.strip() != "":
 				print(line)
 	
 	def getXml(self):
 		res = ""
-		for line in self.dom.toprettyxml("\t","\n","utf-8").splitlines():
+		for line in self.dom.toprettyxml("\t","\n").splitlines():
 			if line.strip() != "":
 				res = res + "%s\n" % (line)
 		return res
