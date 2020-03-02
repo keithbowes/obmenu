@@ -467,6 +467,7 @@ class App:
 	
 	def show_about(self, args):
 		self.builder.add_objects_from_file(self.gladefile, "aboutdialog1")
+		self.builder.get_object("aboutdialog1").show()
 		
 	# application init
 	def init(self):
