@@ -9,12 +9,6 @@ This is a fork of the original [obmenu](http://obmenu.sourceforge.net/) to
 update it for Python 3/GTK 3 and to allow it to work with
 [Waybox](https://github.com/wizbright/waybox).
 
-### REMAINING TASKS
-
-- Port the pipe menus to Python 3 as well
-- Update the Firefox bookmarks pipe menu to use SQLite instead of
-  bookmarks.html (which isn't used by Firefox anymore)
-
 ### FUTURE PLANS (MAYBE)
 
 - Actually allow translating the translatable strings
