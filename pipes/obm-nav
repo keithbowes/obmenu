@@ -1,6 +1,6 @@
-#!/usr/bin/env python -O 
+#!/usr/bin/env python -O
 #########################################################################
-#  Copyright 2005 Manuel Colmenero 
+#  Copyright 2005 Manuel Colmenero
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -35,9 +35,9 @@ files = []
 for itm in os.listdir(sys.argv[1]):
 	if itm[0] != ".":
 		if os.path.isdir(sys.argv[1] + "/" + itm):
-			dirs.append(str(itm, "utf-8", errors='ignore'))
+			dirs.append(itm)
 		else:
-			files.append(str(itm, "utf-8", errors='ignore'))
+			files.append(itm)
 menu.createItem(None, "open", "Execute", "%s \"%s\"" % (sys.argv[2], sys.argv[1]))
 menu.createItem(None, "terminal", "Execute", "sh -c \"cd \\\"%s\\\"; %s\"" % (sys.argv[1], sys.argv[3]))
 if not len(dirs) == 0 or not len(files) == 0:
