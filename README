@@ -2,20 +2,32 @@
 OBMENU 1.0
 ==========
 
-Obmenu is an Openbox menu editor, written in python. It allows to edit menus
-in an intuitive way.
+Obmenu is a menu editor for Openbox and Waybox, written in Python. It allows
+you to edit menus in an intuitive way.
 
-REQUERIMENTS:
+PORT:
 
-  python >= 2.3, pygtk, python-glade
+This is a port of the original obmenu to update it for Python 3/GTK 3 and to
+allow it to work with Waybox.  What's left to do:
+
+- Get the menus to work again
+- Get the tooltips to work again
+- Get the actions to work
+- Port the pipemenus to Python 3 as well
+
+Future plans:
+
+- Actually allow translating the translatable strings?
+
+REQUIREMENTS:
+
+  python >= 3.5, girepository
 
 INSTALLATION:
 	
   Type these commands in a shell:
   
-  su
-  <password>
-  python setup.py install
+  sudo python setup.py install
 
   or
   python minisetup.py install
