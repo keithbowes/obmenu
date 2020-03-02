@@ -1,6 +1,6 @@
 root = true
 
-[{obmenu,*.py}]
+[{obmenu,*.py,pipes/obm-*}]
 charset = utf-8
 end_of_line = lf
 indent_style = tab

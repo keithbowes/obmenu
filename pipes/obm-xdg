@@ -1,6 +1,6 @@
-#!/usr/bin/python -O 
+#!/usr/bin/python -O
 #########################################################################
-#  Copyright 2005 Manuel Colmenero 
+#  Copyright 2005 Manuel Colmenero
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@
 import xml.dom.minidom, obxml, os, sys, time
 
 class XdgMenu:
-	
+
 	def __init__(self):
 		self.name = ""
 		self.title = ""
@@ -41,19 +41,19 @@ class XdgMenu:
 		self.onlyunallocated = False
 		self.deleted = False
 		self.filename = ""
-		
+
 	def _get_node_value(self, node):
 		if node.hasChildNodes():
 			for n in node.childNodes:
 				if n.nodeName == "#text" and n.nodeValue.strip() != "":
 					return n.nodeValue.strip()
-	
+
 	def _get_root_menu(self, menu):
 		child = menu
 		while child.parent != None:
 			child = child.parent
 		return child
-		
+
 	def _find_menu(self, name):
 		if self.name == name:
 			return self
@@ -63,14 +63,14 @@ class XdgMenu:
 			else:
 				b = c._find_menu(name)
 				if b: return b
-	
+
 	def merge(self, menu):
 		for directory in menu.directorydirs:
 			if os.path.isdir(directory):
 				self.directorydirs += directory
 		self.directory = menu.directory
 		self.children += menu.children
-	
+
 	def parseInclude(self, node, logic):
 		for item in node.childNodes:
 			if item.nodeType == 1:
@@ -81,26 +81,26 @@ class XdgMenu:
 					i = XdgLogic(item.nodeName.upper())
 					self.parseInclude(item, i)
 				logic.append(i)
-	
+
 	def parseXml(self, parent):
 		root = self._get_root_menu(self)
-		
+
 		for item in parent.childNodes:
 			nname = item.nodeName.lower()
-			
+
 			if nname == "name":
 				self.name = self._get_node_value(item)
-				
+
 			elif nname == "directory":
 				self.directory = self._get_node_value(item)
-			
+
 			elif nname == "directorydir":
 				value = self._get_node_value(item)
 				if not os.path.isabs(value):
 					value = "%s/%s" % (os.path.dirname(self.filename), value)
 				if os.path.isdir(value):
 					self.directorydirs.append(value)
-					
+
 			elif nname == "defaultdirectorydirs":
 				env = os.getenv("XDG_DATA_DIRS")
 				if env:
@@ -110,15 +110,15 @@ class XdgMenu:
 				else:
 					self.directorydirs.append("/usr/share/desktop-directories")
 					self.directorydirs.append("/usr/local/share/desktop-directories")
-				
+
 			elif nname == "include":
 				self.include = XdgLogic("OR")
 				self.parseInclude(item, self.include)
-			
+
 			elif nname == "exclude":
 				self.exclude = XdgLogic("OR")
 				self.parseInclude(item, self.exclude)
-			
+
 			elif nname == "onlyunallocated":
 				self.onlyunallocated = True
 			elif nname == "notonlyunallocated":
@@ -127,7 +127,7 @@ class XdgMenu:
 				self.deleted = True
 			elif nname == "notdeleted":
 				self.deleted = False
-				
+
 			elif nname == "mergefile":
 				fn = self._get_node_value(item)
 				if not os.path.isabs(fn):
@@ -140,13 +140,13 @@ class XdgMenu:
 				else:
 					newmenu.parent = self
 					self.children.append(newmenu)
-			
+
 			elif nname == "appdir":
 				dr = self._get_node_value(item)
 				if not os.path.isabs(dr):
 					dr = "%s/%s" % (os.path.dirname(self.filename), dr)
 				self.appdirs.append(dr)
-				
+
 			elif nname == "defaultappdirs":
 				xdg_data_dirs = []
 				xdg_env = os.getenv("XDG_DATA_DIRS")
@@ -157,11 +157,11 @@ class XdgMenu:
 				else:
 					xdg_data_dirs.append("/usr/share")
 					xdg_data_dirs.append("/usr/local/share")
-				
+
 				for xdir in xdg_data_dirs:
 					if os.path.isdir("%s/applications"%(xdir)):
 						self.appdirs.append("%s/applications"%(xdir))
-			
+
 			elif nname == "menu":
 				newmenu = XdgMenu()
 				newmenu.appdirs += self.appdirs
@@ -175,18 +175,19 @@ class XdgMenu:
 				else:
 					newmenu.parent = self
 					self.children.append(newmenu)
-							
+
 	def parseFile(self, filename):
-		f = open(filename)
-		dom = xml.dom.minidom.parseString(f.read())
-		f.close()
-		self.filename = filename
-		self.parseXml(dom.documentElement)
-	
+		if os.path.isfile(filename):
+			f = open(filename)
+			dom = xml.dom.minidom.parseString(f.read())
+			f.close()
+			self.filename = filename
+			self.parseXml(dom.documentElement)
+
 	def parseDirectoryFile(self, filename, language):
 		title = ""
 		accuracy = 0
-		
+
 		if language:
 			l = language.split(".")[0].split("_")
 			if len(l) == 2:
@@ -219,14 +220,14 @@ class XdgMenu:
 				elif title == "":
 						accuracy = 1
 						title = name
-		return str(title.strip() ,"utf-8")
-	
+		return title.strip()
+
 	def parseDesktopFile(self, filename, language):
 		title = ""
 		exe = ""
 		cats = []
 		accuracy = 0
-		
+
 		if language:
 			l = language.split(".")[0].split("_")
 			if len(l) == 2:
@@ -276,14 +277,14 @@ class XdgMenu:
 				if cats[-1] == "":
 					cats.pop(-1)
 		item = {
-			"name": str(title.strip() ,"utf-8"),
+			"name": title.strip(),
 			"exec": exe.strip(),
 			"categories": cats,
 			"filename": filename,
 			"allocated": False
 			}
 		return item
-	
+
 	def getAllAppdirs(self, l=[]):
 		for item in self.children:
 			for dr in item.appdirs:
@@ -291,22 +292,22 @@ class XdgMenu:
 					l.append(dr)
 			item.getAllAppdirs(l)
 		return l
-	
+
 	def loadItems(self):
 		data = {}
 		appdirs = self.getAllAppdirs([])
-		
+
 		for each in appdirs:
 			data[each] = []
 			for f in os.listdir(each):
 				if ".desktop" in f:
 					i = self.parseDesktopFile("%s/%s" % (each, f), self.lang)
 					data[each].append(i)
-		
+
 		self._allocate_items(data)
 		self._create_items(data)
 		self._get_menus_titles(self.lang)
-		
+
 	def _get_menus_titles(self, languaje):
 		for item in self.directorydirs:
 			fn = "%s/%s" % (item, self.directory)
@@ -316,7 +317,7 @@ class XdgMenu:
 			self.title = self.name
 		for each in self.children:
 			each._get_menus_titles(languaje)
-	
+
 	def _allocate_items(self, data):
 		if self.include:
 			for d in self.appdirs:
@@ -324,8 +325,8 @@ class XdgMenu:
 					if self.include.evaluate(item["categories"], item["filename"]):
 						item["allocated"] = True
 		for item in self.children:
-			item._allocate_items(data)	
-	
+			item._allocate_items(data)
+
 	def _create_items(self, data):
 		if self.include:
 			for d in self.appdirs:
@@ -339,46 +340,46 @@ class XdgMenu:
 								self.items.append(item)
 		for item in self.children:
 			item._create_items(data)
-			
+
 	def _create_obmenu(self, obmenu, root=None):
 		if self.parent:
 			pid = "xdg-" + self.name
 		else:
 			pid = root
-		
+
 		for child in self.children:
 			if len(child.items) > 0 or len(child.children) > 0:
 				obmenu.createMenu(pid, child.title, "xdg-" + child.name)
 				child._create_obmenu(obmenu, root)
 		for item in self.items:
 			obmenu.createItem(pid, item["name"], "Execute", item["exec"])
-	
+
 class XdgLogic:
 	def __init__(self, tipe):
 		self.tipe = tipe
 		self.items = []
 		self.value = False
 		self.cat = ""
-		
+
 	def append(self, item):
 		self.items.append(item)
 
 	def evaluate(self, list, filename):
-		
+
 		if self.tipe == "CATEGORY":
 			self.value = self.cat in list
 			return self.value
-		
+
 		if self.tipe == "FILENAME":
 			self.value = self.cat == filename
 			return self.value
-			
+
 		if self.tipe == "NOT":
 			self.value = False
 			for i in self.items:
 				self.value = self.value or not i.evaluate(list, filename)
 			return self.value
-				
+
 		if self.tipe == "AND":
 			self.value = True
 			for i in self.items:
@@ -386,39 +387,39 @@ class XdgLogic:
 					self.value = False
 					return self.value
 			return self.value
-			
+
 		if self.tipe == "OR":
 			self.value = False
 			for i in self.items:
 				self.value = self.value or i.evaluate(list, filename)
 			return self.value
-			
+
 		if self.tipe == "ALL":
 			self.value = True
 			return self.value
-			
+
 	def setCategory(self, cat):
 		self.cat = cat
-		
+
 if __name__ == "__main__":
-	
+
 	mnu = XdgMenu()
-	
+
 	if os.getenv("LANG") != "":
 		mnu.lang = os.getenv("LANG")
 	home = os.getenv("HOME")
-	
+
 	xdg_cd = os.getenv("XDG_CONFIG_DIRS")
 	xdg_ch = os.getenv("XDG_CONFIG_HOME")
-	
+
 	if not xdg_ch:
 		xdg_ch = "%s/.config" % (home)
 	if not xdg_cd:
 		xdg_cd = "/etc/xdg"
-	
+
 	filename =  ""
 	role = None
-	
+
 	if os.path.isfile("%s/menus/applications.menu"%(xdg_ch)):
 		filename = "%s/menus/applications.menu"%(xdg_ch)
 	else:
@@ -426,7 +427,7 @@ if __name__ == "__main__":
 			if os.path.isfile("%s/menus/applications.menu"%(cdir)):
 				filename = "%s/menus/applications.menu"%(cdir)
 				break
-	
+
 	for arg in sys.argv[1:]:
 		if arg == "--import":
 			role = "import"
@@ -439,26 +440,26 @@ if __name__ == "__main__":
 		else:
 			if os.path.isfile(sys.argv[1]):
 				filename = sys.argv[1]
-	
+
 	mnu.parseFile(filename)
-	
+
 	if role in ("replace", "import"):
-	
+
 		mnu.loadItems()
 		obmenu = obxml.ObMenu()
 		obmenu.newMenu()
-		
+
 		if role == "replace":
 			mnuid = "root-menu"
 			mnulb = "Openbox 3"
 		else:
 			mnuid = "obm-xdg-menus"
 			mnulb = "Gnome menus"
-		
-		
+
+
 		obmenu.createMenu(None, mnulb, mnuid)
 		mnu._create_obmenu(obmenu, mnuid)
-		
+
 		if role == "replace":
 			obmenu.createMenu(mnuid, "Openbox", "Openbox-Conf-Menu")
 			obmenu.createItem("Openbox-Conf-Menu", "Edit preferences", "Execute", "obconf")
@@ -468,7 +469,7 @@ if __name__ == "__main__":
 			obmenu.createItem("Openbox-Conf-Menu", "Exit", "Exit", "")
 			obmenu.createSep(mnuid)
 			obmenu.createLink(mnuid, "client-list-menu")
-		
+
 			if not os.path.isdir(xdg_ch):
 				os.mkdir(xdg_ch)
 			if not os.path.isdir("%s/openbox"%(xdg_ch)):
@@ -476,12 +477,12 @@ if __name__ == "__main__":
 			if os.path.isfile("%s/openbox/menu.xml"%(xdg_ch)):
 				os.rename("%s/openbox/menu.xml"%(xdg_ch), "%s/openbox/menu.xml~"%(xdg_ch))
 			obmenu.saveMenu("%s/openbox/menu.xml"%(xdg_ch))
-		
+
 		else:
 			obmenu.saveMenu("gnome-menus.xml")
-		
+
 	else:
-	
+
 		cachefile = "%s/.obmxdg.xml" % (home)
 		if os.path.isfile(cachefile):
 			new = False
@@ -494,10 +495,10 @@ if __name__ == "__main__":
 				print(cache.read())
 				cache.close()
 				sys.exit()
-				
+
 		mnu.loadItems()
 		obmenu = obxml.ObMenu()
-	
+
 		obmenu.newPipe()
 		mnu._create_obmenu(obmenu)
 		obmenu.saveMenu(cachefile)
