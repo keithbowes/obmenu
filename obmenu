@@ -474,7 +474,14 @@ class App:
 			# must be a path to a menu
 			self.menu_path = sys.argv[1]
 		elif len(sys.argv) == 1:
-			self.menu_path = os.getenv("HOME") + "/.config/openbox/menu.xml"
+			if os.getenv("WAYLAND_DISPLAY"):
+				app = "waybox"
+			else:
+				app = "openbox"
+			if os.getenv("XDG_CONFIG_HOME"):
+				self.menu_path = os.getenv("XDG_CONFIG_HOME") + "/" + app + "/menu.xml"
+			else:
+				self.menu_path = os.getenv("HOME") + "/.config/" + app + "/menu.xml"
 		else:
 			print("Error: Wrong number of arguments")
 			print("Usage: obmenu /path/to/menu.xml")
