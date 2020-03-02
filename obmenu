@@ -470,8 +470,7 @@ class App:
 			self.remove(None)
 
 	def show_about(self, args):
-		self.builder.add_objects_from_file(self.gladefile, "aboutdialog1")
-		self.builder.get_object("aboutdialog1").show()
+		Gtk.Builder().add_from_file(self.gladepath + "/about.glade")
 
 	# application init
 	def init(self):
@@ -505,20 +504,20 @@ class App:
 
 		self.builder = Gtk.Builder()
 		# Look for my glade file!
-		if os.path.isfile("obmenu.glade"):
+		if os.path.isfile("window.glade"):
 			# It's here.. looks like a pre-installation execution
-			self.gladefile = "obmenu.glade"
-		elif os.path.isfile("/usr/local/share/obmenu/obmenu.glade"):
-			self.gladefile = "/usr/local/share/obmenu/obmenu.glade"
-		elif os.path.isfile("/usr/share/obmenu/obmenu.glade"):
-			self.gladefile = "/usr/share/obmenu/obmenu.glade"
+			self.gladepath = "."
+		elif os.path.isfile("/usr/local/share/obmenu/window.glade"):
+			self.gladepath = "/usr/local/share/obmenu"
+		elif os.path.isfile("/usr/share/obmenu/window.glade"):
+			self.gladepath = "/usr/share/obmenu"
 		else:
-			print("ERROR: obmenu.glade not found!")
+			print("ERROR: window.glade not found!")
 			print("       check that everything was installed all right")
 			sys.exit(1)
 
 		# Set the basics for GTK
-		self.builder.add_from_file(self.gladefile)
+		self.builder.add_from_file(self.gladepath + "/window.glade")
 
 		self.treeview = self.builder.get_object("treeview1")
 		self.label_entry = self.builder.get_object("entry1")
