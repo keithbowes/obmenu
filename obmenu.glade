@@ -630,13 +630,14 @@
 	      </child>
 
 	      <child>
-		<object class="GtkComboBox" id="combobox1">
+		<object class="GtkComboBoxText" id="combobox1">
 		  <property name="visible">True</property>
 		  <property name="sensitive">False</property>
-		  <!-- property name="items" translatable="yes">Execute
-Reconfigure
-Restart
-Exit</property -->
+          <items>
+              <item translatable="no">Execute</item>
+              <item translatable="no">Reconfigure</item>
+              <item translatable="no">Restart</item>
+          </items>
 		  <property name="add_tearoffs">False</property>
 		  <property name="focus_on_click">True</property>
 		  <signal name="changed" handler="action_changed" last_modification_time="Wed, 09 Nov 2005 14:43:38 GMT"/>
