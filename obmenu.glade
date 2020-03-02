@@ -21,9 +21,10 @@
   <signal name="delete_event" handler="exit"/>
 
   <child>
-    <object class="GtkVBox" id="vbox4">
+    <object class="GtkBox" id="vbox4">
       <property name="visible">True</property>
       <property name="homogeneous">False</property>
+      <property name="orientation">GTK_ORIENTATION_VERTICAL</property>
       <property name="spacing">0</property>
 
       <child>
@@ -408,10 +409,11 @@
       </child>
 
       <child>
-        <object class="GtkVBox" id="vbox3">
+        <object class="GtkBox" id="vbox3">
           <property name="visible">True</property>
           <property name="homogeneous">False</property>
           <property name="spacing">0</property>
+          <property name="orientation">GTK_ORIENTATION_VERTICAL</property>
 
           <child>
             <object class="GtkScrolledWindow" id="scrolledwindow1">
@@ -448,13 +450,11 @@
           </child>
 
           <child>
-            <object class="GtkTable" id="table1">
+            <object class="GtkGrid" id="table1">
               <property name="visible">True</property>
-              <property name="n_rows">4</property>
-              <property name="n_columns">2</property>
-              <property name="homogeneous">False</property>
-              <property name="row_spacing">0</property>
-              <property name="column_spacing">0</property>
+              <property name="column_homogeneous">True</property>
+              <property name="row_spacing">2</property>
+              <property name="column_spacing">10</property>
 
               <child>
                 <object class="GtkLabel" id="label1">
@@ -476,12 +476,7 @@
                 </object>
                 <packing>
                   <property name="left_attach">0</property>
-                  <property name="right_attach">1</property>
                   <property name="top_attach">0</property>
-                  <property name="bottom_attach">1</property>
-                  <property name="x_padding">4</property>
-                  <property name="x_options">fill</property>
-                  <property name="y_options"></property>
                 </packing>
               </child>
 
@@ -505,12 +500,7 @@
                 </object>
                 <packing>
                   <property name="left_attach">0</property>
-                  <property name="right_attach">1</property>
                   <property name="top_attach">1</property>
-                  <property name="bottom_attach">2</property>
-                  <property name="x_padding">4</property>
-                  <property name="x_options">fill</property>
-                  <property name="y_options"></property>
                 </packing>
               </child>
 
@@ -534,12 +524,7 @@
                 </object>
                 <packing>
                   <property name="left_attach">0</property>
-                  <property name="right_attach">1</property>
                   <property name="top_attach">2</property>
-                  <property name="bottom_attach">3</property>
-                  <property name="x_padding">4</property>
-                  <property name="x_options">fill</property>
-                  <property name="y_options"></property>
                 </packing>
               </child>
 
@@ -563,12 +548,7 @@
                 </object>
                 <packing>
                   <property name="left_attach">0</property>
-                  <property name="right_attach">1</property>
                   <property name="top_attach">3</property>
-                  <property name="bottom_attach">4</property>
-                  <property name="x_padding">4</property>
-                  <property name="x_options">fill</property>
-                  <property name="y_options"></property>
                 </packing>
               </child>
 
@@ -587,12 +567,9 @@
                   <signal name="changed" handler="label_changed"/>
                 </object>
                 <packing>
+                  <property name="width">10</property>
                   <property name="left_attach">1</property>
-                  <property name="right_attach">2</property>
                   <property name="top_attach">0</property>
-                  <property name="bottom_attach">1</property>
-                  <property name="x_padding">4</property>
-                  <property name="y_options"></property>
                 </packing>
               </child>
 
@@ -611,12 +588,9 @@
                   <signal name="changed" handler="id_changed"/>
                 </object>
                 <packing>
+                  <property name="width">10</property>
                   <property name="left_attach">1</property>
-                  <property name="right_attach">2</property>
                   <property name="top_attach">1</property>
-                  <property name="bottom_attach">2</property>
-                  <property name="x_padding">4</property>
-                  <property name="y_options"></property>
                 </packing>
               </child>
 
@@ -624,31 +598,28 @@
                 <object class="GtkComboBoxText" id="combobox1">
                   <property name="visible">True</property>
                   <property name="sensitive">False</property>
-          <items>
-              <item translatable="no">Execute</item>
-              <item translatable="no">Reconfigure</item>
-              <item translatable="no">Restart</item>
-          </items>
+                    <items>
+                        <item translatable="no">Execute</item>
+                        <item translatable="no">Reconfigure</item>
+                        <item translatable="no">Restart</item>
+                    </items>
                   <property name="add_tearoffs">False</property>
                   <property name="focus_on_click">True</property>
                   <signal name="changed" handler="action_changed"/>
                 </object>
                 <packing>
+                  <property name="width">10</property>
                   <property name="left_attach">1</property>
-                  <property name="right_attach">2</property>
                   <property name="top_attach">2</property>
-                  <property name="bottom_attach">3</property>
-                  <property name="x_padding">4</property>
-                  <property name="x_options">fill</property>
-                  <property name="y_options">fill</property>
                 </packing>
               </child>
 
               <child>
-                <object class="GtkHBox" id="hbox1">
+                <object class="GtkBox" id="hbox1">
                   <property name="visible">True</property>
                   <property name="homogeneous">False</property>
                   <property name="spacing">0</property>
+                  <property name="orientation">GTK_ORIENTATION_HORIZONTAL</property>
 
                   <child>
                     <object class="GtkEntry" id="entry2">
@@ -690,13 +661,9 @@
                   </child>
                 </object>
                 <packing>
+                  <property name="width">10</property>
                   <property name="left_attach">1</property>
-                  <property name="right_attach">2</property>
                   <property name="top_attach">3</property>
-                  <property name="bottom_attach">4</property>
-                  <property name="x_padding">4</property>
-                  <property name="x_options">fill</property>
-                  <property name="y_options">fill</property>
                 </packing>
               </child>
             </object>
