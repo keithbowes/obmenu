@@ -18,7 +18,10 @@
 #    along with this program; if not, write to the Free Software
 #    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-import obxml, gtk, gtk.glade, gobject, random, time, os, sys
+import gi, obxml, random, time, os, sys
+
+gi.require_version('Gtk', '3.0')
+from gi.repository import Gtk, GObject
 
 class App:
 	def reconfigureOpenbox(self):
@@ -43,7 +46,7 @@ class App:
 	
 	def deleteTree(self):
 		# treemodel.iter(label, type, [action], [execute], parent, [menu-id])
-		self.treemodel=gtk.TreeStore(gobject.TYPE_STRING, gobject.TYPE_STRING,
+		self.treemodel=Gtk.TreeStore(gobject.TYPE_STRING, gobject.TYPE_STRING,
 				gobject.TYPE_STRING, gobject.TYPE_STRING, gobject.TYPE_STRING, gobject.TYPE_STRING)
 		self.treeview.set_model(self.treemodel)
 		
@@ -75,7 +78,7 @@ class App:
 		self.auto_change = False
 	
 	def confirm(self, message):
-		dlg = gtk.MessageDialog(None,0,gtk.MESSAGE_WARNING, gtk.BUTTONS_YES_NO,message)
+		dlg = Gtk.MessageDialog(None,0,Gtk.MESSAGE_WARNING, Gtk.BUTTONS_YES_NO,message)
 		res = dlg.run()
 		dlg.destroy()
 		if res == -8: return True
@@ -83,10 +86,10 @@ class App:
 	
 	def ask_for_path(self, title, op):
 		if op == 0:
-			action = gtk.FILE_CHOOSER_ACTION_OPEN
+			action = Gtk.FILE_CHOOSER_ACTION_OPEN
 		else:
-			action = gtk.FILE_CHOOSER_ACTION_SAVE
-		dlg = gtk.FileChooserDialog(title,None,action,(gtk.STOCK_OK, 1, gtk.STOCK_CANCEL, 3))
+			action = Gtk.FILE_CHOOSER_ACTION_SAVE
+		dlg = Gtk.FileChooserDialog(title,None,action,(Gtk.STOCK_OK, 1, Gtk.STOCK_CANCEL, 3))
 		dlg.set_default_response(1)
 		res = dlg.run()
 		flnm = dlg.get_filename()
@@ -149,7 +152,7 @@ class App:
 		if self.sth_changed:
 			res = self.confirm("There are unsaved changes. Exit anyway?")
 			if not res: return True
-		gtk.main_quit()
+		Gtk.main_quit()
 	
 	# file->quit menu signal
 	def mnu_quit (self, bt):
@@ -463,8 +466,7 @@ class App:
 			self.remove(None)
 	
 	def show_about(self, args):
-		#gtk.glade.XML("/usr/local/share/obmenu/obmenu.glade", "aboutdialog1")
-		gtk.glade.XML(self.gladefile, "aboutdialog1")
+		self.builder.add_objects_from_file(self.gladefile, "aboutdialog1")
 		
 	# application init
 	def init(self):
@@ -489,6 +491,7 @@ class App:
 		self.menu = obxml.ObMenu()
 		self.menu.loadMenu(self.menu_path)
 		
+		self.builder = Gtk.Builder()
 		# Look for my glade file!
 		if os.path.isfile("obmenu.glade"):
 			# It's here.. looks like a pre-installation execution
@@ -503,7 +506,7 @@ class App:
 			sys.exit(1)
 		
 		# Set the basics for GTK
-		self.arbol = gtk.glade.XML(self.gladefile, "window1")
+		self.arbol = self.builder.add_objects_from_file(self.gladefile, "window1")
 		
 		self.treeview=self.arbol.get_widget("treeview1")
 		self.label_entry = self.arbol.get_widget("entry1")
@@ -514,7 +517,7 @@ class App:
 		
 
 		# treemodel.iter(label, type, [action], [execute], parent, [menu-id])
-		self.treemodel=gtk.TreeStore(gobject.TYPE_STRING, gobject.TYPE_STRING,
+		self.treemodel=Gtk.TreeStore(gobject.TYPE_STRING, gobject.TYPE_STRING,
 				gobject.TYPE_STRING, gobject.TYPE_STRING, gobject.TYPE_STRING, gobject.TYPE_STRING)
 		self.treeview.set_model(self.treemodel)
 		
@@ -548,23 +551,23 @@ class App:
 		# Set the columns
 		self.treeview.set_headers_visible(True)
 		
-		renderer=gtk.CellRendererText()
-		column=gtk.TreeViewColumn("Label",renderer, text=0)
+		renderer=Gtk.CellRendererText()
+		column=Gtk.TreeViewColumn("Label",renderer, text=0)
 		column.set_resizable(True)
 		self.treeview.append_column(column)
 		
-		renderer=gtk.CellRendererText()
-		column=gtk.TreeViewColumn("Type",renderer,text=1)
+		renderer=Gtk.CellRendererText()
+		column=Gtk.TreeViewColumn("Type",renderer,text=1)
 		column.set_resizable(True)
 		self.treeview.append_column(column)
 		
-		renderer=gtk.CellRendererText()
-		column=gtk.TreeViewColumn("Action",renderer,text=2)
+		renderer=Gtk.CellRendererText()
+		column=Gtk.TreeViewColumn("Action",renderer,text=2)
 		column.set_resizable(True)
 		self.treeview.append_column(column)
 		
-		renderer=gtk.CellRendererText()
-		column=gtk.TreeViewColumn("Execute",renderer,text=3)
+		renderer=Gtk.CellRendererText()
+		column=Gtk.TreeViewColumn("Execute",renderer,text=3)
 		column.set_resizable(True)
 		self.treeview.append_column(column)
 		
@@ -576,7 +579,7 @@ class App:
 		self.createTree(None, None)
 		
 		# Let's roll!
-		gtk.main()
+		Gtk.main()
 
 if __name__ == "__main__":
 	app = App()
