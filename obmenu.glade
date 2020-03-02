@@ -47,6 +47,7 @@
                       <property name="label">gtk-new</property>
                       <property name="use_stock">True</property>
                       <signal name="activate" handler="new_clicked" last_modification_time="Thu, 15 Dec 2005 13:23:16 GMT"/>
+                      <accelerator key="N" modifiers="GDK_CONTROL_MASK" signal="activate"/>
                     </object>
                   </child>
 
@@ -56,6 +57,7 @@
                       <property name="label">gtk-open</property>
                       <property name="use_stock">True</property>
                       <signal name="activate" handler="open_clicked" last_modification_time="Thu, 15 Dec 2005 13:44:10 GMT"/>
+                      <accelerator key="O" modifiers="GDK_CONTROL_MASK" signal="activate"/>
                     </object>
                   </child>
 
@@ -65,6 +67,7 @@
                       <property name="label">gtk-save</property>
                       <property name="use_stock">True</property>
                       <signal name="activate" handler="save_clicked" last_modification_time="Thu, 15 Dec 2005 13:45:31 GMT"/>
+                      <accelerator key="S" modifiers="GDK_CONTROL_MASK" signal="activate"/>
                     </object>
                   </child>
 
@@ -89,6 +92,7 @@
                       <property name="label">gtk-quit</property>
                       <property name="use_stock">True</property>
                       <signal name="activate" handler="mnu_quit" last_modification_time="Tue, 20 Dec 2005 15:52:52 GMT"/>
+                      <accelerator key="Q" modifiers="GDK_CONTROL_MASK" signal="activate"/>
                     </object>
                   </child>
                 </object>
