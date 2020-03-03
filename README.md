@@ -22,45 +22,15 @@ update it for Python 3/GTK 3 and to allow it to work with
   The main target is the currently supported versions of Python.  Support for
   older versions is purely incidental.  Please don't report issues affecting
   only EOL versions of Python (e.g. Python 2.x not being able to save menus
-  with Unicode characters).<br/>
-  This also means that you no longer need PyGtk and PyGlade, required by the
-  original obmenu.
+  with Unicode characters).
 
-### MAGEIA LINUX
-
-#### Python 2.7
-
-As of the time of writing, Mageia still uses Python 2 by default, despite the
-plan to [use Python 3 as the
-default](https://wiki.mageia.org/en/Feature:Python3_as_default).  So, you'll
-need to do:
-
-`sudo urpmi python python2-gi`
-
-#### Python 3
-
-To use Python 3 you'll need to install the python3 and python3-gobject3
-packages:
-
-`sudo urpmi python3 python3-gobject3`
-
-You'll also need to replace `python` with `python3` below and when running
-obmenu.
-
-### OTHER DISTROS
-
-If you use another distro or OS (e.g. FreeBSD), you can send a pull request on
-the required packages and how to install them.
+  You no longer need pygtk and python-glade, required by the original obmenu.
 
 ## INSTALLATION
 
 Type these commands in a shell:
 
 `sudo python setup.py install`
-
-or
-`sudo python minisetup.py install`
-if you don't want the pipemenus
 
 ## CHANGELOG
 
