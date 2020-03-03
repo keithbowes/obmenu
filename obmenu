@@ -27,12 +27,10 @@ class App:
 	def reconfigureOpenbox(self):
 		# Waybox doesn't need reconfigured
 		if not os.getenv("WAYLAND_DISPLAY"):
-			lines = os.popen("ps aux").read().splitlines()
-			ob = os.popen("which openbox").read().strip()
-			for line in lines:
-				if ob in " ".join(line.split()[10:]):
-					os.kill(int(line.split()[1]), 12)
-					break
+			import signal
+			lines = os.popen("pgrep -x openbox").read().splitlines()
+			if lines:
+				os.kill(int(lines[0]), signal.SIGUSR2)
 
 	# Recursively creates the treeview model
 	def createTree(self, padre, menuid):
@@ -61,8 +59,8 @@ class App:
 		self.builder.get_object("window1").set_title("Obmenu: %s %s" % (self.menu_path, s))
 
 	# Auxiliary function for model.foreach()
-	def _change_id(self, model, path, it, _iter):
-		(old_id, new_id) = _iter
+	def _change_id(self, model, path, it, id_pair):
+		(old_id, new_id) = id_pair
 		mid = model.get_value(it,5)
 		if mid == old_id:
 			model.set(it, 5, new_id)
@@ -470,7 +468,7 @@ class App:
 			self.remove(None)
 
 	def show_about(self, args):
-		Gtk.Builder().add_from_file(self.gladepath + "/about.glade")
+		Gtk.Builder().add_from_file(self.datapath + "/about.glade")
 
 	# application init
 	def init(self):
@@ -503,21 +501,25 @@ class App:
 		self.menu.loadMenu(self.menu_path)
 
 		self.builder = Gtk.Builder()
-		# Look for my glade file!
+		# Look for the data files!
 		if os.path.isfile("window.glade"):
-			# It's here.. looks like a pre-installation execution
-			self.gladepath = "."
-		elif os.path.isfile("/usr/local/share/obmenu/window.glade"):
-			self.gladepath = "/usr/local/share/obmenu"
-		elif os.path.isfile("/usr/share/obmenu/window.glade"):
-			self.gladepath = "/usr/share/obmenu"
+			# They're here.. looks like a pre-installation execution
+			self.datapath = os.getcwd()
+		elif os.path.isdir(os.path.abspath(os.path.dirname(__file__) + "/../share/obmenu")):
+			self.datapath = os.path.abspath(os.path.dirname(__file__) + "/../share/obmenu")
+		elif os.path.isdir("/usr/local/share/obmenu"):
+			self.datapath = "/usr/local/share/obmenu"
+		elif os.path.isdir("/usr/share/obmenu"):
+			self.datapath = "/usr/share/obmenu"
+		elif os.path.isdir(os.path.expanduser("~/.local/share/obmenu")):
+			self.datapath = os.path.expanduser("~/.local/share/obmenu")
 		else:
-			print("ERROR: window.glade not found!")
+			print("ERROR: the data files were not found!")
 			print("       check that everything was installed all right")
 			sys.exit(1)
 
 		# Set the basics for GTK
-		self.builder.add_from_file(self.gladepath + "/window.glade")
+		self.builder.add_from_file(self.datapath + "/window.glade")
 
 		self.treeview = self.builder.get_object("treeview1")
 		self.label_entry = self.builder.get_object("entry1")

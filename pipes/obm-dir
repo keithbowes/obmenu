@@ -1,6 +1,6 @@
 #!/usr/bin/env python -O
 #########################################################################
-#  Copyright 2005 Manuel Colmenero 
+#  Copyright 2005 Manuel Colmenero
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -24,20 +24,20 @@ import obxml, sys, os, time
 
 def alfabetiza(lista):
 	dic = {}
-	
+
 	for each in lista:
 		k = each[0].lower()
 		if k not in dic:
 			dic[k] = [each]
 		else:
 			dic[k].append(each)
-			
+
 	for key in list(dic.keys()):
 		dic[key].sort()
-		
+
 	return dic
-			
-		
+
+
 def clasifica(lista, humbral):
 	lgrupos = []
 	if len(lista) / humbral > 1:
@@ -59,7 +59,7 @@ def clasifica(lista, humbral):
 		if n != 0:
 			lgrupos.append( ( "%s-%s" % (primera, k), grupo) )
 		return lgrupos
-	
+
 menu = obxml.ObMenu()
 menu.newPipe()
 

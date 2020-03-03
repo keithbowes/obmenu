@@ -1,8 +1,8 @@
 #!/usr/bin/python
 #
 #  Openbox Menu Editor 1.0 beta
-# 
-#  Copyright 2005 Manuel Colmenero 
+#
+#  Copyright 2005 Manuel Colmenero
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -25,16 +25,16 @@
 import xml.dom.minidom
 
 class ObMenu:
-	
+
 	# Internal functions =============================================
 	# (These mess with the xml tree)
-		
+
 	# given its ID, and its parent (or None for top-level)
 	# returns the dom tree of the menu. Recursively.
 	def _get_dom_menu(self, menu, parent=None):
 		if not menu: return None
 		if not parent: parent = self.dom.documentElement
-		
+
 		for item in parent.childNodes:
 			if item.nodeName == "menu" and item.hasChildNodes():
 				if item.attributes["id"].nodeValue == menu: return item
@@ -55,7 +55,7 @@ class ObMenu:
 					b = self._get_dom_menu(menu, item)
 					if b: return b
 		return None
-	
+
 	# Get an item of 'menu', given its number (order)
 	def _get_dom_item(self,menu,num):
 		if not menu:
@@ -68,18 +68,18 @@ class ObMenu:
 			if it.nodeType == 1:
 				if i == num: return it
 				i += 1
-	
+
 	# Insert a node in the xml tree
 	def _put_dom_item(self, menu, nodo, pos=None):
 		parent = self._get_dom_menu(menu)
 		if not parent: parent = self.dom.documentElement
-		
+
 		if pos == None or pos > self._get_menu_len(menu):
 			parent.appendChild(nodo)
 		elif pos >= 0:
 			ant = self._get_dom_item(menu, pos)
 			parent.insertBefore(nodo, ant)
-	
+
 	# Get the number of items of a menu
 	def _get_menu_len(self,menu):
 		if menu:
@@ -91,7 +91,7 @@ class ObMenu:
 			if it.nodeType == 1:
 				i += 1
 		return i
-	
+
 	# Get "real" item number (counting with comments, text, etc in the xml)
 	def _get_real_num(self,menu,num):
 		if menu:
@@ -105,7 +105,7 @@ class ObMenu:
 				if i == num: return n
 				i += 1
 			n += 1
-	
+
 	# get the properties of an item from the xml, and returns them as a
 	# dictionary.
 	def _get_item_props(self,node):
@@ -122,7 +122,7 @@ class ObMenu:
 								if item.nodeType == 3:
 									param = item.nodeValue.strip()
 		return { "type": "item", "label": etiqueta, "action": accion, "execute": param }
-	
+
 	# get the properties of a menu from the xml, and returns them as a
 	# dictionary.
 	def _get_menu_props(self, node):
@@ -147,12 +147,12 @@ class ObMenu:
 
 	# Public functions ===================================================
 	# Most of them are self-explanatory
-				
+
 	def loadMenu(self, filename):
 		fil = open(filename)
 		self.dom = xml.dom.minidom.parseString(fil.read())
 		fil.close()
-	
+
 	def newMenu(self):
 		self.dom = xml.dom.minidom.parseString(
 		"<?xml version=\"1.0\" ?><openbox_menu></openbox_menu>")
@@ -161,26 +161,26 @@ class ObMenu:
 	def newPipe(self):
 		self.dom = xml.dom.minidom.parseString(
 		"<?xml version=\"1.0\" ?><openbox_pipe_menu></openbox_pipe_menu>")
-	
+
 	def saveMenu(self, filename):
 		output = open(filename, "w")
 		for line in self.dom.toprettyxml("\t","\n").splitlines():
 			if line.strip() != "":
 				output.write("%s\n" %(line))
 		output.close()
-	
+
 	def printXml(self):
 		for line in self.dom.toprettyxml("\t","\n").splitlines():
 			if line.strip() != "":
 				print(line)
-	
+
 	def getXml(self):
 		res = ""
 		for line in self.dom.toprettyxml("\t","\n").splitlines():
 			if line.strip() != "":
 				res = res + "%s\n" % (line)
 		return res
-				
+
 	def removeItem(self,menu, num):
 		if menu:
 			dom_mnu = self._get_dom_menu(menu)
@@ -189,7 +189,7 @@ class ObMenu:
 		item = self._get_dom_item(menu,num)
 		dom_mnu.removeChild(item)
 		item.unlink()
-	
+
 	def removeMenu(self,menu):
 		dom_mnu = self._get_dom_menu(menu)
 		if not dom_mnu.parentNode:
@@ -197,11 +197,11 @@ class ObMenu:
 		else:
 			dom_mnu.parentNode.removeChild(dom_mnu)
 		dom_mnu.unlink()
-	
-	def createSep(self, menu, pos=None):		
+
+	def createSep(self, menu, pos=None):
 		nodo = self.dom.createElement("separator")
 		self._put_dom_item(menu, nodo, pos)
-			
+
 	def createItem(self, menu, label, action, execute, pos=None):
 		nodo = self.dom.createElement("item")
 		nodo.attributes["label"] = label
@@ -214,7 +214,7 @@ class ObMenu:
 		accion.appendChild(exe)
 		nodo.appendChild(accion)
 		self._put_dom_item(menu, nodo, pos)
-	
+
 	def createLink(self, menu, mid, pos=None):
 		nodo = self.dom.createElement("menu")
 		nodo.attributes["id"] = mid
@@ -225,9 +225,9 @@ class ObMenu:
 		nodo.attributes["id"] = mid
 		nodo.attributes["label"] = label
 		nodo.attributes["execute"] = execute
-		
+
 		self._put_dom_item(menu, nodo, pos)
-		
+
 	def createMenu(self, menu, label, mid, pos=None):
 		nodo = self.dom.createElement("menu")
 		nodo.attributes["label"] = label
@@ -236,7 +236,7 @@ class ObMenu:
 		txt.nodeValue = "\n"
 		nodo.appendChild(txt)
 		self._put_dom_item(menu, nodo, pos)
-		
+
 	def interchange(self, menu, n1, n2):
 		if not menu:
 			dom_mnu = self.dom.documentElement
@@ -247,7 +247,7 @@ class ObMenu:
 		uno = dom_mnu.childNodes[i1]
 		dom_mnu.childNodes[i1] = dom_mnu.childNodes[i2]
 		dom_mnu.childNodes[i2] = uno
-	
+
 	def setItemProps(self, menu, n, label, action, exe):
 		itm = self._get_dom_item(menu,n)
 		itm.attributes["label"].nodeValue = label
@@ -270,11 +270,11 @@ class ObMenu:
 				else:
 					for item in it.childNodes:
 						it.removeChild(item)
-	
+
 	def setMenuLabel(self, menu, label):
 		mnu = self._get_dom_menu(menu)
 		if mnu: mnu.attributes["label"].nodeValue = label
-	
+
 	def getMenuLabel(self,menu):
 		mnu = self._get_dom_menu(menu)
 		if mnu: return mnu.attributes["label"].nodeValue
@@ -288,12 +288,12 @@ class ObMenu:
 		prnt = self._get_dom_menu(parent)
 		if prnt: mnu = self._get_dom_ref(mid, prnt)
 		if mnu: mnu.setAttribute("id", new_id)
-	
+
 	def setMenuExecute(self, parent, mid, execute):
 		prnt = self._get_dom_menu(parent)
 		if prnt: mnu = self._get_dom_ref(mid, prnt)
 		if mnu: mnu.setAttribute("execute", execute)
-	
+
 	# Return just an item, given its parent menu an its number
 	def getItem(self,menu,num):
 		mnu = self._get_dom_menu(menu)
@@ -309,7 +309,7 @@ class ObMenu:
 					elif i.nodeName == "item":
 						return self.get_item_props(i)
 				n += 1
-	
+
 	# Is menu? Returns True if it's an existing ID
 	def isMenu(self,menu):
 		dom = self._get_dom_menu(menu)
@@ -317,8 +317,8 @@ class ObMenu:
 			return True
 		else:
 			return False
-		
-	
+
+
 	# Returns a whole menu, as a list of dictionaries.
 	# Each dictionary has the items properties.
 	def getMenu(self,menu):
@@ -338,12 +338,12 @@ class ObMenu:
 					lst.append({"type": "separator", "parent": menu})
 				elif i.nodeName == "item":
 					d = self._get_item_props(i)
-					d["parent"] = menu		
+					d["parent"] = menu
 					lst.append(d)
 		return lst
 
 	# replace all old_id's in file with new_id's
-	# parent shuld start with None	
+	# parent shuld start with None
 	def replaceId(self, old_id, new_id, parent=None):
 		if not parent: parent = self.dom.documentElement
 		for item in parent.childNodes:
