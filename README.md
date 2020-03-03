@@ -28,7 +28,7 @@ update it for Python 3/GTK 3 and to allow it to work with
 
 ## INSTALLATION
 
-Type these commands in a shell:
+Type this command in a shell:
 
 `sudo python setup.py install`
 

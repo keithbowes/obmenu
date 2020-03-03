@@ -56,7 +56,7 @@
                       <property name="label">gtk-open</property>
                       <property name="use_stock">True</property>
                       <signal name="activate" handler="open_clicked"/>
-                      <accelerator key="s" modifiers="GDK_CONTROL_MASK" signal="activate"/>
+                      <accelerator key="o" modifiers="GDK_CONTROL_MASK" signal="activate"/>
                     </object>
                   </child>
 
