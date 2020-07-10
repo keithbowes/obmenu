@@ -85,13 +85,14 @@ class App:
 		else: return False
 
 	def ask_for_path(self, title, op):
+		import gettext
 		if op == 0:
 			action = Gtk.FileChooserAction.OPEN
 		else:
 			action = Gtk.FileChooserAction.SAVE
 		dlg = Gtk.FileChooserDialog(title=title, action=action)
-		dlg.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
-		dlg.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
+		dlg.add_button(gettext.dgettext("gtk30", "_OK"), Gtk.ResponseType.OK)
+		dlg.add_button(gettext.dgettext("gtk30", "_Cancel"), Gtk.ResponseType.CANCEL)
 		dlg.set_default_response(1)
 		res = dlg.run()
 		flnm = dlg.get_filename()
