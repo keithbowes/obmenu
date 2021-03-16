@@ -18,7 +18,7 @@
 #    along with this program; if not, write to the Free Software
 #    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-import gi, obxml, random, time, os, sys
+import gi, obxml, random, time, os, sys, gettext
 
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk, GObject
@@ -85,7 +85,6 @@ class App:
 		else: return False
 
 	def ask_for_path(self, title, op):
-		import gettext
 		if op == 0:
 			action = Gtk.FileChooserAction.OPEN
 		else:
@@ -501,7 +500,6 @@ class App:
 		self.menu = obxml.ObMenu()
 		self.menu.loadMenu(self.menu_path)
 
-		self.gtk_domain = "gtk30"
 		self.builder = Gtk.Builder()
 		# Look for the data files!
 		if os.path.isfile("window.glade"):
@@ -522,6 +520,10 @@ class App:
 			print("       check that everything was installed all right")
 			sys.exit(1)
 
+		gettext.textdomain("obmenu")
+		gettext.bindtextdomain("obmenu", os.path.abspath("%s/../%s" % (self.datapath, "locale")))
+		self.gtk_domain = "gtk30"
+
 		# Set the basics for GTK
 		self.builder.add_from_file(self.datapath + "/window.glade")
 
@@ -531,6 +533,30 @@ class App:
 		self.execute_entry = self.builder.get_object("entry2")
 		self.execute_srch = self.builder.get_object("button1")
 		self.id_entry = self.builder.get_object("entry3")
+
+
+		# Translated widget labels
+		self.builder.get_object("menuitem1").set_label(gettext.dpgettext(self.gtk_domain, "Stock label", "_File"))
+		self.builder.get_object("new1").set_label(gettext.dpgettext(self.gtk_domain, "Stock label", "_New"))
+		self.builder.get_object("open1").set_label(gettext.dpgettext(self.gtk_domain, "Stock label", "_Open"))
+		self.builder.get_object("save1").set_label(gettext.dpgettext(self.gtk_domain, "Stock label", "_Save"))
+		self.builder.get_object("save_as1").set_label(gettext.dpgettext(self.gtk_domain, "Stock label", "Save _As"))
+		self.builder.get_object("quit1").set_label(gettext.dpgettext(self.gtk_domain, "Stock label", "_Quit"))
+
+		self.builder.get_object("menuitem2").set_label(gettext.dpgettext(self.gtk_domain, "Stock label", "_Edit"))
+		self.builder.get_object("move_up1").set_label(gettext.dpgettext(self.gtk_domain, "Stock label, navigation", "_Up"))
+		self.builder.get_object("move_down1").set_label(gettext.dpgettext(self.gtk_domain, "Stock label, navigation", "_Down"))
+		self.builder.get_object("delete2").set_label(gettext.dpgettext(self.gtk_domain, "Stock label", "_Delete"))
+
+		self.builder.get_object("menu5").set_label("_" + gettext.dgettext(self.gtk_domain, "Menu"))
+
+		self.builder.get_object("menuitem4").set_label(gettext.dpgettext(self.gtk_domain, "Stock label", "_Help"))
+		self.builder.get_object("about1").set_label(gettext.dpgettext(self.gtk_domain, "Stock label", "_About"))
+
+		self.builder.get_object("label1").set_label("_" + gettext.dgettext(self.gtk_domain, "Label"))
+		self.builder.get_object("label4").set_label("_" + gettext.dgettext(self.gtk_domain, "ID"))
+		self.builder.get_object("label2").set_label("_" + gettext.dgettext(self.gtk_domain, "Action"))
+		self.builder.get_object("label3").set_label(gettext.dpgettext(self.gtk_domain, "Stock label", "_Execute"))
 
 
 		# treemodel.iter(label, type, [action], [execute], parent, [menu-id])
@@ -569,22 +595,22 @@ class App:
 		self.treeview.set_headers_visible(True)
 
 		renderer=Gtk.CellRendererText()
-		column=Gtk.TreeViewColumn("Label",renderer, text=0)
+		column=Gtk.TreeViewColumn(gettext.dgettext(self.gtk_domain, "Label"),renderer, text=0)
 		column.set_resizable(True)
 		self.treeview.append_column(column)
 
 		renderer=Gtk.CellRendererText()
-		column=Gtk.TreeViewColumn("Type",renderer,text=1)
+		column=Gtk.TreeViewColumn(gettext.dgettext(self.gtk_domain, "Type"),renderer,text=1)
 		column.set_resizable(True)
 		self.treeview.append_column(column)
 
 		renderer=Gtk.CellRendererText()
-		column=Gtk.TreeViewColumn("Action",renderer,text=2)
+		column=Gtk.TreeViewColumn(gettext.dgettext(self.gtk_domain, "Action"),renderer,text=2)
 		column.set_resizable(True)
 		self.treeview.append_column(column)
 
 		renderer=Gtk.CellRendererText()
-		column=Gtk.TreeViewColumn("Execute",renderer,text=3)
+		column=Gtk.TreeViewColumn(gettext.gettext("Execute"),renderer,text=3)
 		column.set_resizable(True)
 		self.treeview.append_column(column)
 
