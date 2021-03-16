@@ -91,8 +91,8 @@ class App:
 		else:
 			action = Gtk.FileChooserAction.SAVE
 		dlg = Gtk.FileChooserDialog(title=title, action=action)
-		dlg.add_button(gettext.dgettext("gtk30", "_OK"), Gtk.ResponseType.OK)
-		dlg.add_button(gettext.dgettext("gtk30", "_Cancel"), Gtk.ResponseType.CANCEL)
+		dlg.add_button(gettext.dgettext(self.gtk_domain, "_OK"), Gtk.ResponseType.OK)
+		dlg.add_button(gettext.dgettext(self.gtk_domain, "_Cancel"), Gtk.ResponseType.CANCEL)
 		dlg.set_default_response(1)
 		res = dlg.run()
 		flnm = dlg.get_filename()
@@ -501,6 +501,7 @@ class App:
 		self.menu = obxml.ObMenu()
 		self.menu.loadMenu(self.menu_path)
 
+		self.gtk_domain = "gtk30"
 		self.builder = Gtk.Builder()
 		# Look for the data files!
 		if os.path.isfile("window.glade"):
@@ -512,6 +513,8 @@ class App:
 			self.datapath = "/usr/local/share/obmenu"
 		elif os.path.isdir("/usr/share/obmenu"):
 			self.datapath = "/usr/share/obmenu"
+		elif os.getenv("XDG_DATA_HOME") and os.path.isdir("%s/%s" % (os.getenv("XDG_DATA_HOME"), "obmenu")):
+			self.datapath = os.path.isdir("%s/%s" % (os.getenv("XDG_DATA_HOME"), "obmenu"))
 		elif os.path.isdir(os.path.expanduser("~/.local/share/obmenu")):
 			self.datapath = os.path.expanduser("~/.local/share/obmenu")
 		else:

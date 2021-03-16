@@ -27,6 +27,7 @@
       <property name="orientation">GTK_ORIENTATION_VERTICAL</property>
       <property name="spacing">0</property>
 
+
       <child>
         <object class="GtkMenuBar" id="menubar1">
           <property name="visible">True</property>
@@ -41,40 +42,40 @@
                 <object class="GtkMenu" id="menuitem1_menu">
 
                   <child>
-                    <object class="GtkImageMenuItem" id="new1">
+                    <object class="GtkMenuItem" id="new1">
                       <property name="visible">True</property>
-                      <property name="label">gtk-new</property>
-                      <property name="use_stock">True</property>
+                      <property name="label">_New</property>
+                      <property name="use_underline">True</property>
                       <signal name="activate" handler="new_clicked"/>
                       <accelerator key="n" modifiers="GDK_CONTROL_MASK" signal="activate"/>
                     </object>
                   </child>
 
                   <child>
-                    <object class="GtkImageMenuItem" id="open1">
+                    <object class="GtkMenuItem" id="open1">
                       <property name="visible">True</property>
-                      <property name="label">gtk-open</property>
-                      <property name="use_stock">True</property>
+                      <property name="label">_Open</property>
+                      <property name="use_underline">True</property>
                       <signal name="activate" handler="open_clicked"/>
                       <accelerator key="o" modifiers="GDK_CONTROL_MASK" signal="activate"/>
                     </object>
                   </child>
 
                   <child>
-                    <object class="GtkImageMenuItem" id="save1">
+                    <object class="GtkMenuItem" id="save1">
                       <property name="visible">True</property>
-                      <property name="label">gtk-save</property>
-                      <property name="use_stock">True</property>
+                      <property name="label">_Save</property>
+                      <property name="use_underline">True</property>
                       <signal name="activate" handler="save_clicked"/>
                       <accelerator key="s" modifiers="GDK_CONTROL_MASK" signal="activate"/>
                     </object>
                   </child>
 
                   <child>
-                    <object class="GtkImageMenuItem" id="save_as1">
+                    <object class="GtkMenuItem" id="save_as1">
                       <property name="visible">True</property>
-                      <property name="label">gtk-save-as</property>
-                      <property name="use_stock">True</property>
+                      <property name="label">_Save As</property>
+                      <property name="use_underline">True</property>
                       <signal name="activate" handler="save_as_clicked"/>
                       <accelerator key="s" modifiers="GDK_CONTROL_MASK|GDK_SHIFT_MASK" signal="activate"/>
                     </object>
@@ -87,10 +88,10 @@
                   </child>
 
                   <child>
-                    <object class="GtkImageMenuItem" id="quit1">
+                    <object class="GtkMenuItem" id="quit1">
                       <property name="visible">True</property>
-                      <property name="label">gtk-quit</property>
-                      <property name="use_stock">True</property>
+                      <property name="label">_Quit</property>
+                      <property name="use_underline">True</property>
                       <signal name="activate" handler="mnu_quit"/>
                       <accelerator key="q" modifiers="GDK_CONTROL_MASK" signal="activate"/>
                     </object>
@@ -136,10 +137,10 @@
                   </child>
 
                   <child>
-                    <object class="GtkImageMenuItem" id="delete2">
+                    <object class="GtkMenuItem" id="delete2">
                       <property name="visible">True</property>
-                      <property name="use_stock">True</property>
-                      <property name="label">gtk-delete</property>
+                      <property name="use_underline">True</property>
+                      <property name="label">_Delete</property>
                       <signal name="activate" handler="mnu_remove"/>
                     </object>
                   </child>
@@ -160,7 +161,7 @@
                   <child>
                     <object class="GtkMenuItem" id="menu5">
                       <property name="visible">True</property>
-                      <property name="label" translatable="yes">Menu</property>
+                      <property name="label" translatable="yes">_Menu</property>
                       <property name="use_underline">True</property>
                       <signal name="activate" handler="menu_clicked"/>
                       <accelerator key="m" modifiers="GDK_CONTROL_MASK" signal="activate"/>
@@ -170,7 +171,7 @@
                   <child>
                     <object class="GtkMenuItem" id="item2">
                       <property name="visible">True</property>
-                      <property name="label" translatable="yes">Item</property>
+                      <property name="label" translatable="yes">_Item</property>
                       <property name="use_underline">True</property>
                       <signal name="activate" handler="item_clicked"/>
                       <accelerator key="i" modifiers="GDK_CONTROL_MASK" signal="activate"/>
@@ -180,7 +181,7 @@
                   <child>
                     <object class="GtkMenuItem" id="separator3">
                       <property name="visible">True</property>
-                      <property name="label" translatable="yes">Separator</property>
+                      <property name="label" translatable="yes">_Separator</property>
                       <property name="use_underline">True</property>
                       <signal name="activate" handler="separator_clicked"/>
                       <accelerator key="r" modifiers="GDK_CONTROL_MASK" signal="activate"/>
@@ -190,7 +191,7 @@
                   <child>
                     <object class="GtkMenuItem" id="pipemenu1">
                       <property name="visible">True</property>
-                      <property name="label" translatable="yes">Pipemenu</property>
+                      <property name="label" translatable="yes">_Pipe Menu</property>
                       <property name="use_underline">True</property>
                       <signal name="activate" handler="pipe_clicked"/>
                       <accelerator key="p" modifiers="GDK_CONTROL_MASK" signal="activate"/>
@@ -200,7 +201,7 @@
                   <child>
                     <object class="GtkMenuItem" id="link1">
                       <property name="visible">True</property>
-                      <property name="label" translatable="yes">Link</property>
+                      <property name="label" translatable="yes">_Link</property>
                       <property name="use_underline">True</property>
                       <signal name="activate" handler="link_clicked"/>
                       <accelerator key="l" modifiers="GDK_CONTROL_MASK" signal="activate"/>
