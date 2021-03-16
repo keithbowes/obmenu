@@ -9,11 +9,6 @@ This is a fork of the original [obmenu](http://obmenu.sourceforge.net/) to
 update it for Python 3/GTK 3 and to allow it to work with
 [Waybox](https://github.com/wizbright/waybox).
 
-### FUTURE PLANS (MAYBE)
-
-- Actually allow translating the translatable strings
-- Rename to wbmenu and remove Openbox-specific functionality
-
 ## REQUIREMENTS
 
   [Python](http://python.org) >= 2.7,

@@ -101,20 +101,20 @@ class App:
 	#  New file clicked
 	def new(self, bt):
 		if self.sth_changed:
-			res = self.confirm("Changes in %s will be lost. Continue?" % (self.menu_path))
+			res = self.confirm(gettext.gettext("Changes in %s will be lost. Continue?") % (self.menu_path))
 			if not res: return
 		self.deleteTree()
 		self.menu.newMenu()
 		self.unsaved_menu = True
-		self.menu_path = "Untitled"
+		self.menu_path = gettext.gettext("Untitled")
 		self._sth_changed(True)
 		self.clear_fields()
 
 	def open(self, bt):
 		if self.sth_changed:
-			res = self.confirm("Changes in %s will be lost. Continue?" % (self.menu_path))
+			res = self.confirm(gettext.gettext("Changes in %s will be lost. Continue?") % (self.menu_path))
 			if not res: return
-		path = self.ask_for_path("Open", 0)
+		path = self.ask_for_path(gettext.gettext("Open"), 0)
 		if not path: return
 		self.menu_path = path
 		self.unsaved_menu = False
@@ -131,7 +131,7 @@ class App:
 	# save the menu
 	def save(self, bt):
 		if self.unsaved_menu:
-			path = self.ask_for_path("Save as...", 1)
+			path = self.ask_for_path(gettext.gettext("Save as..."), 1)
 			if not path: return
 			self.menu_path = path
 			self.unsaved_menu = False
@@ -141,7 +141,7 @@ class App:
 
 	# save as...
 	def save_as(self, bt):
-		path = self.ask_for_path("Save as...", 1)
+		path = self.ask_for_path(gettext.gettext("Save as..."), 1)
 		if not path: return
 		self.menu_path = path
 		self.unsaved_menu = False
@@ -152,7 +152,7 @@ class App:
 	# quit signal
 	def quit (self, bt, arg2):
 		if self.sth_changed:
-			res = self.confirm("There are unsaved changes. Exit anyway?")
+			res = self.confirm(gettext.gettext("There are unsaved changes. Exit anyway?"))
 			if not res: return True
 		Gtk.main_quit()
 
@@ -255,7 +255,7 @@ class App:
 
 	# buton [...] clicked signal
 	def search_clicked(self, arg):
-		path = self.ask_for_path("Select file", 0)
+		path = self.ask_for_path(gettext.gettext("Select File"), 0)
 		if path:
 			self.execute_entry.set_text(path)
 
@@ -319,10 +319,10 @@ class App:
 
 		nmid="%s-%d%d%d" % (menu, random.randint(0,99), time.gmtime()[4], time.gmtime()[5])
 
-		n_menu = self.treemodel.insert_before(parent, ite,("New Menu", "menu", "", "", menu, nmid))
-		itm = self.treemodel.append(n_menu, ("New Item", "item", "Execute", "command", nmid, ""))
-		self.menu.createMenu(menu, "New Menu", nmid, n)
-		self.menu.createItem(nmid, "New Item", "Execute", "command")
+		n_menu = self.treemodel.insert_before(parent, ite,(gettext.gettext("New Menu"), "menu", "", "", menu, nmid))
+		itm = self.treemodel.append(n_menu, (gettext.gettext("New Item"), "item", "Execute", gettext.gettext("command"), nmid, ""))
+		self.menu.createMenu(menu, gettext.gettext("New Menu"), nmid, n)
+		self.menu.createItem(nmid, gettext.gettext("New Item"), "Execute", gettext.gettext("command"))
 
 		path = model.get_path(n_menu)
 		self.treeview.set_cursor(path, None, False)
@@ -341,8 +341,8 @@ class App:
 		n = model.get_path(ite)[-1]
 		parent = model.iter_parent(ite)
 
-		self.menu.createItem(menu, "New Item", "Execute", "command", n)
-		itm = self.treemodel.insert_before(parent, ite, ("New Item", 'item','Execute','command', menu, ""))
+		self.menu.createItem(menu, gettext.gettext("New Item"), "Execute", gettext.gettext("command"), n)
+		itm = self.treemodel.insert_before(parent, ite, (gettext.gettext("New Item"), 'item','Execute','command', menu, ""))
 
 		path = model.get_path(itm)
 		self.treeview.set_cursor(path, None, False)
@@ -402,8 +402,8 @@ class App:
 		parent = model.iter_parent(ite)
 		nmid="pipe-%d%d%d" % (random.randint(0,99), time.gmtime()[4], time.gmtime()[5])
 
-		self.menu.createPipe(menu, nmid, "Newpipe", "command", n)
-		itm = self.treemodel.insert_before(parent, ite, ("Newpipe", 'menu', 'Pipemenu','command', menu, nmid))
+		self.menu.createPipe(menu, nmid, "Newpipe", gettext.gettext("command"), n)
+		itm = self.treemodel.insert_before(parent, ite, ("Newpipe", 'menu', 'Pipemenu',gettext.gettext('command'), menu, nmid))
 
 		path = model.get_path(itm)
 		self.treeview.set_cursor(path, None, False)
@@ -472,34 +472,6 @@ class App:
 
 	# application init
 	def init(self):
-		if len(sys.argv) == 2:
-			# must be a path to a menu
-			self.menu_path = sys.argv[1]
-		elif len(sys.argv) == 1:
-			if os.getenv("WAYLAND_DISPLAY"):
-				app = "waybox"
-			else:
-				app = "openbox"
-			if os.getenv("XDG_CONFIG_HOME"):
-				self.menu_path = os.getenv("XDG_CONFIG_HOME") + "/" + app + "/menu.xml"
-			else:
-				self.menu_path = os.getenv("HOME") + "/.config/" + app + "/menu.xml"
-		else:
-			print("Error: Wrong number of arguments")
-			print("Usage: obmenu /path/to/menu.xml")
-			print("\tOr just obmenu, to edit the default file")
-			return
-
-		if not os.path.isfile(self.menu_path):
-			print("Error: \"%s\" not found" % self.menu_path)
-			return
-
-		self.unsaved_menu = False
-
-		# Load in memory the real xml menu
-		self.menu = obxml.ObMenu()
-		self.menu.loadMenu(self.menu_path)
-
 		self.builder = Gtk.Builder()
 		# Look for the data files!
 		if os.path.isfile("window.glade"):
@@ -516,6 +488,7 @@ class App:
 		elif os.path.isdir(os.path.expanduser("~/.local/share/obmenu")):
 			self.datapath = os.path.expanduser("~/.local/share/obmenu")
 		else:
+			# These will be untranslated, as things weren't installed correctly
 			print("ERROR: the data files were not found!")
 			print("       check that everything was installed all right")
 			sys.exit(1)
@@ -590,6 +563,33 @@ class App:
 			"down_clicked": self.down,
 			"show_about": self.show_about,
 			"exit": self.quit })
+
+		if len(sys.argv) == 2:
+			# must be a path to a menu
+			self.menu_path = sys.argv[1]
+		elif len(sys.argv) == 1:
+			if os.getenv("WAYLAND_DISPLAY"):
+				app = "waybox"
+			else:
+				app = "openbox"
+			if os.getenv("XDG_CONFIG_HOME"):
+				self.menu_path = os.getenv("XDG_CONFIG_HOME") + "/" + app + "/menu.xml"
+			else:
+				self.menu_path = os.getenv("HOME") + "/.config/" + app + "/menu.xml"
+		else:
+			print(gettext.gettext("Error: Wrong number of arguments"))
+			print(gettext.gettext("Usage: obmenu /path/to/menu.xml"))
+			print(gettext.gettext("\tOr just obmenu, to edit the default file"))
+			return
+
+		if not os.path.isfile(self.menu_path):
+			print(gettext.gettext("Error: \"%s\" not found") % self.menu_path)
+			return
+		self.unsaved_menu = False
+
+		# Load in memory the real xml menu
+		self.menu = obxml.ObMenu()
+		self.menu.loadMenu(self.menu_path)
 
 		# Set the columns
 		self.treeview.set_headers_visible(True)
