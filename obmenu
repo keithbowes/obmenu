@@ -23,6 +23,8 @@ import gi, obxml, random, time, os, sys, gettext
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk, GObject
 
+from gettext import dgettext, dpgettext, gettext as _
+
 class App:
 	def reconfigureOpenbox(self):
 		# Waybox doesn't need reconfigured
@@ -90,8 +92,8 @@ class App:
 		else:
 			action = Gtk.FileChooserAction.SAVE
 		dlg = Gtk.FileChooserDialog(title=title, action=action)
-		dlg.add_button(gettext.dgettext(self.gtk_domain, "_OK"), Gtk.ResponseType.OK)
-		dlg.add_button(gettext.dgettext(self.gtk_domain, "_Cancel"), Gtk.ResponseType.CANCEL)
+		dlg.add_button(dgettext(self.gtk_domain, "_OK"), Gtk.ResponseType.OK)
+		dlg.add_button(dgettext(self.gtk_domain, "_Cancel"), Gtk.ResponseType.CANCEL)
 		dlg.set_default_response(1)
 		res = dlg.run()
 		flnm = dlg.get_filename()
@@ -101,20 +103,20 @@ class App:
 	#  New file clicked
 	def new(self, bt):
 		if self.sth_changed:
-			res = self.confirm(gettext.gettext("Changes in %s will be lost. Continue?") % (self.menu_path))
+			res = self.confirm(_("Changes in %s will be lost. Continue?") % (self.menu_path))
 			if not res: return
 		self.deleteTree()
 		self.menu.newMenu()
 		self.unsaved_menu = True
-		self.menu_path = gettext.gettext("Untitled")
+		self.menu_path = _("Untitled")
 		self._sth_changed(True)
 		self.clear_fields()
 
 	def open(self, bt):
 		if self.sth_changed:
-			res = self.confirm(gettext.gettext("Changes in %s will be lost. Continue?") % (self.menu_path))
+			res = self.confirm(_("Changes in %s will be lost. Continue?") % (self.menu_path))
 			if not res: return
-		path = self.ask_for_path(gettext.gettext("Open"), 0)
+		path = self.ask_for_path(_("Open"), 0)
 		if not path: return
 		self.menu_path = path
 		self.unsaved_menu = False
@@ -131,7 +133,7 @@ class App:
 	# save the menu
 	def save(self, bt):
 		if self.unsaved_menu:
-			path = self.ask_for_path(gettext.gettext("Save as..."), 1)
+			path = self.ask_for_path(_("Save as..."), 1)
 			if not path: return
 			self.menu_path = path
 			self.unsaved_menu = False
@@ -141,7 +143,7 @@ class App:
 
 	# save as...
 	def save_as(self, bt):
-		path = self.ask_for_path(gettext.gettext("Save as..."), 1)
+		path = self.ask_for_path(_("Save as..."), 1)
 		if not path: return
 		self.menu_path = path
 		self.unsaved_menu = False
@@ -152,7 +154,7 @@ class App:
 	# quit signal
 	def quit (self, bt, arg2):
 		if self.sth_changed:
-			res = self.confirm(gettext.gettext("There are unsaved changes. Exit anyway?"))
+			res = self.confirm(_("There are unsaved changes. Exit anyway?"))
 			if not res: return True
 		Gtk.main_quit()
 
@@ -255,7 +257,7 @@ class App:
 
 	# buton [...] clicked signal
 	def search_clicked(self, arg):
-		path = self.ask_for_path(gettext.gettext("Select File"), 0)
+		path = self.ask_for_path(_("Select File"), 0)
 		if path:
 			self.execute_entry.set_text(path)
 
@@ -319,10 +321,10 @@ class App:
 
 		nmid="%s-%d%d%d" % (menu, random.randint(0,99), time.gmtime()[4], time.gmtime()[5])
 
-		n_menu = self.treemodel.insert_before(parent, ite,(gettext.gettext("New Menu"), "menu", "", "", menu, nmid))
-		itm = self.treemodel.append(n_menu, (gettext.gettext("New Item"), "item", "Execute", gettext.gettext("command"), nmid, ""))
-		self.menu.createMenu(menu, gettext.gettext("New Menu"), nmid, n)
-		self.menu.createItem(nmid, gettext.gettext("New Item"), "Execute", gettext.gettext("command"))
+		n_menu = self.treemodel.insert_before(parent, ite,(_("New Menu"), "menu", "", "", menu, nmid))
+		itm = self.treemodel.append(n_menu, (_("New Item"), "item", "Execute", _("command"), nmid, ""))
+		self.menu.createMenu(menu, _("New Menu"), nmid, n)
+		self.menu.createItem(nmid, _("New Item"), "Execute", _("command"))
 
 		path = model.get_path(n_menu)
 		self.treeview.set_cursor(path, None, False)
@@ -341,8 +343,8 @@ class App:
 		n = model.get_path(ite)[-1]
 		parent = model.iter_parent(ite)
 
-		self.menu.createItem(menu, gettext.gettext("New Item"), "Execute", gettext.gettext("command"), n)
-		itm = self.treemodel.insert_before(parent, ite, (gettext.gettext("New Item"), 'item','Execute','command', menu, ""))
+		self.menu.createItem(menu, _("New Item"), "Execute", _("command"), n)
+		itm = self.treemodel.insert_before(parent, ite, (_("New Item"), 'item','Execute','command', menu, ""))
 
 		path = model.get_path(itm)
 		self.treeview.set_cursor(path, None, False)
@@ -402,8 +404,8 @@ class App:
 		parent = model.iter_parent(ite)
 		nmid="pipe-%d%d%d" % (random.randint(0,99), time.gmtime()[4], time.gmtime()[5])
 
-		self.menu.createPipe(menu, nmid, "Newpipe", gettext.gettext("command"), n)
-		itm = self.treemodel.insert_before(parent, ite, ("Newpipe", 'menu', 'Pipemenu',gettext.gettext('command'), menu, nmid))
+		self.menu.createPipe(menu, nmid, _("New Pipe"), _("command"), n)
+		itm = self.treemodel.insert_before(parent, ite, (_("New Pipe"), 'menu', 'Pipemenu',_('command'), menu, nmid))
 
 		path = model.get_path(itm)
 		self.treeview.set_cursor(path, None, False)
@@ -509,27 +511,25 @@ class App:
 
 
 		# Translated widget labels
-		self.builder.get_object("menuitem1").set_label(gettext.dpgettext(self.gtk_domain, "Stock label", "_File"))
-		self.builder.get_object("new1").set_label(gettext.dpgettext(self.gtk_domain, "Stock label", "_New"))
-		self.builder.get_object("open1").set_label(gettext.dpgettext(self.gtk_domain, "Stock label", "_Open"))
-		self.builder.get_object("save1").set_label(gettext.dpgettext(self.gtk_domain, "Stock label", "_Save"))
-		self.builder.get_object("save_as1").set_label(gettext.dpgettext(self.gtk_domain, "Stock label", "Save _As"))
-		self.builder.get_object("quit1").set_label(gettext.dpgettext(self.gtk_domain, "Stock label", "_Quit"))
+		self.builder.get_object("menuitem1").set_label(dpgettext(self.gtk_domain, "Stock label", "_File"))
+		self.builder.get_object("new1").set_label(dpgettext(self.gtk_domain, "Stock label", "_New"))
+		self.builder.get_object("open1").set_label(dpgettext(self.gtk_domain, "Stock label", "_Open"))
+		self.builder.get_object("save1").set_label(dpgettext(self.gtk_domain, "Stock label", "_Save"))
+		self.builder.get_object("save_as1").set_label(dpgettext(self.gtk_domain, "Stock label", "Save _As"))
+		self.builder.get_object("quit1").set_label(dpgettext(self.gtk_domain, "Stock label", "_Quit"))
 
-		self.builder.get_object("menuitem2").set_label(gettext.dpgettext(self.gtk_domain, "Stock label", "_Edit"))
-		self.builder.get_object("move_up1").set_label(gettext.dpgettext(self.gtk_domain, "Stock label, navigation", "_Up"))
-		self.builder.get_object("move_down1").set_label(gettext.dpgettext(self.gtk_domain, "Stock label, navigation", "_Down"))
-		self.builder.get_object("delete2").set_label(gettext.dpgettext(self.gtk_domain, "Stock label", "_Delete"))
+		self.builder.get_object("menuitem2").set_label(dpgettext(self.gtk_domain, "Stock label", "_Edit"))
+		self.builder.get_object("delete2").set_label(dpgettext(self.gtk_domain, "Stock label", "_Delete"))
 
-		self.builder.get_object("menu5").set_label("_" + gettext.dgettext(self.gtk_domain, "Menu"))
+		self.builder.get_object("menu5").set_label("_" + dgettext(self.gtk_domain, "Menu"))
 
-		self.builder.get_object("menuitem4").set_label(gettext.dpgettext(self.gtk_domain, "Stock label", "_Help"))
-		self.builder.get_object("about1").set_label(gettext.dpgettext(self.gtk_domain, "Stock label", "_About"))
+		self.builder.get_object("menuitem4").set_label(dpgettext(self.gtk_domain, "Stock label", "_Help"))
+		self.builder.get_object("about1").set_label(dpgettext(self.gtk_domain, "Stock label", "_About"))
 
-		self.builder.get_object("label1").set_label("_" + gettext.dgettext(self.gtk_domain, "Label"))
-		self.builder.get_object("label4").set_label("_" + gettext.dgettext(self.gtk_domain, "ID"))
-		self.builder.get_object("label2").set_label("_" + gettext.dgettext(self.gtk_domain, "Action"))
-		self.builder.get_object("label3").set_label(gettext.dpgettext(self.gtk_domain, "Stock label", "_Execute"))
+		self.builder.get_object("label1").set_label("_" + dgettext(self.gtk_domain, "Label"))
+		self.builder.get_object("label4").set_label("_" + dgettext(self.gtk_domain, "ID"))
+		self.builder.get_object("label2").set_label("_" + dgettext(self.gtk_domain, "Action"))
+		self.builder.get_object("label3").set_label(dpgettext(self.gtk_domain, "Stock label", "_Execute"))
 
 
 		# treemodel.iter(label, type, [action], [execute], parent, [menu-id])
@@ -577,13 +577,13 @@ class App:
 			else:
 				self.menu_path = os.getenv("HOME") + "/.config/" + app + "/menu.xml"
 		else:
-			print(gettext.gettext("Error: Wrong number of arguments"))
-			print(gettext.gettext("Usage: obmenu /path/to/menu.xml"))
-			print(gettext.gettext("\tOr just obmenu, to edit the default file"))
+			print(_("Error: Wrong number of arguments"))
+			print(_("Usage: obmenu /path/to/menu.xml"))
+			print(_("\tOr just obmenu, to edit the default file"))
 			return
 
 		if not os.path.isfile(self.menu_path):
-			print(gettext.gettext("Error: \"%s\" not found") % self.menu_path)
+			print(_("Error: \"%s\" not found") % self.menu_path)
 			return
 		self.unsaved_menu = False
 
@@ -595,22 +595,22 @@ class App:
 		self.treeview.set_headers_visible(True)
 
 		renderer=Gtk.CellRendererText()
-		column=Gtk.TreeViewColumn(gettext.dgettext(self.gtk_domain, "Label"),renderer, text=0)
+		column=Gtk.TreeViewColumn(dgettext(self.gtk_domain, "Label"),renderer, text=0)
 		column.set_resizable(True)
 		self.treeview.append_column(column)
 
 		renderer=Gtk.CellRendererText()
-		column=Gtk.TreeViewColumn(gettext.dgettext(self.gtk_domain, "Type"),renderer,text=1)
+		column=Gtk.TreeViewColumn(dgettext(self.gtk_domain, "Type"),renderer,text=1)
 		column.set_resizable(True)
 		self.treeview.append_column(column)
 
 		renderer=Gtk.CellRendererText()
-		column=Gtk.TreeViewColumn(gettext.dgettext(self.gtk_domain, "Action"),renderer,text=2)
+		column=Gtk.TreeViewColumn(dgettext(self.gtk_domain, "Action"),renderer,text=2)
 		column.set_resizable(True)
 		self.treeview.append_column(column)
 
 		renderer=Gtk.CellRendererText()
-		column=Gtk.TreeViewColumn(gettext.gettext("Execute"),renderer,text=3)
+		column=Gtk.TreeViewColumn(_("Execute"),renderer,text=3)
 		column.set_resizable(True)
 		self.treeview.append_column(column)
 
