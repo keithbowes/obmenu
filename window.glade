@@ -251,7 +251,7 @@
             <object class="GtkToolButton" id="toolbutton13">
               <property name="visible">True</property>
               <property name="tooltip-text" translatable="yes">Save the menu</property>
-              <property name="stock_id">gtk-save</property>
+              <property name="icon-name">document-save</property>
               <property name="visible_horizontal">True</property>
               <property name="visible_vertical">True</property>
               <property name="is_important">False</property>
@@ -281,7 +281,7 @@
               <property name="visible">True</property>
               <property name="label" translatable="yes">New menu</property>
               <property name="use_underline">True</property>
-              <property name="stock_id">gtk-index</property>
+              <property name="icon-name">gtk-index</property>
               <property name="visible_horizontal">True</property>
               <property name="visible_vertical">True</property>
               <property name="is_important">True</property>
@@ -298,7 +298,7 @@
               <property name="visible">True</property>
               <property name="label" translatable="yes">New item</property>
               <property name="use_underline">True</property>
-              <property name="stock_id">gtk-execute</property>
+              <property name="icon-name">gtk-execute</property>
               <property name="visible_horizontal">True</property>
               <property name="visible_vertical">True</property>
               <property name="is_important">True</property>
@@ -315,7 +315,7 @@
               <property name="visible">True</property>
               <property name="label" translatable="yes">New separator</property>
               <property name="use_underline">True</property>
-              <property name="stock_id">gtk-file</property>
+              <property name="icon-name">text-x-generic</property>
               <property name="visible_horizontal">True</property>
               <property name="visible_vertical">True</property>
               <property name="is_important">True</property>
@@ -344,7 +344,7 @@
             <object class="GtkToolButton" id="toolbutton18">
               <property name="visible">True</property>
               <property name="tooltip-text" translatable="yes">Move up</property>
-              <property name="stock_id">gtk-go-up</property>
+              <property name="icon-name">go-up</property>
               <property name="visible_horizontal">True</property>
               <property name="visible_vertical">True</property>
               <property name="is_important">False</property>
@@ -360,7 +360,7 @@
             <object class="GtkToolButton" id="toolbutton19">
               <property name="visible">True</property>
               <property name="tooltip-text" translatable="yes">Move down</property>
-              <property name="stock_id">gtk-go-down</property>
+              <property name="icon-name">go-down</property>
               <property name="visible_horizontal">True</property>
               <property name="visible_vertical">True</property>
               <property name="is_important">False</property>
@@ -389,7 +389,7 @@
             <object class="GtkToolButton" id="toolbutton17">
               <property name="visible">True</property>
               <property name="tooltip-text" translatable="yes">Removes a menu or an item</property>
-              <property name="stock_id">gtk-remove</property>
+              <property name="icon-name">remove</property>
               <property name="visible_horizontal">True</property>
               <property name="visible_vertical">True</property>
               <property name="is_important">False</property>

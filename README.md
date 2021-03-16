@@ -36,12 +36,12 @@ Type this command in a shell:
 
 - Waybox/GTK 3/Python 3 support
 - Automatically reconfigures Openbox
-- Create and modify pipemenus. Pipemenus are a way of creating menus
-  dynamically. For more info, visit openbox documentation.
+- Create and modify pipe menus. Pipe menus are a way of creating menus
+  dynamically. For more info, visit Openbox documentation.
 - The same with "link" menus, which are references to other menus by their IDs.
   That way you can reproduce a menu in several places of your file.
-- Lot's of GUI enhancements
-- Multifile support (New, open, save, ..)
+- Lots of GUI enhancements
+- Multi-file support (New, Open, Save, ...)
 
 ## CREDITS
 
