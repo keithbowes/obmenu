@@ -1,4 +1,4 @@
-# OBMENU 1.0
+# OBMENU 1.1
 
 Obmenu is a menu editor for Openbox and Waybox, written in Python. It allows
 you to edit menus in an intuitive way.
