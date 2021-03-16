@@ -11,13 +11,8 @@ update it for Python 3/GTK 3 and to allow it to work with
 
 ## REQUIREMENTS
 
-  [Python](http://python.org) >= 2.7,
+  [Python](http://python.org) >= 3.8,
   [PyGObject](https://pygobject.readthedocs.io)
-
-  The main target is the currently supported versions of Python.  Support for
-  older versions is purely incidental.  Please don't report issues affecting
-  only EOL versions of Python (e.g. Python 2.x not being able to save menus
-  with Unicode characters).
 
   You no longer need pygtk and python-glade, required by the original obmenu.
 
