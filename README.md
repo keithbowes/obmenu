@@ -5,14 +5,15 @@ you to edit menus in an intuitive way.
 
 ## FORK
 
-This is a fork of the original [obmenu](http://obmenu.sourceforge.net/) to
+This is a fork of [the original obmenu](http://obmenu.sourceforge.net/) to
 update it for Python 3/GTK 3 and to allow it to work with
 [Waybox](https://github.com/wizbright/waybox).
 
 ## REQUIREMENTS
 
-  [Python](http://python.org) >= 3.8,
-  [PyGObject](https://pygobject.readthedocs.io)
+  [Python](http://python.org),
+  [PyGObject](https://pygobject.readthedocs.io),
+  [GTK+](http://gtk.org/) >= 3.0
 
   You no longer need pygtk and python-glade, required by the original obmenu.
 
@@ -24,7 +25,12 @@ Type this command in a shell:
 
 ## CHANGELOG
 
-- Waybox/GTK 3/Python 3 support
+### 1.0.1
+
+- Waybox/GTK+ 3/Python 3 support.
+
+### 1.0
+
 - Automatically reconfigures Openbox
 - Create and modify pipe menus. Pipe menus are a way of creating menus
   dynamically. For more info, visit Openbox documentation.

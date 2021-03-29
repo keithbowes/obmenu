@@ -1,0 +1,294 @@
+# German translations for obMenu package.
+# Copyright (C) 2021 THE obMenu'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the obMenu package.
+# Keith Bowes <keith@localhost>, 2021.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: obMenu 1.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-03-29 09:36-0400\n"
+"PO-Revision-Date: 2021-03-29 09:46-0400\n"
+"Last-Translator: Keith Bowes <keith@localhost>\n"
+"Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../obmenu:95
+msgid "_OK"
+msgstr "_OK"
+
+#: ../obmenu:96
+msgid "_Cancel"
+msgstr "_Abbrechen"
+
+#: ../obmenu:106 ../obmenu:117
+#, c-format
+msgid "Changes in %s will be lost. Continue?"
+msgstr "Änderungen in %s wird verloren werden. Fortsetzen?"
+
+#: ../obmenu:111
+msgid "Untitled"
+msgstr "Titellos"
+
+#: ../obmenu:119
+msgid "Open"
+msgstr "Öffnen"
+
+#: ../obmenu:136 ../obmenu:146
+msgid "Save as..."
+msgstr "Speichern wie"
+
+#: ../obmenu:157
+msgid "There are unsaved changes. Exit anyway?"
+msgstr "Es gibt ungespeicherte Änderungen. Trotzdem beenden?"
+
+#: ../obmenu:260
+msgid "Select File"
+msgstr "Datei wählen"
+
+#: ../obmenu:324 ../obmenu:326
+msgid "New Menu"
+msgstr "Neus Menü"
+
+#: ../obmenu:325 ../obmenu:327 ../obmenu:346 ../obmenu:347
+msgid "New Item"
+msgstr "Neuer Eintrag"
+
+#: ../obmenu:325 ../obmenu:327 ../obmenu:346 ../obmenu:407
+msgid "command"
+msgstr "Befehl"
+
+#: ../obmenu:407 ../obmenu:408
+msgid "New Pipe"
+msgstr "Neuer Rohr"
+
+#: ../obmenu:559
+msgid "Error: Wrong number of arguments"
+msgstr "Fehler: Falsche Zahl Argumente"
+
+#: ../obmenu:560
+msgid "Usage: obmenu /path/to/menu.xml"
+msgstr "Benutzung: obmenu /Pfad/zu/menu.xml"
+
+#: ../obmenu:561
+msgid "\tOr just obmenu, to edit the default file"
+msgstr "\tOder nur obmenu, um die Standarddatei zu bearbeiten"
+
+#: ../obmenu:565
+#, c-format
+msgid "Error: \"%s\" not found"
+msgstr "Fehler: \"%s\" nicht gefunden"
+
+#: ../obmenu:577
+msgid "Label"
+msgstr "Etikette"
+
+#: ../obmenu:582
+msgid "Type"
+msgstr "Art"
+
+#: ../obmenu:587
+msgid "Action"
+msgstr "Aktion"
+
+#: ../obmenu:592
+msgid "Execute"
+msgstr "Ausführen"
+
+#: ../window.glade:6 ../window.glade:698
+msgid "Openbox Menu Editor"
+msgstr "Openbox Menueditor"
+
+#: ../window.glade:38
+msgctxt "Stock label"
+msgid "_File"
+msgstr "_Datei"
+
+#: ../window.glade:47
+msgctxt "Stock label"
+msgid "_New"
+msgstr "_Neu"
+
+#: ../window.glade:57
+msgctxt "Stock label"
+msgid "_Open"
+msgstr "_Öffnen"
+
+#: ../window.glade:67
+msgctxt "Stock label"
+msgid "_Save"
+msgstr "_Speichern"
+
+#: ../window.glade:77
+msgctxt "Stock label"
+msgid "Save _As"
+msgstr "Speichern _wie"
+
+#: ../window.glade:93
+msgctxt "Stock label"
+msgid "_Quit"
+msgstr "_Beenden"
+
+#: ../window.glade:107
+msgctxt "Stock label"
+msgid "_Edit"
+msgstr "_Bearbeiten"
+
+#: ../window.glade:116
+msgid "Move _up"
+msgstr "_Oben bewegen"
+
+#: ../window.glade:126
+msgid "Move dow_n"
+msgstr "_Unten bewegen"
+
+#: ../window.glade:143
+msgid "_Add"
+msgstr "_Zusätzen"
+
+#: ../window.glade:152
+msgid "_Menu"
+msgstr "_Menü"
+
+#: ../window.glade:162
+msgid "_Item"
+msgstr "_Eintrag"
+
+#: ../window.glade:172
+msgid "_Separator"
+msgstr "_Separator"
+
+#: ../window.glade:182
+msgid "_Pipe Menu"
+msgstr "_Roarmenü"
+
+#: ../window.glade:192
+msgid "_Link"
+msgstr "_Link"
+
+#: ../window.glade:207
+msgctxt "Stock label"
+msgid "_Delete"
+msgstr "_Entfernen"
+
+#: ../window.glade:219
+msgctxt "Stock label"
+msgid "_Help"
+msgstr "_Hilfe"
+
+#: ../window.glade:228
+msgctxt "Stock label"
+msgid "_About"
+msgstr "_Über"
+
+#: ../window.glade:256
+msgid "Save the menu"
+msgstr "Das Menü speichern"
+
+#: ../window.glade:285
+msgid "New menu"
+msgstr "Neus Menü"
+
+#: ../window.glade:302
+msgid "New item"
+msgstr "Neuer Eintrag"
+
+#: ../window.glade:319
+msgid "New separator"
+msgstr "Neuer Separator"
+
+#: ../window.glade:349
+msgid "Move up"
+msgstr "Oben wegen"
+
+#: ../window.glade:365
+msgid "Move down"
+msgstr "Unten wegen"
+
+#: ../window.glade:394
+msgid "Removes a menu or an item"
+msgstr "Entfernt ein Menü oder einen Eintrag"
+
+#: ../window.glade:466
+msgid "_Label"
+msgstr "_Etikette"
+
+#: ../window.glade:491
+msgid "_ID"
+msgstr "_Auszeichnung"
+
+#: ../window.glade:516
+msgid "_Action"
+msgstr "_Aktion"
+
+#: ../window.glade:541
+msgctxt "Stock label"
+msgid "_Execute"
+msgstr "_Ausführen"
+
+#: ../window.glade:658
+msgid "..."
+msgstr "..."
+
+#: ../window.glade:699
+msgid ""
+"Thank you for using this sofware.\n"
+"     Send any feedback to m.kolme@gmail.com"
+msgstr ""
+"Danke für diese Software benutzen.\n"
+"     Nachrichten an m.kolme@gmail.com schicken"
+
+#: ../window.glade:701
+msgid ""
+"    obmenu: Openbox Menu Editor\n"
+"        Copyright (C) 2005-2006  Manuel Colmenero\n"
+"\n"
+"        This program is free software; you can redistribute it and/or "
+"modify\n"
+"        it under the terms of the GNU General Public License as published "
+"by\n"
+"        the Free Software Foundation; either version 2 of the License, or\n"
+"        (at your option) any later version.\n"
+"\n"
+"        This program is distributed in the hope that it will be useful,\n"
+"        but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+"        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
+"        GNU General Public License for more details.\n"
+"\n"
+"        You should have received a copy of the GNU General Public License\n"
+"        along with this program; if not, write to the Free Software\n"
+"        Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  "
+"02111-1307  USA"
+msgstr ""
+"    obMenu: Openbox Menüeditor\n"
+"        Copyright (C) 2005-2006  Manuel Colmenero\n"
+"\n"
+"        Dieses Programm ist freie Software. Sie können es unter den\n"
+"        Bedingungen der GNU General Public License, wie von der Free\n"
+"        Software Foundation veröffentlicht, weitergeben und/oder\n"
+"        modifizieren, entwedergemäß Version 2 der Lizenz oder (nach Ihrer\n"
+"        Option) jeder späteren Version.\n"
+"\n"
+"        Die Veröffentlichung dieses Programms erfolgt in der Hoffnung, daß\n"
+"        es Ihnen von Nutzen sein wird, aber OHNE IRGENDEINE GARANTIE, sogar\n"
+"        ohne die implizite Garantie der MARKTREIFE oder der VERWENDBARKEIT\n"
+"        FÜR EINEN BESTIMMTEN ZWECK.\n"
+"        Details finden Sie in der GNU General Public License.\n"
+"\n"
+"       Sie sollten ein Exemplar der GNU General Public License zusammen mit\n"
+"       diesem Programm erhalten haben. Falls nicht, schreiben Sie an die\n"
+"       Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston,\n"
+"       MA 02110, USA."
+
+#: ../window.glade:718
+msgid "Website"
+msgstr "Website"
+
+#. TRANSLATORS: Replace this string with your names, one name per line.
+#: ../window.glade:720
+msgid "translator-credits"
+msgstr "translator-credits"

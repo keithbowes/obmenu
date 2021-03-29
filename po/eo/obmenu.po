@@ -1,0 +1,295 @@
+# Esperanto translations for obmenu-py package.
+# Copyright (C) 2021 THE obmenu-py'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the obMenu package.
+# Keith Bowes <keith@localhost>, 2021.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: obMenu 1.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-03-29 09:36-0400\n"
+"PO-Revision-Date: 2021-03-29 09:45-0400\n"
+"Last-Translator: Keith Bowes <keith@localhost>\n"
+"Language-Team: Esperanto <translation-team-eo@lists.sourceforge.net>\n"
+"Language: eo\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../obmenu:95
+msgid "_OK"
+msgstr "_Bone"
+
+#: ../obmenu:96
+msgid "_Cancel"
+msgstr "_Nuligi"
+
+#: ../obmenu:106 ../obmenu:117
+#, c-format
+msgid "Changes in %s will be lost. Continue?"
+msgstr "Ŝanĝoj de %s perdiĝos. Ĉu daŭrigi?"
+
+#: ../obmenu:111
+msgid "Untitled"
+msgstr "Sennoma"
+
+#: ../obmenu:119
+msgid "Open"
+msgstr "Malfermi"
+
+#: ../obmenu:136 ../obmenu:146
+msgid "Save as..."
+msgstr "Konservi kiel..."
+
+#: ../obmenu:157
+msgid "There are unsaved changes. Exit anyway?"
+msgstr "Ekzistas nekonservitajn ŝanĝojn. Ĉu senkonsidere fini?"
+
+#: ../obmenu:260
+msgid "Select File"
+msgstr "Elekti dosieron"
+
+#: ../obmenu:324 ../obmenu:326
+msgid "New Menu"
+msgstr "Nova menuo"
+
+#: ../obmenu:325 ../obmenu:327 ../obmenu:346 ../obmenu:347
+msgid "New Item"
+msgstr "Nova ero"
+
+#: ../obmenu:325 ../obmenu:327 ../obmenu:346 ../obmenu:407
+msgid "command"
+msgstr "komando"
+
+#: ../obmenu:407 ../obmenu:408
+msgid "New Pipe"
+msgstr "Nova tubo"
+
+#: ../obmenu:559
+msgid "Error: Wrong number of arguments"
+msgstr "Eraro: Malĝusta nombro da argumentoj"
+
+#: ../obmenu:560
+msgid "Usage: obmenu /path/to/menu.xml"
+msgstr "Uzo: obmenu /vojo/al/menu.xml"
+
+#: ../obmenu:561
+msgid "\tOr just obmenu, to edit the default file"
+msgstr "\tAŭ nur obmenu, por redakti la aprioran dosieron"
+
+#: ../obmenu:565
+#, c-format
+msgid "Error: \"%s\" not found"
+msgstr "Eraro: \"%s\" ne trovita"
+
+#: ../obmenu:577
+msgid "Label"
+msgstr "Etikedo"
+
+#: ../obmenu:582
+msgid "Type"
+msgstr "Tipo"
+
+#: ../obmenu:587
+msgid "Action"
+msgstr "Ago"
+
+#: ../obmenu:592
+msgid "Execute"
+msgstr "Plenumi"
+
+#: ../window.glade:6 ../window.glade:698
+msgid "Openbox Menu Editor"
+msgstr "Menuo-redaktilo por Openbox"
+
+#: ../window.glade:38
+msgctxt "Stock label"
+msgid "_File"
+msgstr "_Dosiero"
+
+#: ../window.glade:47
+msgctxt "Stock label"
+msgid "_New"
+msgstr "_Nova"
+
+#: ../window.glade:57
+msgctxt "Stock label"
+msgid "_Open"
+msgstr "_Malfermi"
+
+#: ../window.glade:67
+msgctxt "Stock label"
+msgid "_Save"
+msgstr "_Konservi"
+
+#: ../window.glade:77
+msgctxt "Stock label"
+msgid "Save _As"
+msgstr "Konservi _kiel"
+
+#: ../window.glade:93
+msgctxt "Stock label"
+msgid "_Quit"
+msgstr "_Fini"
+
+#: ../window.glade:107
+msgctxt "Stock label"
+msgid "_Edit"
+msgstr "_Redakti"
+
+#: ../window.glade:116
+msgid "Move _up"
+msgstr "Movi _supren"
+
+#: ../window.glade:126
+msgid "Move dow_n"
+msgstr "Movi _malsupren"
+
+#: ../window.glade:143
+msgid "_Add"
+msgstr "_Aldoni"
+
+#: ../window.glade:152
+msgid "_Menu"
+msgstr "_Menuo"
+
+#: ../window.glade:162
+msgid "_Item"
+msgstr "_Eron"
+
+#: ../window.glade:172
+msgid "_Separator"
+msgstr "A_partigilon"
+
+#: ../window.glade:182
+msgid "_Pipe Menu"
+msgstr "_Tubo-menuon"
+
+#: ../window.glade:192
+msgid "_Link"
+msgstr "_Ligilon"
+
+#: ../window.glade:207
+msgctxt "Stock label"
+msgid "_Delete"
+msgstr "_Forigi"
+
+#: ../window.glade:219
+msgctxt "Stock label"
+msgid "_Help"
+msgstr "_Helpo"
+
+#: ../window.glade:228
+msgctxt "Stock label"
+msgid "_About"
+msgstr "_Pri"
+
+#: ../window.glade:256
+msgid "Save the menu"
+msgstr "Konservi la menuon"
+
+#: ../window.glade:285
+msgid "New menu"
+msgstr "Novan menuon"
+
+#: ../window.glade:302
+msgid "New item"
+msgstr "Novan eron"
+
+#: ../window.glade:319
+msgid "New separator"
+msgstr "Novan apartigilon"
+
+#: ../window.glade:349
+msgid "Move up"
+msgstr "Movi supren"
+
+#: ../window.glade:365
+msgid "Move down"
+msgstr "Movi malsupren"
+
+#: ../window.glade:394
+msgid "Removes a menu or an item"
+msgstr "Forigas menuon aŭ eron"
+
+#: ../window.glade:466
+msgid "_Label"
+msgstr "_Etikedo"
+
+#: ../window.glade:491
+msgid "_ID"
+msgstr "_Identigilo"
+
+#: ../window.glade:516
+msgid "_Action"
+msgstr "_Ago"
+
+#: ../window.glade:541
+msgctxt "Stock label"
+msgid "_Execute"
+msgstr "_Plenumi"
+
+#: ../window.glade:658
+msgid "..."
+msgstr "..."
+
+#: ../window.glade:699
+msgid ""
+"Thank you for using this sofware.\n"
+"     Send any feedback to m.kolme@gmail.com"
+msgstr ""
+"Dankon pro la uzo de ĉi tiu programo.\n"
+"    Sendu komentojn al mi ĉe m.kolme@gmail.com"
+
+#: ../window.glade:701
+msgid ""
+"    obmenu: Openbox Menu Editor\n"
+"        Copyright (C) 2005-2006  Manuel Colmenero\n"
+"\n"
+"        This program is free software; you can redistribute it and/or "
+"modify\n"
+"        it under the terms of the GNU General Public License as published "
+"by\n"
+"        the Free Software Foundation; either version 2 of the License, or\n"
+"        (at your option) any later version.\n"
+"\n"
+"        This program is distributed in the hope that it will be useful,\n"
+"        but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+"        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
+"        GNU General Public License for more details.\n"
+"\n"
+"        You should have received a copy of the GNU General Public License\n"
+"        along with this program; if not, write to the Free Software\n"
+"        Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  "
+"02111-1307  USA"
+msgstr ""
+"   obmenu: Menuo-redaktilo por Openbox\n"
+"       Kopirajto (C) 2005-2006  Manuel Colmenero\n"
+"\n"
+"       Ĉi tiu verko estas libera programo; vi povas ĝin plue disdoni\n"
+"       kaj/aŭ modifi laŭ la kondiĉoj de la Ĝenerala Publika Permesilo de\n"
+"       GNU eldonita de «Free Software Foundation», laŭ la eldono 2 de tiu\n"
+"       Permesilo aŭ se vi preferas, ajna posta eldono.\n"
+"\n"
+"       Ni  disdonas ĉi tiun programon esperante ke ĝi estos utila, tamen\n"
+"       SEN IA AJN GARANTIO, i.a. sen la implica garantio pri\n"
+"       SURMERKATIGEBLO aŭ TAŬGECO POR IU KONKRETA CELO. Pliajn detalojn\n"
+"       vidu en la Ĝenerala Publika Permesilo de GNU.\n"
+"\n"
+"        Ekzemplero de la Ĝenerala Publika Permesilo de GNU devas esti\n"
+"        liverita al vi kun ĉi tiu programo; se vi ĝin ne ricevis, turnu\n"
+"        vin al:\n"
+"        Free Software Foundation, Inc.,\n"
+"                   59 Temple Place, Suite 330,\n"
+"                   Boston, MA 02111-1307\n"
+"                   USA"
+
+#: ../window.glade:718
+msgid "Website"
+msgstr "TTT-ejo"
+
+#. TRANSLATORS: Replace this string with your names, one name per line.
+#: ../window.glade:720
+msgid "translator-credits"
+msgstr "translator-credits"

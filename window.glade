@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<interface>
+<interface domain="obmenu">
 
 <object class="GtkWindow" id="window1">
   <property name="visible">True</property>
@@ -27,7 +27,7 @@
       <property name="orientation">GTK_ORIENTATION_VERTICAL</property>
       <property name="spacing">0</property>
 
-
+      <interface domain="gtk30">
       <child>
         <object class="GtkMenuBar" id="menubar1">
           <property name="visible">True</property>
@@ -35,7 +35,7 @@
           <child>
             <object class="GtkMenuItem" id="menuitem1">
               <property name="visible">True</property>
-              <property name="label" translatable="yes">_File</property>
+              <property name="label" translatable="yes" context="Stock label">_File</property>
               <property name="use_underline">True</property>
 
               <child type="submenu">
@@ -44,7 +44,7 @@
                   <child>
                     <object class="GtkMenuItem" id="new1">
                       <property name="visible">True</property>
-                      <property name="label">_New</property>
+                      <property name="label" translatable="yes" context="Stock label">_New</property>
                       <property name="use_underline">True</property>
                       <signal name="activate" handler="new_clicked"/>
                       <accelerator key="n" modifiers="GDK_CONTROL_MASK" signal="activate"/>
@@ -54,7 +54,7 @@
                   <child>
                     <object class="GtkMenuItem" id="open1">
                       <property name="visible">True</property>
-                      <property name="label">_Open</property>
+                      <property name="label" translatable="yes" context="Stock label">_Open</property>
                       <property name="use_underline">True</property>
                       <signal name="activate" handler="open_clicked"/>
                       <accelerator key="o" modifiers="GDK_CONTROL_MASK" signal="activate"/>
@@ -64,7 +64,7 @@
                   <child>
                     <object class="GtkMenuItem" id="save1">
                       <property name="visible">True</property>
-                      <property name="label">_Save</property>
+                      <property name="label" translatable="yes" context="Stock label">_Save</property>
                       <property name="use_underline">True</property>
                       <signal name="activate" handler="save_clicked"/>
                       <accelerator key="s" modifiers="GDK_CONTROL_MASK" signal="activate"/>
@@ -74,7 +74,7 @@
                   <child>
                     <object class="GtkMenuItem" id="save_as1">
                       <property name="visible">True</property>
-                      <property name="label">_Save As</property>
+                      <property name="label" translatable="yes" context="Stock label">Save _As</property>
                       <property name="use_underline">True</property>
                       <signal name="activate" handler="save_as_clicked"/>
                       <accelerator key="s" modifiers="GDK_CONTROL_MASK|GDK_SHIFT_MASK" signal="activate"/>
@@ -90,7 +90,7 @@
                   <child>
                     <object class="GtkMenuItem" id="quit1">
                       <property name="visible">True</property>
-                      <property name="label">_Quit</property>
+                      <property name="label" translatable="yes" context="Stock label">_Quit</property>
                       <property name="use_underline">True</property>
                       <signal name="activate" handler="mnu_quit"/>
                       <accelerator key="q" modifiers="GDK_CONTROL_MASK" signal="activate"/>
@@ -104,7 +104,7 @@
           <child>
             <object class="GtkMenuItem" id="menuitem2">
               <property name="visible">True</property>
-              <property name="label" translatable="yes">_Edit</property>
+              <property name="label" translatable="yes" context="Stock label">_Edit</property>
               <property name="use_underline">True</property>
 
               <child type="submenu">
@@ -204,7 +204,7 @@
                     <object class="GtkMenuItem" id="delete2">
                       <property name="visible">True</property>
                       <property name="use_underline">True</property>
-                      <property name="label">_Delete</property>
+                      <property name="label" translatable="yes" context="Stock label">_Delete</property>
                       <signal name="activate" handler="mnu_remove"/>
                     </object>
                   </child>
@@ -216,7 +216,7 @@
           <child>
             <object class="GtkMenuItem" id="menuitem4">
               <property name="visible">True</property>
-              <property name="label" translatable="yes">_Help</property>
+              <property name="label" translatable="yes" context="Stock label">_Help</property>
               <property name="use_underline">True</property>
 
               <child type="submenu">
@@ -225,7 +225,7 @@
                   <child>
                     <object class="GtkMenuItem" id="about1">
                       <property name="visible">True</property>
-                      <property name="label" translatable="yes">_About</property>
+                      <property name="label" translatable="yes" context="Stock label">_About</property>
                       <property name="use_underline">True</property>
                       <signal name="activate" handler="show_about"/>
                     </object>
@@ -241,6 +241,7 @@
           <property name="fill">False</property>
         </packing>
       </child>
+    </interface>
 
       <child>
         <object class="GtkToolbar" id="toolbar1">
@@ -451,6 +452,7 @@
             </packing>
           </child>
 
+          <interface domain="gtk30">
           <child>
             <object class="GtkGrid" id="table1">
               <property name="visible">True</property>
@@ -536,7 +538,7 @@
               <child>
                 <object class="GtkLabel" id="label3">
                   <property name="visible">True</property>
-                  <property name="label" translatable="yes">_Execute</property>
+                  <property name="label" translatable="yes" context="Stock label">_Execute</property>
                   <property name="use_underline">True</property>
                   <property name="mnemonic-widget">entry2</property>
                   <property name="use_markup">False</property>
@@ -679,6 +681,7 @@
               <property name="fill">True</property>
             </packing>
           </child>
+        </interface>
         </object>
         <packing>
           <property name="padding">0</property>
@@ -689,5 +692,33 @@
     </object>
   </child>
 </object>
+    <object class="GtkAboutDialog" id="aboutdialog">
+      <property name="visible">False</property>
+      <property name="destroy_with_parent">True</property>
+      <property name="name" translatable="yes">Openbox Menu Editor</property>
+      <property name="comments" translatable="yes">Thank you for using this sofware.
+     Send any feedback to m.kolme@gmail.com</property>
+      <property name="license" translatable="yes">    obmenu: Openbox Menu Editor
+        Copyright (C) 2005-2006  Manuel Colmenero
+
+        This program is free software; you can redistribute it and/or modify
+        it under the terms of the GNU General Public License as published by
+        the Free Software Foundation; either version 2 of the License, or
+        (at your option) any later version.
+
+        This program is distributed in the hope that it will be useful,
+        but WITHOUT ANY WARRANTY; without even the implied warranty of
+        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+        GNU General Public License for more details.
+
+        You should have received a copy of the GNU General Public License
+        along with this program; if not, write to the Free Software
+        Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA</property>
+      <property name="website">http://obmenu.sourceforge.net/</property>
+      <property name="website_label" translatable="yes">Website</property>
+      <property name="authors">Manuel Colmenero &lt;m.kolme@gmail.com&gt;</property>
+      <property name="translator_credits" translatable="yes" comments="TRANSLATORS: Replace this string with your names, one name per line.">translator-credits</property>
+      <property name="logo">icons/mnu48.png</property>
+    </object>
 
 </interface>

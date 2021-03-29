@@ -23,7 +23,7 @@ import gi, obxml, random, time, os, sys, gettext
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk, GObject
 
-from gettext import dgettext, dpgettext, gettext as _
+from gettext import dgettext, gettext as _
 
 class App:
 	def reconfigureOpenbox(self):
@@ -255,7 +255,7 @@ class App:
 			self.menu.setMenuExecute(menu, mid, ex)
 		model.set(ite, 3, ex)
 
-	# buton [...] clicked signal
+	# button [...] clicked signal
 	def search_clicked(self, arg):
 		path = self.ask_for_path(_("Select File"), 0)
 		if path:
@@ -470,7 +470,8 @@ class App:
 			self.remove(None)
 
 	def show_about(self, args):
-		Gtk.Builder().add_from_file(self.datapath + "/about.glade")
+		aboutdialog = self.builder.get_object("aboutdialog")
+		aboutdialog.show()
 
 	# application init
 	def init(self):
@@ -496,8 +497,8 @@ class App:
 			sys.exit(1)
 
 		gettext.textdomain("obmenu")
-		gettext.bindtextdomain("obmenu", os.path.abspath("%s/../%s" % (self.datapath, "locale")))
-		self.gtk_domain = "gtk30"
+		gettext.bindtextdomain("%s/share/locale" % sys.prefix)
+		self.gtk_domain = "gtk%d0" % Gtk.MAJOR_VERSION
 
 		# Set the basics for GTK
 		self.builder.add_from_file(self.datapath + "/window.glade")
@@ -508,28 +509,6 @@ class App:
 		self.execute_entry = self.builder.get_object("entry2")
 		self.execute_srch = self.builder.get_object("button1")
 		self.id_entry = self.builder.get_object("entry3")
-
-
-		# Translated widget labels
-		self.builder.get_object("menuitem1").set_label(dpgettext(self.gtk_domain, "Stock label", "_File"))
-		self.builder.get_object("new1").set_label(dpgettext(self.gtk_domain, "Stock label", "_New"))
-		self.builder.get_object("open1").set_label(dpgettext(self.gtk_domain, "Stock label", "_Open"))
-		self.builder.get_object("save1").set_label(dpgettext(self.gtk_domain, "Stock label", "_Save"))
-		self.builder.get_object("save_as1").set_label(dpgettext(self.gtk_domain, "Stock label", "Save _As"))
-		self.builder.get_object("quit1").set_label(dpgettext(self.gtk_domain, "Stock label", "_Quit"))
-
-		self.builder.get_object("menuitem2").set_label(dpgettext(self.gtk_domain, "Stock label", "_Edit"))
-		self.builder.get_object("delete2").set_label(dpgettext(self.gtk_domain, "Stock label", "_Delete"))
-
-		self.builder.get_object("menu5").set_label("_" + dgettext(self.gtk_domain, "Menu"))
-
-		self.builder.get_object("menuitem4").set_label(dpgettext(self.gtk_domain, "Stock label", "_Help"))
-		self.builder.get_object("about1").set_label(dpgettext(self.gtk_domain, "Stock label", "_About"))
-
-		self.builder.get_object("label1").set_label("_" + dgettext(self.gtk_domain, "Label"))
-		self.builder.get_object("label4").set_label("_" + dgettext(self.gtk_domain, "ID"))
-		self.builder.get_object("label2").set_label("_" + dgettext(self.gtk_domain, "Action"))
-		self.builder.get_object("label3").set_label(dpgettext(self.gtk_domain, "Stock label", "_Execute"))
 
 
 		# treemodel.iter(label, type, [action], [execute], parent, [menu-id])

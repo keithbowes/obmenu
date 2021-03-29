@@ -1,0 +1,273 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-03-29 09:36-0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../obmenu:95
+msgid "_OK"
+msgstr ""
+
+#: ../obmenu:96
+msgid "_Cancel"
+msgstr ""
+
+#: ../obmenu:106 ../obmenu:117
+#, c-format
+msgid "Changes in %s will be lost. Continue?"
+msgstr ""
+
+#: ../obmenu:111
+msgid "Untitled"
+msgstr ""
+
+#: ../obmenu:119
+msgid "Open"
+msgstr ""
+
+#: ../obmenu:136 ../obmenu:146
+msgid "Save as..."
+msgstr ""
+
+#: ../obmenu:157
+msgid "There are unsaved changes. Exit anyway?"
+msgstr ""
+
+#: ../obmenu:260
+msgid "Select File"
+msgstr ""
+
+#: ../obmenu:324 ../obmenu:326
+msgid "New Menu"
+msgstr ""
+
+#: ../obmenu:325 ../obmenu:327 ../obmenu:346 ../obmenu:347
+msgid "New Item"
+msgstr ""
+
+#: ../obmenu:325 ../obmenu:327 ../obmenu:346 ../obmenu:407
+msgid "command"
+msgstr ""
+
+#: ../obmenu:407 ../obmenu:408
+msgid "New Pipe"
+msgstr ""
+
+#: ../obmenu:559
+msgid "Error: Wrong number of arguments"
+msgstr ""
+
+#: ../obmenu:560
+msgid "Usage: obmenu /path/to/menu.xml"
+msgstr ""
+
+#: ../obmenu:561
+msgid "\tOr just obmenu, to edit the default file"
+msgstr ""
+
+#: ../obmenu:565
+#, c-format
+msgid "Error: \"%s\" not found"
+msgstr ""
+
+#: ../obmenu:577
+msgid "Label"
+msgstr ""
+
+#: ../obmenu:582
+msgid "Type"
+msgstr ""
+
+#: ../obmenu:587
+msgid "Action"
+msgstr ""
+
+#: ../obmenu:592
+msgid "Execute"
+msgstr ""
+
+#: ../window.glade:6 ../window.glade:698
+msgid "Openbox Menu Editor"
+msgstr ""
+
+#: ../window.glade:38
+msgctxt "Stock label"
+msgid "_File"
+msgstr ""
+
+#: ../window.glade:47
+msgctxt "Stock label"
+msgid "_New"
+msgstr ""
+
+#: ../window.glade:57
+msgctxt "Stock label"
+msgid "_Open"
+msgstr ""
+
+#: ../window.glade:67
+msgctxt "Stock label"
+msgid "_Save"
+msgstr ""
+
+#: ../window.glade:77
+msgctxt "Stock label"
+msgid "Save _As"
+msgstr ""
+
+#: ../window.glade:93
+msgctxt "Stock label"
+msgid "_Quit"
+msgstr ""
+
+#: ../window.glade:107
+msgctxt "Stock label"
+msgid "_Edit"
+msgstr ""
+
+#: ../window.glade:116
+msgid "Move _up"
+msgstr ""
+
+#: ../window.glade:126
+msgid "Move dow_n"
+msgstr ""
+
+#: ../window.glade:143
+msgid "_Add"
+msgstr ""
+
+#: ../window.glade:152
+msgid "_Menu"
+msgstr ""
+
+#: ../window.glade:162
+msgid "_Item"
+msgstr ""
+
+#: ../window.glade:172
+msgid "_Separator"
+msgstr ""
+
+#: ../window.glade:182
+msgid "_Pipe Menu"
+msgstr ""
+
+#: ../window.glade:192
+msgid "_Link"
+msgstr ""
+
+#: ../window.glade:207
+msgctxt "Stock label"
+msgid "_Delete"
+msgstr ""
+
+#: ../window.glade:219
+msgctxt "Stock label"
+msgid "_Help"
+msgstr ""
+
+#: ../window.glade:228
+msgctxt "Stock label"
+msgid "_About"
+msgstr ""
+
+#: ../window.glade:256
+msgid "Save the menu"
+msgstr ""
+
+#: ../window.glade:285
+msgid "New menu"
+msgstr ""
+
+#: ../window.glade:302
+msgid "New item"
+msgstr ""
+
+#: ../window.glade:319
+msgid "New separator"
+msgstr ""
+
+#: ../window.glade:349
+msgid "Move up"
+msgstr ""
+
+#: ../window.glade:365
+msgid "Move down"
+msgstr ""
+
+#: ../window.glade:394
+msgid "Removes a menu or an item"
+msgstr ""
+
+#: ../window.glade:466
+msgid "_Label"
+msgstr ""
+
+#: ../window.glade:491
+msgid "_ID"
+msgstr ""
+
+#: ../window.glade:516
+msgid "_Action"
+msgstr ""
+
+#: ../window.glade:541
+msgctxt "Stock label"
+msgid "_Execute"
+msgstr ""
+
+#: ../window.glade:658
+msgid "..."
+msgstr ""
+
+#: ../window.glade:699
+msgid ""
+"Thank you for using this sofware.\n"
+"     Send any feedback to m.kolme@gmail.com"
+msgstr ""
+
+#: ../window.glade:701
+msgid ""
+"    obmenu: Openbox Menu Editor\n"
+"        Copyright (C) 2005-2006  Manuel Colmenero\n"
+"\n"
+"        This program is free software; you can redistribute it and/or "
+"modify\n"
+"        it under the terms of the GNU General Public License as published "
+"by\n"
+"        the Free Software Foundation; either version 2 of the License, or\n"
+"        (at your option) any later version.\n"
+"\n"
+"        This program is distributed in the hope that it will be useful,\n"
+"        but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+"        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
+"        GNU General Public License for more details.\n"
+"\n"
+"        You should have received a copy of the GNU General Public License\n"
+"        along with this program; if not, write to the Free Software\n"
+"        Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  "
+"02111-1307  USA"
+msgstr ""
+
+#: ../window.glade:718
+msgid "Website"
+msgstr ""
+
+#. TRANSLATORS: Replace this string with your names, one name per line.
+#: ../window.glade:720
+msgid "translator-credits"
+msgstr ""

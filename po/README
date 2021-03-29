@@ -1,0 +1,14 @@
+Translations for obMenu.
+
+They're in separate directories because setup.py doesn't support renaming
+files.
+
+To add a translation, create an obmenu.po file in a subdirectory named the
+shortest form of the ISO code for your language and add the same code to
+LINGUAS.
+
+I've done the German, Esperanto, and Spanish translations.  My Spanish isn't
+that good, but I figure it's a good tribute to the original author of obMenu,
+whose native language was Spanish.
+
+A Makefile is provided to aid in the updating of the files.
