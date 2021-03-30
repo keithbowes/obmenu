@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<schemalist>
+  <schema path="/io/sourceforge/obmenu/" id="io.sourceforge.obmenu">
+    <key name="last-opened-menu" type="s">
+      <default>""</default>
+      <summary>Last opened menu</summary>
+      <description>
+        The last menu file opened, to be reopened automatically on program start.
+      </description>
+    </key>
+  </schema>
+</schemalist>

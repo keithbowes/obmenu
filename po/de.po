@@ -1,14 +1,14 @@
-# German translations for obMenu package.
-# Copyright (C) 2021 THE obMenu'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the obMenu package.
+# German translations for Obmenu package.
+# Copyright (C) 2021 THE Obmenu'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the Obmenu package.
 # Keith Bowes <keith@localhost>, 2021.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: obMenu 1.1\n"
+"Project-Id-Version: Obmenu 1.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-29 09:36-0400\n"
-"PO-Revision-Date: 2021-03-29 09:46-0400\n"
+"PO-Revision-Date: 2021-03-30 17:28-0400\n"
 "Last-Translator: Keith Bowes <keith@localhost>\n"
 "Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
 "Language: de\n"
@@ -264,7 +264,7 @@ msgid ""
 "        Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  "
 "02111-1307  USA"
 msgstr ""
-"    obMenu: Openbox Menüeditor\n"
+"    obmenu: Openbox Menüeditor\n"
 "        Copyright (C) 2005-2006  Manuel Colmenero\n"
 "\n"
 "        Dieses Programm ist freie Software. Sie können es unter den\n"

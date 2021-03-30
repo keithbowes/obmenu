@@ -26,14 +26,6 @@ from gi.repository import Gtk, Gio, GLib, GObject
 from gettext import dgettext, gettext as _
 
 class App(Gtk.Application):
-	def reconfigureOpenbox(self):
-		# Waybox doesn't need reconfigured
-		if not os.getenv("WAYLAND_DISPLAY"):
-			import signal
-			lines = os.popen("pgrep -x openbox").read().splitlines()
-			if lines:
-				os.kill(int(lines[0]), signal.SIGUSR2)
-
 	# Recursively creates the treeview model
 	def createTree(self, padre, menuid):
 		for it in self.menu.getMenu(menuid):
@@ -58,7 +50,10 @@ class App(Gtk.Application):
 		self.sth_changed = op
 		if op: s = "(*)"
 		else: s = ""
-		self.appwindow.set_title("Obmenu: %s %s" % (self.menu_path, s))
+		if self.menu_path:
+			self.appwindow.set_title("Obmenu: %s %s" % (self.menu_path, s))
+		else:
+			self.appwindow.set_title("Obmenu")
 
 	# Auxiliary function for model.foreach()
 	def _change_id(self, model, path, it, id_pair):
@@ -138,10 +133,9 @@ class App(Gtk.Application):
 			self.menu_path = path
 			self.unsaved_menu = False
 		self.menu.saveMenu(self.menu_path)
-		self.reconfigureOpenbox()
 		self._sth_changed(False)
 
-	# save as...
+	# save as
 	def save_as(self, params, data):
 		path = self.ask_for_path(_("Save as..."), 1)
 		if not path: return
@@ -149,13 +143,20 @@ class App(Gtk.Application):
 		self.unsaved_menu = False
 		self._sth_changed(False)
 		self.menu.saveMenu(self.menu_path)
-		self.reconfigureOpenbox()
+
+	def reconfigure_openbox(self, param, data):
+		import signal
+		lines = os.popen("pgrep -x openbox").read().splitlines()
+		if lines:
+			os.kill(int(lines[0]), signal.SIGUSR2)
 
 	# quit signal
 	def exit (self, bt, arg2):
 		if self.sth_changed:
 			res = self.confirm(_("There are unsaved changes. Exit anyway?"))
 			if not res: return True
+		if self.settings:
+			self.settings.set_value("last-opened-menu", GLib.Variant.new_string(self.menu_path))
 		self.quit()
 
 	# File->Quit menu signal
@@ -514,6 +515,7 @@ class App(Gtk.Application):
 			"open": self.open,
 			"save": self.save,
 			"save.as": self.save_as,
+			"reconfigure": self.reconfigure_openbox,
 			"quit": self.mnu_quit,
 			"remove": self.mnu_remove,
 			"label_changed": self.change_label,
@@ -552,38 +554,32 @@ class App(Gtk.Application):
 		self.execute_srch = self.builder.get_object("execute_search_button")
 		self.id_entry = self.builder.get_object("id_entry")
 
+		self.menu_path = ""
+		try:
+			if self.menu_file.query_exists():
+				self.menu_path = self.menu_file.get_path()
+		except:
+			# No files specified on the command line
+			self.menu = None
+			# If the GSettings schema isn't installed, don't go kaboom
+			if Gio.SettingsSchemaSource.lookup(Gio.SettingsSchemaSource.get_default(), self.appid, False):
+				self.settings = Gio.Settings.new(self.appid)
+				self.menu_path = GLib.Variant.get_string(self.settings.get_value("last-opened-menu"))
+			else:
+				self.settings = None
+
+		if self.menu_path:
+			# Load in memory the real xml menu
+			self.menu = obxml.ObMenu()
+			self.menu.loadMenu(self.menu_path)
+			self.unsaved_menu = False
+		else:
+			self.unsaved_menu = True
 
 		# treemodel.iter(label, type, [action], [execute], parent, [menu-id])
 		self.treemodel=Gtk.TreeStore(GObject.TYPE_STRING, GObject.TYPE_STRING,
 				GObject.TYPE_STRING, GObject.TYPE_STRING, GObject.TYPE_STRING, GObject.TYPE_STRING)
 		self.treeview.set_model(self.treemodel)
-
-		if len(sys.argv) == 2:
-			# must be a path to a menu
-			self.menu_path = sys.argv[1]
-		elif len(sys.argv) == 1:
-			if os.getenv("WAYLAND_DISPLAY"):
-				app = "waybox"
-			else:
-				app = "openbox"
-			if os.getenv("XDG_CONFIG_HOME"):
-				self.menu_path = os.getenv("XDG_CONFIG_HOME") + "/" + app + "/menu.xml"
-			else:
-				self.menu_path = os.getenv("HOME") + "/.config/" + app + "/menu.xml"
-		else:
-			print(_("Error: Wrong number of arguments"))
-			print(_("Usage: obmenu /path/to/menu.xml"))
-			print(_("\tOr just obmenu, to edit the default file"))
-			return
-
-		if not os.path.isfile(self.menu_path):
-			print(_("Error: \"%s\" not found") % self.menu_path)
-			return
-		self.unsaved_menu = False
-
-		# Load in memory the real xml menu
-		self.menu = obxml.ObMenu()
-		self.menu.loadMenu(self.menu_path)
 
 		# Set the columns
 		self.treeview.set_headers_visible(True)
@@ -613,18 +609,27 @@ class App(Gtk.Application):
 		self._sth_changed(False)
 
 		# Create the menu tree
-		self.createTree(None, None)
-
+		if self.menu:
+			self.createTree(None, None)
 
 		# Let's roll!
 		self.add_window(self.appwindow)
 		self.appwindow.show()
 
+	# Callback called when command-line arguments are provided
+	def do_open(self, files, n_files, hint):
+		if n_files > 1:
+			print(_("Error: Obmenu can presently open only one file at a time."))
+			print(_("Only the first specified will be opened."))
+		self.menu_file = files[0]
+		self.do_activate()
+
 	# Application init
 	def __init__(self):
-		Gtk.Application.__init__(self, application_id="org.gtk.obmenu",
-				flags=Gio.ApplicationFlags.FLAGS_NONE)
-		GLib.set_prgname("org.gtk.obmenu")
+		self.appid = "io.sourceforge.obmenu"
+		Gtk.Application.__init__(self, application_id=self.appid,
+				flags=Gio.ApplicationFlags.HANDLES_OPEN)
+		GLib.set_prgname(self.appid)
 
 if __name__ == "__main__":
 	app = App()

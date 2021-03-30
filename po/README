@@ -1,9 +1,9 @@
-Translations for obMenu.
+Translations for Obmenu.
 
 To add a translation, create an obmenu.po file in a subdirectory named the
 shortest form of the ISO code for your language and add the same code to
 LINGUAS.
 
 I've done the German, Esperanto, and Spanish translations.  My Spanish isn't
-that good, but I figure it's a good tribute to the original author of obMenu,
+that good, but I figure it's a good tribute to the original author of Obmenu,
 whose native language was Spanish.

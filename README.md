@@ -5,7 +5,7 @@ you to edit menus in an intuitive way.
 
 ## FORK
 
-This is a fork of [the original obmenu](http://obmenu.sourceforge.net/) to
+This is a fork of [the original Obmenu](http://obmenu.sourceforge.net/) to
 update it for Python 3/GTK 3 and to allow it to work with
 [Waybox](https://github.com/wizbright/waybox).
 
@@ -24,7 +24,7 @@ update it for Python 3/GTK 3 and to allow it to work with
   If you use PyPy, you'll need the equivalents of the Python versions specified
   above.
 
-  You no longer need pygtk and pyglade, required by the original obmenu.
+  You no longer need pygtk and pyglade, required by the original Obmenu.
 
 ## INSTALLATION
 

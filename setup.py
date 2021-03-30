@@ -7,7 +7,7 @@ libdir = 'share/obmenu'
 localedir = 'share/locale'
 sys.path += [os.path.join(os.curdir, libdir)]
 
-setup(name='obMenu',
+setup(name='Obmenu',
       version='1.1',
       description='Openbox Menu Editor',
       long_description='A Python script that allows you to edit menus for Openbox and clones thereof in an intuitive way',
