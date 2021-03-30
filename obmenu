@@ -21,11 +21,11 @@
 import gi, obxml, random, time, os, sys, gettext
 
 gi.require_version('Gtk', '3.0')
-from gi.repository import Gtk, GObject
+from gi.repository import Gtk, Gio, GLib, GObject
 
 from gettext import dgettext, gettext as _
 
-class App:
+class App(Gtk.Application):
 	def reconfigureOpenbox(self):
 		# Waybox doesn't need reconfigured
 		if not os.getenv("WAYLAND_DISPLAY"):
@@ -152,15 +152,15 @@ class App:
 		self.reconfigureOpenbox()
 
 	# quit signal
-	def quit (self, bt, arg2):
+	def exit (self, bt, arg2):
 		if self.sth_changed:
 			res = self.confirm(_("There are unsaved changes. Exit anyway?"))
 			if not res: return True
-		Gtk.main_quit()
+		self.quit()
 
-	# file->quit menu signal
+	# File->Quit menu signal
 	def mnu_quit (self, bt):
-		self.quit(None,None)
+		self.exit(None, None)
 
 	# id_entry changed signal
 	def change_id(self, pa):
@@ -476,8 +476,8 @@ class App:
 	def show_about(self, args):
 		self.builder.get_object("aboutdialog").show()
 
-	# application init
-	def init(self):
+	# Application activation
+	def do_activate(self):
 		self.builder = Gtk.Builder()
 		# Look for the data files!
 		if os.path.isfile("window.glade"):
@@ -547,7 +547,7 @@ class App:
 			"down_clicked": self.down,
 			"hide_about": self.hide_about,
 			"show_about": self.show_about,
-			"exit": self.quit })
+			"exit": self.exit })
 
 		if len(sys.argv) == 2:
 			# must be a path to a menu
@@ -607,8 +607,14 @@ class App:
 		self.createTree(None, None)
 
 		# Let's roll!
-		Gtk.main()
+		self.add_window(self.builder.get_object("window1"))
+
+	# Application init
+	def __init__(self):
+		Gtk.Application.__init__(self, application_id="org.gtk.obmenu",
+				flags=Gio.ApplicationFlags.FLAGS_NONE)
+		GLib.set_prgname("org.gtk.obmenu")
 
 if __name__ == "__main__":
 	app = App()
-	app.init()
+	app.run(sys.argv)
