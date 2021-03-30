@@ -58,7 +58,7 @@ class App(Gtk.Application):
 		self.sth_changed = op
 		if op: s = "(*)"
 		else: s = ""
-		self.builder.get_object("window1").set_title("Obmenu: %s %s" % (self.menu_path, s))
+		self.appwindow.set_title("Obmenu: %s %s" % (self.menu_path, s))
 
 	# Auxiliary function for model.foreach()
 	def _change_id(self, model, path, it, id_pair):
@@ -76,7 +76,7 @@ class App(Gtk.Application):
 		for each in (self.label_entry, self.id_entry, self.execute_entry):
 			each.set_sensitive(False)
 			each.set_text("")
-		self.action_entry.set_sensitive(False)
+		self.action_combo.set_sensitive(False)
 		self.auto_change = False
 
 	def confirm(self, message):
@@ -218,7 +218,7 @@ class App(Gtk.Application):
 		p = model.get_path(ite)
 		n = p[len(p)-1]
 		if tipe == "item":
-			ac = self.action_entry.get_active()
+			ac = self.action_combo.get_active()
 			self.execute_entry.set_sensitive(False)
 			self.execute_srch.set_sensitive(False)
 			if ac == 0:
@@ -279,7 +279,7 @@ class App(Gtk.Application):
 		self.execute_entry.set_text(exe)
 
 		self.label_entry.set_sensitive(tipe == "item" or (tipe == "menu" and action != "Link"))
-		self.action_entry.set_sensitive(tipe == "item")
+		self.action_combo.set_sensitive(tipe == "item")
 		self.id_entry.set_sensitive(tipe == "menu")
 		self.id_entry.set_text(mid)
 
@@ -287,17 +287,17 @@ class App(Gtk.Application):
 			self.execute_entry.set_sensitive(False)
 			self.execute_srch.set_sensitive(False)
 			if action.lower() == "execute":
-				self.action_entry.set_active(0)
+				self.action_combo.set_active(0)
 				self.execute_entry.set_sensitive(True)
 				self.execute_srch.set_sensitive(True)
 			elif action.lower() == "reconfigure":
-				self.action_entry.set_active(1)
+				self.action_combo.set_active(1)
 			elif action.lower() == "restart":
-				self.action_entry.set_active(2)
+				self.action_combo.set_active(2)
 			elif action.lower() == "exit":
-				self.action_entry.set_active(3)
+				self.action_combo.set_active(3)
 			else:
-				self.action_entry.set_sensitive(False)
+				self.action_combo.set_sensitive(False)
 		elif tipe == "menu":
 			self.execute_entry.set_sensitive(action == "Pipemenu")
 			self.execute_srch.set_sensitive(action == "Pipemenu")
@@ -513,7 +513,7 @@ class App(Gtk.Application):
 			"new": self.new,
 			"open": self.open,
 			"save": self.save,
-			"save_as": self.save_as,
+			"save.as": self.save_as,
 			"quit": self.mnu_quit,
 			"remove": self.mnu_remove,
 			"label_changed": self.change_label,
@@ -522,13 +522,13 @@ class App(Gtk.Application):
 			"execute_changed": self.change_execute,
 			"action_changed": self.change_action,
 			"search_clicked": self.search_clicked,
-			"on_treeview1": self.treeview_changed,
+			"treeview_changed": self.treeview_changed,
 			"tree_key_pressed": self.tree_key_pressed,
-			"add_menu": self.new_menu,
-			"add_item": self.new_item,
-			"add_separator": self.new_separator,
-			"add_pipe": self.new_pipe,
-			"add_link": self.new_link,
+			"add.menu": self.new_menu,
+			"add.item": self.new_item,
+			"add.separator": self.new_separator,
+			"add.pipe": self.new_pipe,
+			"add.link": self.new_link,
 			"remove_clicked": self.remove,
 			"up": self.up,
 			"down": self.down,
@@ -536,7 +536,7 @@ class App(Gtk.Application):
 			"about": self.show_about,
 			"exit": self.exit }
 		for signal in signals:
-			action = Gio.SimpleAction.new(signal)
+			action = Gio.SimpleAction.new(signal, None)
 			action.connect("activate", signals[signal])
 			self.add_action(action)
 		self.builder.connect_signals(signals)
@@ -544,13 +544,13 @@ class App(Gtk.Application):
 	# Application activation
 	def do_activate(self):
 		# Set the basics for GTK
-		self.treeview = self.builder.get_object("treeview1")
-		self.label_entry = self.builder.get_object("entry1")
-		self.action_entry = self.builder.get_object("combobox1")
-		self.execute_entry = self.builder.get_object("entry2")
-		self.execute_srch = self.builder.get_object("button1")
-		self.id_entry = self.builder.get_object("entry3")
-		self.window = self.builder.get_object("window1")
+		self.appwindow = self.builder.get_object("appwindow")
+		self.treeview = self.builder.get_object("treeview")
+		self.label_entry = self.builder.get_object("label_entry")
+		self.action_combo = self.builder.get_object("action_combo")
+		self.execute_entry = self.builder.get_object("execute_entry")
+		self.execute_srch = self.builder.get_object("execute_search_button")
+		self.id_entry = self.builder.get_object("id_entry")
 
 
 		# treemodel.iter(label, type, [action], [execute], parent, [menu-id])
@@ -617,8 +617,8 @@ class App(Gtk.Application):
 
 
 		# Let's roll!
-		self.add_window(self.window)
-		self.window.show()
+		self.add_window(self.appwindow)
+		self.appwindow.show()
 
 	# Application init
 	def __init__(self):

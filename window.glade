@@ -13,7 +13,7 @@
         </item>
         <item>
           <attribute name="label" translatable="yes">_Open</attribute>
-          <attribute name="accel">&lt;Control&gt;n</attribute>
+          <attribute name="accel">&lt;Control&gt;o</attribute>
           <attribute name="action">app.open</attribute>
           <attribute name="icon">document-open</attribute>
         </item>
@@ -26,7 +26,7 @@
         <item>
           <attribute name="label" translatable="yes">Save _As</attribute>
           <attribute name="accel">&lt;Control&gt;&lt;Shift&gt;s</attribute>
-          <attribute name="action">app.save_as</attribute>
+          <attribute name="action">app.save.as</attribute>
           <attribute name="icon">document-save-as</attribute>
         </item>
       </section>
@@ -63,30 +63,30 @@
             <item>
               <attribute name="label" translatable="yes">_Menu</attribute>
               <attribute name="accel">&lt;Control&gt;m</attribute>
-              <attribute name="action">app.add_menu</attribute>
+              <attribute name="action">app.add.menu</attribute>
               <attribute name="icon">gtk-index</attribute>
             </item>
             <item>
               <attribute name="label" translatable="yes">_Item</attribute>
               <attribute name="accel">&lt;Control&gt;i</attribute>
-              <attribute name="action">app.add_item</attribute>
+              <attribute name="action">app.add.item</attribute>
               <attribute name="icon">gtk-execute</attribute>
             </item>
             <item>
               <attribute name="label" translatable="yes">_Separator</attribute>
               <attribute name="accel">&lt;Control&gt;r</attribute>
-              <attribute name="action">app.add_separator</attribute>
+              <attribute name="action">app.add.separator</attribute>
               <attribute name="icon">text-x-generic</attribute>
             </item>
             <item>
               <attribute name="label" translatable="yes">_Pipe Menu</attribute>
               <attribute name="accel">&lt;Control&gt;p</attribute>
-              <attribute name="action">app.add_pipe</attribute>
+              <attribute name="action">app.add.pipe</attribute>
             </item>
             <item>
               <attribute name="label" translatable="yes">_Link</attribute>
               <attribute name="accel">&lt;Control&gt;l</attribute>
-              <attribute name="action">app.add_link</attribute>
+              <attribute name="action">app.add.link</attribute>
               <attribute name="icon">insert-link</attribute>
             </item>
           </section>
@@ -115,7 +115,7 @@
   </menu>
 
 
-<object class="GtkApplicationWindow" id="window1">
+<object class="GtkApplicationWindow" id="appwindow">
   <property name="visible">False</property>
   <property name="title" translatable="yes">Openbox Menu Editor</property>
   <property name="type">GTK_WINDOW_TOPLEVEL</property>
@@ -136,21 +136,21 @@
   <signal name="delete_event" handler="exit"/>
 
   <child>
-    <object class="GtkBox" id="vbox4">
+    <object class="GtkBox" id="main_layout_box">
       <property name="visible">True</property>
       <property name="homogeneous">False</property>
       <property name="orientation">GTK_ORIENTATION_VERTICAL</property>
       <property name="spacing">0</property>
 
       <child>
-        <object class="GtkToolbar" id="toolbar1">
+        <object class="GtkToolbar" id="toolbar">
           <property name="visible">True</property>
           <property name="orientation">GTK_ORIENTATION_HORIZONTAL</property>
           <property name="toolbar_style">GTK_TOOLBAR_BOTH_HORIZ</property>
           <property name="show_arrow">True</property>
 
           <child>
-            <object class="GtkToolButton" id="toolbutton13">
+            <object class="GtkToolButton" id="save_toolbutton">
               <property name="visible">True</property>
               <property name="tooltip-text" translatable="yes">Save the menu</property>
               <property name="icon-name">document-save</property>
@@ -158,6 +158,115 @@
               <property name="visible_vertical">True</property>
               <property name="is_important">False</property>
               <signal name="clicked" handler="save"/>
+            </object>
+            <packing>
+              <property name="expand">False</property>
+              <property name="homogeneous">True</property>
+            </packing>
+          </child>
+
+          <child>
+            <object class="GtkSeparatorToolItem" id="separatortoolitem1">
+              <property name="visible">True</property>
+              <property name="draw">True</property>
+              <property name="visible_horizontal">True</property>
+              <property name="visible_vertical">True</property>
+            </object>
+            <packing>
+              <property name="expand">False</property>
+              <property name="homogeneous">False</property>
+            </packing>
+          </child>
+
+          <child>
+            <object class="GtkToolButton" id="new_menu_toolbutton">
+              <property name="visible">True</property>
+              <property name="label" translatable="yes">New menu</property>
+              <property name="use_underline">True</property>
+              <property name="icon-name">gtk-index</property>
+              <property name="visible_horizontal">True</property>
+              <property name="visible_vertical">True</property>
+              <property name="is_important">True</property>
+              <signal name="clicked" handler="add.menu"/>
+            </object>
+            <packing>
+              <property name="expand">False</property>
+              <property name="homogeneous">True</property>
+            </packing>
+          </child>
+
+          <child>
+            <object class="GtkToolButton" id="new_item_toolbutton">
+              <property name="visible">True</property>
+              <property name="label" translatable="yes">New item</property>
+              <property name="use_underline">True</property>
+              <property name="icon-name">gtk-execute</property>
+              <property name="visible_horizontal">True</property>
+              <property name="visible_vertical">True</property>
+              <property name="is_important">True</property>
+              <signal name="clicked" handler="add.item"/>
+            </object>
+            <packing>
+              <property name="expand">False</property>
+              <property name="homogeneous">True</property>
+            </packing>
+          </child>
+
+          <child>
+            <object class="GtkToolButton" id="new_separator_toolbutton">
+              <property name="visible">True</property>
+              <property name="label" translatable="yes">New separator</property>
+              <property name="use_underline">True</property>
+              <property name="icon-name">text-x-generic</property>
+              <property name="visible_horizontal">True</property>
+              <property name="visible_vertical">True</property>
+              <property name="is_important">True</property>
+              <signal name="clicked" handler="add.separator"/>
+            </object>
+            <packing>
+              <property name="expand">False</property>
+              <property name="homogeneous">True</property>
+            </packing>
+          </child>
+
+          <child>
+            <object class="GtkSeparatorToolItem" id="separatortoolitem2">
+              <property name="visible">True</property>
+              <property name="draw">True</property>
+              <property name="visible_horizontal">True</property>
+              <property name="visible_vertical">True</property>
+            </object>
+            <packing>
+              <property name="expand">False</property>
+              <property name="homogeneous">False</property>
+            </packing>
+          </child>
+
+          <child>
+            <object class="GtkToolButton" id="move_up_toolbutton">
+              <property name="visible">True</property>
+              <property name="tooltip-text" translatable="yes">Move up</property>
+              <property name="icon-name">go-up</property>
+              <property name="visible_horizontal">True</property>
+              <property name="visible_vertical">True</property>
+              <property name="is_important">False</property>
+              <signal name="clicked" handler="up"/>
+            </object>
+            <packing>
+              <property name="expand">False</property>
+              <property name="homogeneous">True</property>
+            </packing>
+          </child>
+
+          <child>
+            <object class="GtkToolButton" id="move_down_toolbutton">
+              <property name="visible">True</property>
+              <property name="tooltip-text" translatable="yes">Move down</property>
+              <property name="icon-name">go-down</property>
+              <property name="visible_horizontal">True</property>
+              <property name="visible_vertical">True</property>
+              <property name="is_important">False</property>
+              <signal name="clicked" handler="down"/>
             </object>
             <packing>
               <property name="expand">False</property>
@@ -179,116 +288,7 @@
           </child>
 
           <child>
-            <object class="GtkToolButton" id="toolbutton14">
-              <property name="visible">True</property>
-              <property name="label" translatable="yes">New menu</property>
-              <property name="use_underline">True</property>
-              <property name="icon-name">gtk-index</property>
-              <property name="visible_horizontal">True</property>
-              <property name="visible_vertical">True</property>
-              <property name="is_important">True</property>
-              <signal name="clicked" handler="add_menu"/>
-            </object>
-            <packing>
-              <property name="expand">False</property>
-              <property name="homogeneous">True</property>
-            </packing>
-          </child>
-
-          <child>
-            <object class="GtkToolButton" id="toolbutton15">
-              <property name="visible">True</property>
-              <property name="label" translatable="yes">New item</property>
-              <property name="use_underline">True</property>
-              <property name="icon-name">gtk-execute</property>
-              <property name="visible_horizontal">True</property>
-              <property name="visible_vertical">True</property>
-              <property name="is_important">True</property>
-              <signal name="clicked" handler="add_item"/>
-            </object>
-            <packing>
-              <property name="expand">False</property>
-              <property name="homogeneous">True</property>
-            </packing>
-          </child>
-
-          <child>
-            <object class="GtkToolButton" id="toolbutton16">
-              <property name="visible">True</property>
-              <property name="label" translatable="yes">New separator</property>
-              <property name="use_underline">True</property>
-              <property name="icon-name">text-x-generic</property>
-              <property name="visible_horizontal">True</property>
-              <property name="visible_vertical">True</property>
-              <property name="is_important">True</property>
-              <signal name="clicked" handler="add_separator"/>
-            </object>
-            <packing>
-              <property name="expand">False</property>
-              <property name="homogeneous">True</property>
-            </packing>
-          </child>
-
-          <child>
-            <object class="GtkSeparatorToolItem" id="separatortoolitem5">
-              <property name="visible">True</property>
-              <property name="draw">True</property>
-              <property name="visible_horizontal">True</property>
-              <property name="visible_vertical">True</property>
-            </object>
-            <packing>
-              <property name="expand">False</property>
-              <property name="homogeneous">False</property>
-            </packing>
-          </child>
-
-          <child>
-            <object class="GtkToolButton" id="toolbutton18">
-              <property name="visible">True</property>
-              <property name="tooltip-text" translatable="yes">Move up</property>
-              <property name="icon-name">go-up</property>
-              <property name="visible_horizontal">True</property>
-              <property name="visible_vertical">True</property>
-              <property name="is_important">False</property>
-              <signal name="clicked" handler="up"/>
-            </object>
-            <packing>
-              <property name="expand">False</property>
-              <property name="homogeneous">True</property>
-            </packing>
-          </child>
-
-          <child>
-            <object class="GtkToolButton" id="toolbutton19">
-              <property name="visible">True</property>
-              <property name="tooltip-text" translatable="yes">Move down</property>
-              <property name="icon-name">go-down</property>
-              <property name="visible_horizontal">True</property>
-              <property name="visible_vertical">True</property>
-              <property name="is_important">False</property>
-              <signal name="clicked" handler="down"/>
-            </object>
-            <packing>
-              <property name="expand">False</property>
-              <property name="homogeneous">True</property>
-            </packing>
-          </child>
-
-          <child>
-            <object class="GtkSeparatorToolItem" id="separatortoolitem6">
-              <property name="visible">True</property>
-              <property name="draw">True</property>
-              <property name="visible_horizontal">True</property>
-              <property name="visible_vertical">True</property>
-            </object>
-            <packing>
-              <property name="expand">False</property>
-              <property name="homogeneous">False</property>
-            </packing>
-          </child>
-
-          <child>
-            <object class="GtkToolButton" id="toolbutton17">
+            <object class="GtkToolButton" id="remove_toolbutton">
               <property name="visible">True</property>
               <property name="tooltip-text" translatable="yes">Removes a menu or an item</property>
               <property name="icon-name">remove</property>
@@ -311,14 +311,14 @@
       </child>
 
       <child>
-        <object class="GtkBox" id="vbox3">
+        <object class="GtkBox" id="treeview_box">
           <property name="visible">True</property>
           <property name="homogeneous">False</property>
           <property name="spacing">0</property>
           <property name="orientation">GTK_ORIENTATION_VERTICAL</property>
 
           <child>
-            <object class="GtkScrolledWindow" id="scrolledwindow1">
+            <object class="GtkScrolledWindow" id="treeview_scrolled_window">
               <property name="visible">True</property>
               <property name="can_focus">True</property>
               <property name="hscrollbar_policy">GTK_POLICY_ALWAYS</property>
@@ -327,7 +327,7 @@
               <property name="window_placement">GTK_CORNER_TOP_LEFT</property>
 
               <child>
-                <object class="GtkTreeView" id="treeview1">
+                <object class="GtkTreeView" id="treeview">
                   <property name="visible">True</property>
                   <property name="can_default">True</property>
                   <property name="has_default">True</property>
@@ -339,7 +339,7 @@
                   <property name="fixed_height_mode">False</property>
                   <property name="hover_selection">False</property>
                   <property name="hover_expand">False</property>
-                  <signal name="cursor_changed" handler="on_treeview1"/>
+                  <signal name="cursor_changed" handler="treeview_changed"/>
                   <signal name="key_press_event" handler="tree_key_pressed"/>
                 </object>
               </child>
@@ -352,18 +352,18 @@
           </child>
 
           <child>
-            <object class="GtkGrid" id="table1">
+            <object class="GtkGrid" id="properties_grid">
               <property name="visible">True</property>
               <property name="column_homogeneous">True</property>
               <property name="row_spacing">2</property>
               <property name="column_spacing">10</property>
 
               <child>
-                <object class="GtkLabel" id="label1">
+                <object class="GtkLabel" id="label_label">
                   <property name="visible">True</property>
                   <property name="label" translatable="yes">_Label</property>
                   <property name="use_underline">True</property>
-                  <property name="mnemonic-widget">entry1</property>
+                  <property name="mnemonic-widget">label_entry</property>
                   <property name="use_markup">False</property>
                   <property name="justify">GTK_JUSTIFY_LEFT</property>
                   <property name="wrap">False</property>
@@ -384,11 +384,11 @@
               </child>
 
               <child>
-                <object class="GtkLabel" id="label4">
+                <object class="GtkLabel" id="id_label">
                   <property name="visible">True</property>
                   <property name="label" translatable="yes">_ID</property>
                   <property name="use_underline">True</property>
-                  <property name="mnemonic-widget">entry3</property>
+                  <property name="mnemonic-widget">id_entry</property>
                   <property name="use_markup">False</property>
                   <property name="justify">GTK_JUSTIFY_LEFT</property>
                   <property name="wrap">False</property>
@@ -409,11 +409,11 @@
               </child>
 
               <child>
-                <object class="GtkLabel" id="label2">
+                <object class="GtkLabel" id="action_label">
                   <property name="visible">True</property>
                   <property name="label" translatable="yes">_Action</property>
                   <property name="use_underline">True</property>
-                  <property name="mnemonic-widget">combobox1</property>
+                  <property name="mnemonic-widget">action_combo</property>
                   <property name="use_markup">False</property>
                   <property name="justify">GTK_JUSTIFY_LEFT</property>
                   <property name="wrap">False</property>
@@ -434,11 +434,11 @@
               </child>
 
               <child>
-                <object class="GtkLabel" id="label3">
+                <object class="GtkLabel" id="execute_label">
                   <property name="visible">True</property>
                   <property name="label" translatable="yes">_Execute</property>
                   <property name="use_underline">True</property>
-                  <property name="mnemonic-widget">entry2</property>
+                  <property name="mnemonic-widget">execute_entry</property>
                   <property name="use_markup">False</property>
                   <property name="justify">GTK_JUSTIFY_LEFT</property>
                   <property name="wrap">False</property>
@@ -459,7 +459,7 @@
               </child>
 
               <child>
-                <object class="GtkEntry" id="entry1">
+                <object class="GtkEntry" id="label_entry">
                   <property name="visible">True</property>
                   <property name="sensitive">False</property>
                   <property name="can_focus">True</property>
@@ -480,7 +480,7 @@
               </child>
 
               <child>
-                <object class="GtkEntry" id="entry3">
+                <object class="GtkEntry" id="id_entry">
                   <property name="visible">True</property>
                   <property name="sensitive">False</property>
                   <property name="can_focus">True</property>
@@ -501,7 +501,7 @@
               </child>
 
               <child>
-                <object class="GtkComboBoxText" id="combobox1">
+                <object class="GtkComboBoxText" id="action_combo">
                   <property name="visible">True</property>
                   <property name="sensitive">False</property>
                     <items>
@@ -521,14 +521,14 @@
               </child>
 
               <child>
-                <object class="GtkBox" id="hbox1">
+                <object class="GtkBox" id="execute_box">
                   <property name="visible">True</property>
                   <property name="homogeneous">False</property>
                   <property name="spacing">0</property>
                   <property name="orientation">GTK_ORIENTATION_HORIZONTAL</property>
 
                   <child>
-                    <object class="GtkEntry" id="entry2">
+                    <object class="GtkEntry" id="execute_entry">
                       <property name="visible">True</property>
                       <property name="sensitive">False</property>
                       <property name="can_focus">True</property>
@@ -549,7 +549,7 @@
                   </child>
 
                   <child>
-                    <object class="GtkButton" id="button1">
+                    <object class="GtkButton" id="execute_search_button">
                       <property name="visible">True</property>
                       <property name="sensitive">False</property>
                       <property name="can_focus">True</property>
