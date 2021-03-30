@@ -101,7 +101,7 @@ class App(Gtk.Application):
 		if res == Gtk.ResponseType.OK: return flnm
 
 	#  New file clicked
-	def new(self, bt):
+	def new(self, params, data):
 		if self.sth_changed:
 			res = self.confirm(_("Changes in %s will be lost. Continue?") % (self.menu_path))
 			if not res: return
@@ -112,7 +112,7 @@ class App(Gtk.Application):
 		self._sth_changed(True)
 		self.clear_fields()
 
-	def open(self, bt):
+	def open(self, params, data):
 		if self.sth_changed:
 			res = self.confirm(_("Changes in %s will be lost. Continue?") % (self.menu_path))
 			if not res: return
@@ -131,7 +131,7 @@ class App(Gtk.Application):
 		self.clear_fields()
 
 	# save the menu
-	def save(self, bt):
+	def save(self, params, data=None):
 		if self.unsaved_menu:
 			path = self.ask_for_path(_("Save as..."), 1)
 			if not path: return
@@ -142,7 +142,7 @@ class App(Gtk.Application):
 		self._sth_changed(False)
 
 	# save as...
-	def save_as(self, bt):
+	def save_as(self, params, data):
 		path = self.ask_for_path(_("Save as..."), 1)
 		if not path: return
 		self.menu_path = path
@@ -159,7 +159,7 @@ class App(Gtk.Application):
 		self.quit()
 
 	# File->Quit menu signal
-	def mnu_quit (self, bt):
+	def mnu_quit (self, params, data):
 		self.exit(None, None)
 
 	# id_entry changed signal
@@ -307,7 +307,7 @@ class App(Gtk.Application):
 		self.auto_change = False
 
 	# new menu button clicked
-	def new_menu(self, param):
+	def new_menu(self, param, data=None):
 		(model, ite) = self.treeview.get_selection().get_selected()
 
 		if ite:
@@ -334,7 +334,7 @@ class App(Gtk.Application):
 		self._sth_changed(True)
 
 	# new item button clicked
-	def new_item(self,param):
+	def new_item(self, param, data=None):
 		(model, ite) = self.treeview.get_selection().get_selected()
 		if not ite: return
 		(label, tipe, action, exe, menu, mid) = model.get(ite,0,1,2,3,4,5)
@@ -354,7 +354,7 @@ class App(Gtk.Application):
 		self._sth_changed(True)
 
 	# new separator button clicked
-	def new_separator(self,param):
+	def new_separator(self, param, data=None):
 		(model, ite) = self.treeview.get_selection().get_selected()
 		if not ite: return
 		(label, tipe, action, exe, menu, mid) = model.get(ite,0,1,2,3,4,5)
@@ -373,7 +373,7 @@ class App(Gtk.Application):
 		self._sth_changed(True)
 
 	# new link button clicked
-	def new_link(self,param):
+	def new_link(self,param, data):
 		(model, ite) = self.treeview.get_selection().get_selected()
 		if not ite: return
 		(label, tipe, action, exe, menu, mid) = model.get(ite,0,1,2,3,4,5)
@@ -394,7 +394,7 @@ class App(Gtk.Application):
 		self._sth_changed(True)
 
 	# new pipe button clicked
-	def new_pipe(self,param):
+	def new_pipe(self,param, data):
 		(model, ite) = self.treeview.get_selection().get_selected()
 		if not ite: return
 		(label, tipe, action, exe, menu, mid) = model.get(ite,0,1,2,3,4,5)
@@ -415,7 +415,7 @@ class App(Gtk.Application):
 		self._sth_changed(True)
 
 	# up button clicked
-	def up(self,param):
+	def up(self, param, data=None):
 		(model, ite) = self.treeview.get_selection().get_selected()
 		if not ite: return
 		(label, tipe, action, exe, menu, mid) = model.get(ite,0,1,2,3,4,5)
@@ -432,7 +432,7 @@ class App(Gtk.Application):
 			model.move_before(ite,upper)
 
 	# down button clicked
-	def down(self,param):
+	def down(self, param, data=None):
 		(model, ite) = self.treeview.get_selection().get_selected()
 		if not ite: return
 		(label, tipe, action, exe, menu, mid) = model.get(ite,0,1,2,3,4,5)
@@ -465,7 +465,7 @@ class App(Gtk.Application):
 		model.remove(ite)
 		self.clear_fields()
 
-	def mnu_remove(self, param):
+	def mnu_remove(self, param, data):
 		if self.treeview.is_focus():
 			self.remove(None)
 
@@ -473,12 +473,12 @@ class App(Gtk.Application):
 		widget.hide()
 		return True
 
-	def show_about(self, args):
+	def show_about(self, param, data):
 		self.builder.get_object("aboutdialog").show()
 
-	# Application activation
-	def do_activate(self):
-		self.builder = Gtk.Builder()
+	def do_startup(self):
+		Gtk.Application.do_startup(self)
+
 		# Look for the data files!
 		if os.path.isfile("window.glade"):
 			# They're here.. looks like a pre-installation execution
@@ -505,30 +505,17 @@ class App(Gtk.Application):
 		gettext.bindtextdomain("%s/share/locale" % sys.prefix)
 		self.gtk_domain = "gtk%d0" % Gtk.MAJOR_VERSION
 
-		# Set the basics for GTK
+		self.builder = Gtk.Builder()
 		self.builder.add_from_file(self.datapath + "/window.glade")
+		self.set_menubar(self.builder.get_object("menubar"))
 
-		self.treeview = self.builder.get_object("treeview1")
-		self.label_entry = self.builder.get_object("entry1")
-		self.action_entry = self.builder.get_object("combobox1")
-		self.execute_entry = self.builder.get_object("entry2")
-		self.execute_srch = self.builder.get_object("button1")
-		self.id_entry = self.builder.get_object("entry3")
-
-
-		# treemodel.iter(label, type, [action], [execute], parent, [menu-id])
-		self.treemodel=Gtk.TreeStore(GObject.TYPE_STRING, GObject.TYPE_STRING,
-				GObject.TYPE_STRING, GObject.TYPE_STRING, GObject.TYPE_STRING, GObject.TYPE_STRING)
-		self.treeview.set_model(self.treemodel)
-
-		# Signals
-		self.builder.connect_signals ({
-			"new_clicked": self.new,
-			"open_clicked": self.open,
-			"save_clicked": self.save,
-			"save_as_clicked": self.save_as,
-			"mnu_quit": self.mnu_quit,
-			"mnu_remove": self.mnu_remove,
+		signals = {
+			"new": self.new,
+			"open": self.open,
+			"save": self.save,
+			"save_as": self.save_as,
+			"quit": self.mnu_quit,
+			"remove": self.mnu_remove,
 			"label_changed": self.change_label,
 			"id_changed": self.change_id,
 			"action_changed": self.change_action,
@@ -537,17 +524,39 @@ class App(Gtk.Application):
 			"search_clicked": self.search_clicked,
 			"on_treeview1": self.treeview_changed,
 			"tree_key_pressed": self.tree_key_pressed,
-			"menu_clicked": self.new_menu,
-			"item_clicked": self.new_item,
-			"separator_clicked": self.new_separator,
-			"pipe_clicked": self.new_pipe,
-			"link_clicked": self.new_link,
+			"add_menu": self.new_menu,
+			"add_item": self.new_item,
+			"add_separator": self.new_separator,
+			"add_pipe": self.new_pipe,
+			"add_link": self.new_link,
 			"remove_clicked": self.remove,
-			"up_clicked": self.up,
-			"down_clicked": self.down,
+			"up": self.up,
+			"down": self.down,
 			"hide_about": self.hide_about,
-			"show_about": self.show_about,
-			"exit": self.exit })
+			"about": self.show_about,
+			"exit": self.exit }
+		for signal in signals:
+			action = Gio.SimpleAction.new(signal)
+			action.connect("activate", signals[signal])
+			self.add_action(action)
+		self.builder.connect_signals(signals)
+
+	# Application activation
+	def do_activate(self):
+		# Set the basics for GTK
+		self.treeview = self.builder.get_object("treeview1")
+		self.label_entry = self.builder.get_object("entry1")
+		self.action_entry = self.builder.get_object("combobox1")
+		self.execute_entry = self.builder.get_object("entry2")
+		self.execute_srch = self.builder.get_object("button1")
+		self.id_entry = self.builder.get_object("entry3")
+		self.window = self.builder.get_object("window1")
+
+
+		# treemodel.iter(label, type, [action], [execute], parent, [menu-id])
+		self.treemodel=Gtk.TreeStore(GObject.TYPE_STRING, GObject.TYPE_STRING,
+				GObject.TYPE_STRING, GObject.TYPE_STRING, GObject.TYPE_STRING, GObject.TYPE_STRING)
+		self.treeview.set_model(self.treemodel)
 
 		if len(sys.argv) == 2:
 			# must be a path to a menu
@@ -606,8 +615,10 @@ class App(Gtk.Application):
 		# Create the menu tree
 		self.createTree(None, None)
 
+
 		# Let's roll!
-		self.add_window(self.builder.get_object("window1"))
+		self.add_window(self.window)
+		self.window.show()
 
 	# Application init
 	def __init__(self):

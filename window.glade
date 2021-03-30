@@ -1,8 +1,122 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface domain="obmenu">
 
+  <menu id="menubar">
+    <submenu>
+      <attribute name="label" translatable="yes">_File</attribute>
+      <section>
+        <item>
+          <attribute name="label" translatable="yes">_New</attribute>
+          <attribute name="accel">&lt;Control&gt;n</attribute>
+          <attribute name="action">app.new</attribute>
+          <attribute name="icon">document-new</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">_Open</attribute>
+          <attribute name="accel">&lt;Control&gt;n</attribute>
+          <attribute name="action">app.open</attribute>
+          <attribute name="icon">document-open</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">_Save</attribute>
+          <attribute name="accel">&lt;Control&gt;s</attribute>
+          <attribute name="action">app.save</attribute>
+          <attribute name="icon">document-save</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Save _As</attribute>
+          <attribute name="accel">&lt;Control&gt;&lt;Shift&gt;s</attribute>
+          <attribute name="action">app.save_as</attribute>
+          <attribute name="icon">document-save-as</attribute>
+        </item>
+      </section>
+      <section>
+        <item>
+          <attribute name="label" translatable="yes">_Quit</attribute>
+          <attribute name="accel">&lt;Control&gt;q</attribute>
+          <attribute name="action">app.quit</attribute>
+          <attribute name="icon">gtk-quit</attribute>
+        </item>
+      </section>
+    </submenu>
+    <submenu>
+      <attribute name="label" translatable="yes">_Edit</attribute>
+      <section>
+        <item>
+          <attribute name="label" translatable="yes">Move _up</attribute>
+          <attribute name="accel">&lt;Control&gt;Up</attribute>
+          <attribute name="action">app.up</attribute>
+          <attribute name="icon">go-up</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Move dow_n</attribute>
+          <attribute name="accel">&lt;Control&gt;Down</attribute>
+          <attribute name="action">app.down</attribute>
+          <attribute name="icon">go-down</attribute>
+        </item>
+      </section>
+      <section>
+        <submenu>
+          <attribute name="label" translatable="yes">_Add</attribute>
+          <attribute name="icon">gtk-add</attribute>
+          <section>
+            <item>
+              <attribute name="label" translatable="yes">_Menu</attribute>
+              <attribute name="accel">&lt;Control&gt;m</attribute>
+              <attribute name="action">app.add_menu</attribute>
+              <attribute name="icon">gtk-index</attribute>
+            </item>
+            <item>
+              <attribute name="label" translatable="yes">_Item</attribute>
+              <attribute name="accel">&lt;Control&gt;i</attribute>
+              <attribute name="action">app.add_item</attribute>
+              <attribute name="icon">gtk-execute</attribute>
+            </item>
+            <item>
+              <attribute name="label" translatable="yes">_Separator</attribute>
+              <attribute name="accel">&lt;Control&gt;r</attribute>
+              <attribute name="action">app.add_separator</attribute>
+              <attribute name="icon">text-x-generic</attribute>
+            </item>
+            <item>
+              <attribute name="label" translatable="yes">_Pipe Menu</attribute>
+              <attribute name="accel">&lt;Control&gt;p</attribute>
+              <attribute name="action">app.add_pipe</attribute>
+            </item>
+            <item>
+              <attribute name="label" translatable="yes">_Link</attribute>
+              <attribute name="accel">&lt;Control&gt;l</attribute>
+              <attribute name="action">app.add_link</attribute>
+              <attribute name="icon">insert-link</attribute>
+            </item>
+          </section>
+        </submenu>
+      </section>
+      <section>
+        <item>
+          <attribute name="label" translatable="yes">_Delete</attribute>
+          <attribute name="accel">Delete</attribute>
+          <attribute name="action">app.remove</attribute>
+          <attribute name="icon">remove</attribute>
+        </item>
+      </section>
+    </submenu>
+    <submenu>
+      <attribute name="label" translatable="yes">_Help</attribute>
+      <section>
+        <item>
+          <attribute name="label" translatable="yes">_About</attribute>
+          <attribute name="accel">F1</attribute>
+          <attribute name="action">app.about</attribute>
+          <attribute name="icon">help-about</attribute>
+        </item>
+      </section>
+    </submenu>
+  </menu>
+
+
 <object class="GtkApplicationWindow" id="window1">
-  <property name="visible">True</property>
+  <property name="visible">False</property>
   <property name="title" translatable="yes">Openbox Menu Editor</property>
   <property name="type">GTK_WINDOW_TOPLEVEL</property>
   <property name="window_position">GTK_WIN_POS_NONE</property>
@@ -18,6 +132,7 @@
   <property name="type_hint">GDK_WINDOW_TYPE_HINT_NORMAL</property>
   <property name="gravity">GDK_GRAVITY_NORTH</property>
   <property name="focus_on_map">True</property>
+  <property name="show-menubar">True</property>
   <signal name="delete_event" handler="exit"/>
 
   <child>
@@ -26,220 +141,6 @@
       <property name="homogeneous">False</property>
       <property name="orientation">GTK_ORIENTATION_VERTICAL</property>
       <property name="spacing">0</property>
-
-      <child>
-        <object class="GtkMenuBar" id="menubar1">
-          <property name="visible">True</property>
-
-          <child>
-            <object class="GtkMenuItem" id="menuitem1">
-              <property name="visible">True</property>
-              <property name="label" translatable="yes" context="Stock label">_File</property>
-              <property name="use_underline">True</property>
-
-              <child type="submenu">
-                <object class="GtkMenu" id="menuitem1_menu">
-
-                  <child>
-                    <object class="GtkMenuItem" id="new1">
-                      <property name="visible">True</property>
-                      <property name="label" translatable="yes" context="Stock label">_New</property>
-                      <property name="use_underline">True</property>
-                      <signal name="activate" handler="new_clicked"/>
-                      <accelerator key="n" modifiers="GDK_CONTROL_MASK" signal="activate"/>
-                    </object>
-                  </child>
-
-                  <child>
-                    <object class="GtkMenuItem" id="open1">
-                      <property name="visible">True</property>
-                      <property name="label" translatable="yes" context="Stock label">_Open</property>
-                      <property name="use_underline">True</property>
-                      <signal name="activate" handler="open_clicked"/>
-                      <accelerator key="o" modifiers="GDK_CONTROL_MASK" signal="activate"/>
-                    </object>
-                  </child>
-
-                  <child>
-                    <object class="GtkMenuItem" id="save1">
-                      <property name="visible">True</property>
-                      <property name="label" translatable="yes" context="Stock label">_Save</property>
-                      <property name="use_underline">True</property>
-                      <signal name="activate" handler="save_clicked"/>
-                      <accelerator key="s" modifiers="GDK_CONTROL_MASK" signal="activate"/>
-                    </object>
-                  </child>
-
-                  <child>
-                    <object class="GtkMenuItem" id="save_as1">
-                      <property name="visible">True</property>
-                      <property name="label" translatable="yes" context="Stock label">Save _As</property>
-                      <property name="use_underline">True</property>
-                      <signal name="activate" handler="save_as_clicked"/>
-                      <accelerator key="s" modifiers="GDK_CONTROL_MASK|GDK_SHIFT_MASK" signal="activate"/>
-                    </object>
-                  </child>
-
-                  <child>
-                    <object class="GtkSeparatorMenuItem" id="separatormenuitem1">
-                      <property name="visible">True</property>
-                    </object>
-                  </child>
-
-                  <child>
-                    <object class="GtkMenuItem" id="quit1">
-                      <property name="visible">True</property>
-                      <property name="label" translatable="yes" context="Stock label">_Quit</property>
-                      <property name="use_underline">True</property>
-                      <signal name="activate" handler="mnu_quit"/>
-                      <accelerator key="q" modifiers="GDK_CONTROL_MASK" signal="activate"/>
-                    </object>
-                  </child>
-                </object>
-              </child>
-            </object>
-          </child>
-
-          <child>
-            <object class="GtkMenuItem" id="menuitem2">
-              <property name="visible">True</property>
-              <property name="label" translatable="yes" context="Stock label">_Edit</property>
-              <property name="use_underline">True</property>
-
-              <child type="submenu">
-                <object class="GtkMenu" id="menuitem2_menu">
-
-                  <child>
-                    <object class="GtkMenuItem" id="move_up1">
-                      <property name="visible">True</property>
-                      <property name="label" translatable="yes">Move _up</property>
-                      <property name="use_underline">True</property>
-                      <signal name="activate" handler="up_clicked"/>
-                      <accelerator key="Up" modifiers="GDK_CONTROL_MASK" signal="activate"/>
-                    </object>
-                  </child>
-
-                  <child>
-                    <object class="GtkMenuItem" id="move_down1">
-                      <property name="visible">True</property>
-                      <property name="label" translatable="yes">Move dow_n</property>
-                      <property name="use_underline">True</property>
-                      <signal name="activate" handler="down_clicked"/>
-                      <accelerator key="Down" modifiers="GDK_CONTROL_MASK" signal="activate"/>
-                    </object>
-                  </child>
-
-                  <child>
-                    <object class="GtkSeparatorMenuItem" id="separator2">
-                      <property name="visible">True</property>
-                    </object>
-                  </child>
-
-                  <child>
-                      <object class="GtkMenuItem">
-
-                      <property name="visible">True</property>
-                      <property name="label" translatable="yes">_Add</property>
-                      <property name="use_underline">True</property>
-
-                      <child type="submenu">
-                        <object class="GtkMenu" id="menuitem3_menu">
-
-                          <child>
-                            <object class="GtkMenuItem" id="menu5">
-                              <property name="visible">True</property>
-                              <property name="label" translatable="yes">_Menu</property>
-                              <property name="use_underline">True</property>
-                              <signal name="activate" handler="menu_clicked"/>
-                              <accelerator key="m" modifiers="GDK_CONTROL_MASK" signal="activate"/>
-                            </object>
-                          </child>
-
-                          <child>
-                            <object class="GtkMenuItem" id="item2">
-                              <property name="visible">True</property>
-                              <property name="label" translatable="yes">_Item</property>
-                              <property name="use_underline">True</property>
-                              <signal name="activate" handler="item_clicked"/>
-                              <accelerator key="i" modifiers="GDK_CONTROL_MASK" signal="activate"/>
-                            </object>
-                          </child>
-
-                          <child>
-                            <object class="GtkMenuItem" id="separator3">
-                              <property name="visible">True</property>
-                              <property name="label" translatable="yes">_Separator</property>
-                              <property name="use_underline">True</property>
-                              <signal name="activate" handler="separator_clicked"/>
-                              <accelerator key="r" modifiers="GDK_CONTROL_MASK" signal="activate"/>
-                            </object>
-                          </child>
-
-                          <child>
-                            <object class="GtkMenuItem" id="pipemenu1">
-                              <property name="visible">True</property>
-                              <property name="label" translatable="yes">_Pipe Menu</property>
-                              <property name="use_underline">True</property>
-                              <signal name="activate" handler="pipe_clicked"/>
-                              <accelerator key="p" modifiers="GDK_CONTROL_MASK" signal="activate"/>
-                            </object>
-                          </child>
-
-                          <child>
-                            <object class="GtkMenuItem" id="link1">
-                              <property name="visible">True</property>
-                              <property name="label" translatable="yes">_Link</property>
-                              <property name="use_underline">True</property>
-                              <signal name="activate" handler="link_clicked"/>
-                              <accelerator key="l" modifiers="GDK_CONTROL_MASK" signal="activate"/>
-                            </object>
-                          </child>
-                        </object>
-                      </child>
-                    </object>
-                  </child>
-
-                  <child>
-                    <object class="GtkMenuItem" id="delete2">
-                      <property name="visible">True</property>
-                      <property name="use_underline">True</property>
-                      <property name="label" translatable="yes" context="Stock label">_Delete</property>
-                      <signal name="activate" handler="mnu_remove"/>
-                    </object>
-                  </child>
-                </object>
-              </child>
-            </object>
-          </child>
-
-          <child>
-            <object class="GtkMenuItem" id="menuitem4">
-              <property name="visible">True</property>
-              <property name="label" translatable="yes" context="Stock label">_Help</property>
-              <property name="use_underline">True</property>
-
-              <child type="submenu">
-                <object class="GtkMenu" id="menuitem4_menu">
-
-                  <child>
-                    <object class="GtkMenuItem" id="about1">
-                      <property name="visible">True</property>
-                      <property name="label" translatable="yes" context="Stock label">_About</property>
-                      <property name="use_underline">True</property>
-                      <signal name="activate" handler="show_about"/>
-                    </object>
-                  </child>
-                </object>
-              </child>
-            </object>
-          </child>
-        </object>
-        <packing>
-          <property name="padding">0</property>
-          <property name="expand">False</property>
-          <property name="fill">False</property>
-        </packing>
-      </child>
 
       <child>
         <object class="GtkToolbar" id="toolbar1">
@@ -256,7 +157,7 @@
               <property name="visible_horizontal">True</property>
               <property name="visible_vertical">True</property>
               <property name="is_important">False</property>
-              <signal name="clicked" handler="save_clicked"/>
+              <signal name="clicked" handler="save"/>
             </object>
             <packing>
               <property name="expand">False</property>
@@ -286,7 +187,7 @@
               <property name="visible_horizontal">True</property>
               <property name="visible_vertical">True</property>
               <property name="is_important">True</property>
-              <signal name="clicked" handler="menu_clicked"/>
+              <signal name="clicked" handler="add_menu"/>
             </object>
             <packing>
               <property name="expand">False</property>
@@ -303,7 +204,7 @@
               <property name="visible_horizontal">True</property>
               <property name="visible_vertical">True</property>
               <property name="is_important">True</property>
-              <signal name="clicked" handler="item_clicked"/>
+              <signal name="clicked" handler="add_item"/>
             </object>
             <packing>
               <property name="expand">False</property>
@@ -320,7 +221,7 @@
               <property name="visible_horizontal">True</property>
               <property name="visible_vertical">True</property>
               <property name="is_important">True</property>
-              <signal name="clicked" handler="separator_clicked"/>
+              <signal name="clicked" handler="add_separator"/>
             </object>
             <packing>
               <property name="expand">False</property>
@@ -349,7 +250,7 @@
               <property name="visible_horizontal">True</property>
               <property name="visible_vertical">True</property>
               <property name="is_important">False</property>
-              <signal name="clicked" handler="up_clicked"/>
+              <signal name="clicked" handler="up"/>
             </object>
             <packing>
               <property name="expand">False</property>
@@ -365,7 +266,7 @@
               <property name="visible_horizontal">True</property>
               <property name="visible_vertical">True</property>
               <property name="is_important">False</property>
-              <signal name="clicked" handler="down_clicked"/>
+              <signal name="clicked" handler="down"/>
             </object>
             <packing>
               <property name="expand">False</property>
@@ -535,7 +436,7 @@
               <child>
                 <object class="GtkLabel" id="label3">
                   <property name="visible">True</property>
-                  <property name="label" translatable="yes" context="Stock label">_Execute</property>
+                  <property name="label" translatable="yes">_Execute</property>
                   <property name="use_underline">True</property>
                   <property name="mnemonic-widget">entry2</property>
                   <property name="use_markup">False</property>
