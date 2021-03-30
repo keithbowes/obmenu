@@ -7,15 +7,6 @@ libdir = 'share/obmenu'
 localedir = 'share/locale'
 sys.path += [os.path.join(os.curdir, libdir)]
 
-locales = ()
-with open("po/LINGUAS") as f:
-	# A bit inelegant, but necessary for Python versions without the Walrus operator
-	while True:
-		lang = f.readline().strip()
-		if not lang:
-			break
-		locales += (localedir + "/" + lang + "/LC_MESSAGES", ["po/" + lang + "/obmenu.mo"])
-
 setup(name='obMenu',
       version='1.1',
       description='Openbox Menu Editor',
@@ -27,5 +18,5 @@ setup(name='obMenu',
       download_url='https://sourceforge.net/projects/obmenu/files/',
       scripts=['obmenu', 'pipes/obm-xdg','pipes/obm-dir','pipes/obm-nav'],
       py_modules=['obxml'],
-      data_files=[(libdir, ['window.glade', 'icons/mnu16.png','icons/mnu48.png']), locales],
+      data_files=[(libdir, ['window.glade']), ("%s/icons" % libdir, ['icons/mnu16.png','icons/mnu48.png'])],
       )

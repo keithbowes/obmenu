@@ -1,17 +1,32 @@
-.PHONY: all clean
+.PHONY: all clean install uninstall update-po
 .SUFFIXES:
 .SUFFIXES: .mo .po
 
+PREFIX ?= /usr/local
+
 deps=$(shell cat POTFILES)
-pofiles=$(wildcard */obmenu.po)
+linguas=$(shell cat LINGUAS)
+pofiles=$(addsuffix .po,$(linguas))
 mofiles=$(pofiles:.po=.mo)
+
+localedir=$(DESTDIR)$(PREFIX)/share/locale
 
 all: $(mofiles)
 
 clean:
-	find . \( -name '*.mo' -o -name '*.po~' \) -exec rm -fv '{}' \;
+	rm -fv *.mo *.po~
 
-%.mo: %.po
+install: all
+	$(foreach l,$(linguas),mkdir -p $(localedir)/$l/LC_MESSAGES;\
+		install -m 644 $l.mo $(localedir)/$l/LC_MESSAGES/obmenu.mo;\
+		echo "$(localedir)/$l/LC_MESSAGES/obmenu.mo" >> ../install_log.txt;)
+
+uninstall:
+	rm -f $(DESTDIR)$(PREFIX)/share/locale/*/obmenu.mo
+
+update-po: $(pofiles)
+
+.po.mo:
 	msgfmt -o $@ $<
 
 %.po: obmenu.pot

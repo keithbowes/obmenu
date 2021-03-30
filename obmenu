@@ -469,9 +469,12 @@ class App:
 		if self.treeview.is_focus():
 			self.remove(None)
 
+	def hide_about(self, widget, event):
+		widget.hide()
+		return True
+
 	def show_about(self, args):
-		aboutdialog = self.builder.get_object("aboutdialog")
-		aboutdialog.show()
+		self.builder.get_object("aboutdialog").show()
 
 	# application init
 	def init(self):
@@ -482,12 +485,14 @@ class App:
 			self.datapath = os.getcwd()
 		elif os.path.isdir(os.path.abspath(os.path.dirname(__file__) + "/../share/obmenu")):
 			self.datapath = os.path.abspath(os.path.dirname(__file__) + "/../share/obmenu")
+		elif os.path.isdir("%s/share/obmenu" % sys.prefix):
+			self.datatpath = "%s/share/obmenu" % sys.prefix
 		elif os.path.isdir("/usr/local/share/obmenu"):
 			self.datapath = "/usr/local/share/obmenu"
 		elif os.path.isdir("/usr/share/obmenu"):
 			self.datapath = "/usr/share/obmenu"
 		elif os.getenv("XDG_DATA_HOME") and os.path.isdir("%s/%s" % (os.getenv("XDG_DATA_HOME"), "obmenu")):
-			self.datapath = os.path.isdir("%s/%s" % (os.getenv("XDG_DATA_HOME"), "obmenu"))
+			self.datapath = "%s/%s" % (os.getenv("XDG_DATA_HOME"), "obmenu")
 		elif os.path.isdir(os.path.expanduser("~/.local/share/obmenu")):
 			self.datapath = os.path.expanduser("~/.local/share/obmenu")
 		else:
@@ -540,6 +545,7 @@ class App:
 			"remove_clicked": self.remove,
 			"up_clicked": self.up,
 			"down_clicked": self.down,
+			"hide_about": self.hide_about,
 			"show_about": self.show_about,
 			"exit": self.quit })
 

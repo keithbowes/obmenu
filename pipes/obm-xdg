@@ -454,7 +454,7 @@ if __name__ == "__main__":
 			mnulb = "Openbox 3"
 		else:
 			mnuid = "obm-xdg-menus"
-			mnulb = "Gnome menus"
+			mnulb = "XDG menu"
 
 
 		obmenu.createMenu(None, mnulb, mnuid)
@@ -479,7 +479,7 @@ if __name__ == "__main__":
 			obmenu.saveMenu("%s/openbox/menu.xml"%(xdg_ch))
 
 		else:
-			obmenu.saveMenu("gnome-menus.xml")
+			obmenu.saveMenu("xdg-menu.xml")
 
 	else:
 

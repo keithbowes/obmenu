@@ -13,13 +13,26 @@ update it for Python 3/GTK 3 and to allow it to work with
 
   [Python](http://python.org),
   [PyGObject](https://pygobject.readthedocs.io),
-  [GTK+](http://gtk.org/) >= 3.0
+  [GTK](http://gtk.org/) >= 3.0
 
-  You no longer need pygtk and python-glade, required by the original obmenu.
+  PyGObject 3 or higher is recommended, but older versions may also work.
+  For Python 2.7 (not recommended) or older versions of Python 3, you'll need a
+  PyGObect version less than 3.38.0.
+  For GTK 4 support, you'll need PyGObject 3.40.0 or higher.
+
+  It should work with [PyPy](http://pypy.org), but there are no guarantees.
+  If you use PyPy, you'll need the equivalents of the Python versions specified
+  above.
+
+  You no longer need pygtk and pyglade, required by the original obmenu.
 
 ## INSTALLATION
 
 Type this command in a shell:
+
+`python setup.py install --user`
+
+or to install system-wide:
 
 `sudo python setup.py install`
 
