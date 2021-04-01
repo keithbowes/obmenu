@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Obmenu 1.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-29 09:36-0400\n"
-"PO-Revision-Date: 2021-03-30 17:28-0400\n"
+"POT-Creation-Date: 2021-03-31 23:15-0400\n"
+"PO-Revision-Date: 2021-03-31 23:20-0400\n"
 "Last-Translator: Keith Bowes <keith@localhost>\n"
 "Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
 "Language: de\n"
@@ -17,224 +17,208 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../obmenu:95
+#: ../obmenu:131
 msgid "_OK"
 msgstr "_OK"
 
-#: ../obmenu:96
+#: ../obmenu:132
 msgid "_Cancel"
 msgstr "_Abbrechen"
 
-#: ../obmenu:106 ../obmenu:117
+#: ../obmenu:145 ../obmenu:156
 #, c-format
 msgid "Changes in %s will be lost. Continue?"
 msgstr "Änderungen in %s wird verloren werden. Fortsetzen?"
 
-#: ../obmenu:111
+#: ../obmenu:150
 msgid "Untitled"
 msgstr "Titellos"
 
-#: ../obmenu:119
+#: ../obmenu:158
 msgid "Open"
 msgstr "Öffnen"
 
-#: ../obmenu:136 ../obmenu:146
+#: ../obmenu:177 ../obmenu:184 ../obmenu:189
 msgid "Save as..."
 msgstr "Speichern wie"
 
-#: ../obmenu:157
+#: ../obmenu:212
 msgid "There are unsaved changes. Exit anyway?"
 msgstr "Es gibt ungespeicherte Änderungen. Trotzdem beenden?"
 
-#: ../obmenu:260
+#: ../obmenu:317
 msgid "Select File"
 msgstr "Datei wählen"
 
-#: ../obmenu:324 ../obmenu:326
+#: ../obmenu:379 ../obmenu:381
 msgid "New Menu"
 msgstr "Neus Menü"
 
-#: ../obmenu:325 ../obmenu:327 ../obmenu:346 ../obmenu:347
+#: ../obmenu:380 ../obmenu:382 ../obmenu:401 ../obmenu:402
 msgid "New Item"
 msgstr "Neuer Eintrag"
 
-#: ../obmenu:325 ../obmenu:327 ../obmenu:346 ../obmenu:407
+#: ../obmenu:380 ../obmenu:382 ../obmenu:401 ../obmenu:462
 msgid "command"
 msgstr "Befehl"
 
-#: ../obmenu:407 ../obmenu:408
+#: ../obmenu:462 ../obmenu:463
 msgid "New Pipe"
 msgstr "Neuer Rohr"
 
-#: ../obmenu:559
-msgid "Error: Wrong number of arguments"
-msgstr "Fehler: Falsche Zahl Argumente"
-
-#: ../obmenu:560
-msgid "Usage: obmenu /path/to/menu.xml"
-msgstr "Benutzung: obmenu /Pfad/zu/menu.xml"
-
-#: ../obmenu:561
-msgid "\tOr just obmenu, to edit the default file"
-msgstr "\tOder nur obmenu, um die Standarddatei zu bearbeiten"
-
-#: ../obmenu:565
-#, c-format
-msgid "Error: \"%s\" not found"
-msgstr "Fehler: \"%s\" nicht gefunden"
-
-#: ../obmenu:577
+#: ../obmenu:669
 msgid "Label"
 msgstr "Etikette"
 
-#: ../obmenu:582
+#: ../obmenu:674
 msgid "Type"
 msgstr "Art"
 
-#: ../obmenu:587
+#: ../obmenu:679
 msgid "Action"
 msgstr "Aktion"
 
-#: ../obmenu:592
+#: ../obmenu:684
 msgid "Execute"
 msgstr "Ausführen"
 
-#: ../window.glade:6 ../window.glade:698
-msgid "Openbox Menu Editor"
-msgstr "Openbox Menueditor"
+#: ../obmenu:702
+msgid "Error: Obmenu can presently open only one file at a time."
+msgstr "Fehler: Jetzt kann Obmenu nur eine Datei gleichzeitig öffnen."
 
-#: ../window.glade:38
-msgctxt "Stock label"
+#: ../obmenu:703
+msgid "Only the first specified will be opened."
+msgstr "Nur die erste spezifizierte wird geöffnet werden"
+
+#: ../obmenu.glade:6 ../obmenu.ui:6
 msgid "_File"
 msgstr "_Datei"
 
-#: ../window.glade:47
-msgctxt "Stock label"
+#: ../obmenu.glade:9 ../obmenu.ui:9
 msgid "_New"
 msgstr "_Neu"
 
-#: ../window.glade:57
-msgctxt "Stock label"
+#: ../obmenu.glade:15 ../obmenu.ui:15
 msgid "_Open"
 msgstr "_Öffnen"
 
-#: ../window.glade:67
-msgctxt "Stock label"
+#: ../obmenu.glade:21 ../obmenu.ui:21
 msgid "_Save"
 msgstr "_Speichern"
 
-#: ../window.glade:77
-msgctxt "Stock label"
+#: ../obmenu.glade:27 ../obmenu.ui:27
 msgid "Save _As"
-msgstr "Speichern _wie"
+msgstr "Speichern _unter"
 
-#: ../window.glade:93
-msgctxt "Stock label"
+#: ../obmenu.glade:35 ../obmenu.ui:35
+msgid "_Reconfigure Openbox"
+msgstr "_Openbox neu laden"
+
+#: ../obmenu.glade:43 ../obmenu.ui:43
 msgid "_Quit"
 msgstr "_Beenden"
 
-#: ../window.glade:107
-msgctxt "Stock label"
+#: ../obmenu.glade:51 ../obmenu.ui:51
 msgid "_Edit"
 msgstr "_Bearbeiten"
 
-#: ../window.glade:116
+#: ../obmenu.glade:54 ../obmenu.ui:54
 msgid "Move _up"
 msgstr "_Oben bewegen"
 
-#: ../window.glade:126
+#: ../obmenu.glade:60 ../obmenu.ui:60
 msgid "Move dow_n"
 msgstr "_Unten bewegen"
 
-#: ../window.glade:143
+#: ../obmenu.glade:68 ../obmenu.ui:68
 msgid "_Add"
 msgstr "_Zusätzen"
 
-#: ../window.glade:152
+#: ../obmenu.glade:72 ../obmenu.ui:72
 msgid "_Menu"
 msgstr "_Menü"
 
-#: ../window.glade:162
+#: ../obmenu.glade:78 ../obmenu.ui:78
 msgid "_Item"
 msgstr "_Eintrag"
 
-#: ../window.glade:172
+#: ../obmenu.glade:84 ../obmenu.ui:84
 msgid "_Separator"
 msgstr "_Separator"
 
-#: ../window.glade:182
+#: ../obmenu.glade:90 ../obmenu.ui:90
 msgid "_Pipe Menu"
 msgstr "_Roarmenü"
 
-#: ../window.glade:192
+#: ../obmenu.glade:96 ../obmenu.ui:96
 msgid "_Link"
 msgstr "_Link"
 
-#: ../window.glade:207
-msgctxt "Stock label"
+#: ../obmenu.glade:106 ../obmenu.ui:106
 msgid "_Delete"
 msgstr "_Entfernen"
 
-#: ../window.glade:219
-msgctxt "Stock label"
+#: ../obmenu.glade:114 ../obmenu.ui:114
 msgid "_Help"
 msgstr "_Hilfe"
 
-#: ../window.glade:228
-msgctxt "Stock label"
+#: ../obmenu.glade:117 ../obmenu.ui:117
 msgid "_About"
 msgstr "_Über"
 
-#: ../window.glade:256
+#: ../obmenu.glade:129 ../obmenu.glade:603 ../obmenu.ui:126 ../obmenu.ui:359
+msgid "Openbox Menu Editor"
+msgstr "Openbox Menueditor"
+
+#: ../obmenu.glade:164 ../obmenu.ui:147
 msgid "Save the menu"
 msgstr "Das Menü speichern"
 
-#: ../window.glade:285
+#: ../obmenu.glade:193 ../obmenu.ui:159
 msgid "New menu"
 msgstr "Neus Menü"
 
-#: ../window.glade:302
+#: ../obmenu.glade:210 ../obmenu.ui:167
 msgid "New item"
 msgstr "Neuer Eintrag"
 
-#: ../window.glade:319
+#: ../obmenu.glade:227 ../obmenu.ui:175
 msgid "New separator"
 msgstr "Neuer Separator"
 
-#: ../window.glade:349
+#: ../obmenu.glade:257 ../obmenu.ui:188
 msgid "Move up"
 msgstr "Oben wegen"
 
-#: ../window.glade:365
+#: ../obmenu.glade:273 ../obmenu.ui:195
 msgid "Move down"
 msgstr "Unten wegen"
 
-#: ../window.glade:394
+#: ../obmenu.glade:302 ../obmenu.ui:207
 msgid "Removes a menu or an item"
 msgstr "Entfernt ein Menü oder einen Eintrag"
 
-#: ../window.glade:466
+#: ../obmenu.glade:372 ../obmenu.ui:238
 msgid "_Label"
 msgstr "_Etikette"
 
-#: ../window.glade:491
+#: ../obmenu.glade:397 ../obmenu.ui:250
 msgid "_ID"
 msgstr "_Auszeichnung"
 
-#: ../window.glade:516
+#: ../obmenu.glade:422 ../obmenu.ui:262
 msgid "_Action"
 msgstr "_Aktion"
 
-#: ../window.glade:541
-msgctxt "Stock label"
+#: ../obmenu.glade:447 ../obmenu.ui:274
 msgid "_Execute"
 msgstr "_Ausführen"
 
-#: ../window.glade:658
+#: ../obmenu.glade:564 ../obmenu.ui:338
 msgid "..."
 msgstr "..."
 
-#: ../window.glade:699
+#: ../obmenu.glade:605 ../obmenu.ui:361
 msgid ""
 "Thank you for using this sofware.\n"
 "     Send any feedback to m.kolme@gmail.com"
@@ -242,9 +226,9 @@ msgstr ""
 "Danke für diese Software benutzen.\n"
 "     Nachrichten an m.kolme@gmail.com schicken"
 
-#: ../window.glade:701
+#: ../obmenu.glade:607 ../obmenu.ui:363
 msgid ""
-"    obmenu: Openbox Menu Editor\n"
+"    Obmenu: Openbox Menu Editor\n"
 "        Copyright (C) 2005-2006  Manuel Colmenero\n"
 "\n"
 "        This program is free software; you can redistribute it and/or "
@@ -264,7 +248,7 @@ msgid ""
 "        Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  "
 "02111-1307  USA"
 msgstr ""
-"    obmenu: Openbox Menüeditor\n"
+"    Obmenu: Openbox Menüeditor\n"
 "        Copyright (C) 2005-2006  Manuel Colmenero\n"
 "\n"
 "        Dieses Programm ist freie Software. Sie können es unter den\n"
@@ -284,11 +268,11 @@ msgstr ""
 "       Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston,\n"
 "       MA 02110, USA."
 
-#: ../window.glade:718
+#: ../obmenu.glade:624 ../obmenu.ui:380
 msgid "Website"
 msgstr "Website"
 
 #. TRANSLATORS: Replace this string with your names, one name per line.
-#: ../window.glade:720
+#: ../obmenu.glade:626 ../obmenu.ui:382
 msgid "translator-credits"
 msgstr "translator-credits"
