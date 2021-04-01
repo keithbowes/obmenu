@@ -7,7 +7,7 @@ indent_style = tab
 tab_width = 8
 trim_trailing_whitespace = true
 
-[window.glade]
+[{obmenu.glade,obmenu.ui}]
 charset = utf-8
 end_of_line = lf
 indent_size = 2

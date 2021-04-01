@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface domain="obmenu">
+  <requires lib="gtk" version="4.0"/>
+  <menu id="menubar">
+    <submenu>
+      <attribute name="label" translatable="yes">_File</attribute>
+      <section>
+        <item>
+          <attribute name="label" translatable="yes">_New</attribute>
+          <attribute name="accel">&lt;Control&gt;n</attribute>
+          <attribute name="action">app.new</attribute>
+          <attribute name="icon">document-new</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">_Open</attribute>
+          <attribute name="accel">&lt;Control&gt;o</attribute>
+          <attribute name="action">app.open</attribute>
+          <attribute name="icon">document-open</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">_Save</attribute>
+          <attribute name="accel">&lt;Control&gt;s</attribute>
+          <attribute name="action">app.save</attribute>
+          <attribute name="icon">document-save</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Save _As</attribute>
+          <attribute name="accel">&lt;Control&gt;&lt;Shift&gt;s</attribute>
+          <attribute name="action">app.save.as</attribute>
+          <attribute name="icon">document-save-as</attribute>
+        </item>
+      </section>
+      <section>
+        <item>
+          <attribute name="label" translatable="yes">_Reconfigure Openbox</attribute>
+          <attribute name="accel">&lt;Control&gt;c</attribute>
+          <attribute name="action">app.reconfigure</attribute>
+          <attribute name="icon">view-refresh</attribute>
+        </item>
+      </section>
+      <section>
+        <item>
+          <attribute name="label" translatable="yes">_Quit</attribute>
+          <attribute name="accel">&lt;Control&gt;q</attribute>
+          <attribute name="action">app.quit</attribute>
+          <attribute name="icon">gtk-quit</attribute>
+        </item>
+      </section>
+    </submenu>
+    <submenu>
+      <attribute name="label" translatable="yes">_Edit</attribute>
+      <section>
+        <item>
+          <attribute name="label" translatable="yes">Move _up</attribute>
+          <attribute name="accel">&lt;Control&gt;Up</attribute>
+          <attribute name="action">app.up</attribute>
+          <attribute name="icon">go-up</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Move dow_n</attribute>
+          <attribute name="accel">&lt;Control&gt;Down</attribute>
+          <attribute name="action">app.down</attribute>
+          <attribute name="icon">go-down</attribute>
+        </item>
+      </section>
+      <section>
+        <submenu>
+          <attribute name="label" translatable="yes">_Add</attribute>
+          <attribute name="icon">gtk-add</attribute>
+          <section>
+            <item>
+              <attribute name="label" translatable="yes">_Menu</attribute>
+              <attribute name="accel">&lt;Control&gt;m</attribute>
+              <attribute name="action">app.add.menu</attribute>
+              <attribute name="icon">folder-new</attribute>
+            </item>
+            <item>
+              <attribute name="label" translatable="yes">_Item</attribute>
+              <attribute name="accel">&lt;Control&gt;i</attribute>
+              <attribute name="action">app.add.item</attribute>
+              <attribute name="icon">system-run</attribute>
+            </item>
+            <item>
+              <attribute name="label" translatable="yes">_Separator</attribute>
+              <attribute name="accel">&lt;Control&gt;r</attribute>
+              <attribute name="action">app.add.separator</attribute>
+              <attribute name="icon">text-x-generic</attribute>
+            </item>
+            <item>
+              <attribute name="label" translatable="yes">_Pipe Menu</attribute>
+              <attribute name="accel">&lt;Control&gt;p</attribute>
+              <attribute name="action">app.add.pipe</attribute>
+              <attribute name="icon">document-share</attribute>
+            </item>
+            <item>
+              <attribute name="label" translatable="yes">_Link</attribute>
+              <attribute name="accel">&lt;Control&gt;l</attribute>
+              <attribute name="action">app.add.link</attribute>
+              <attribute name="icon">insert-link</attribute>
+            </item>
+          </section>
+        </submenu>
+      </section>
+      <section>
+        <item>
+          <attribute name="label" translatable="yes">_Delete</attribute>
+          <attribute name="accel">Delete</attribute>
+          <attribute name="action">app.remove</attribute>
+          <attribute name="icon">remove</attribute>
+        </item>
+      </section>
+    </submenu>
+    <submenu>
+      <attribute name="label" translatable="yes">_Help</attribute>
+      <section>
+        <item>
+          <attribute name="label" translatable="yes">_About</attribute>
+          <attribute name="accel">F1</attribute>
+          <attribute name="action">app.about</attribute>
+          <attribute name="icon">help-about</attribute>
+        </item>
+      </section>
+    </submenu>
+  </menu>
+  <object class="GtkApplicationWindow" id="appwindow">
+    <property name="title" translatable="yes">Openbox Menu Editor</property>
+    <property name="default-width">500</property>
+    <property name="default-height">500</property>
+    <property name="icon-name"></property>
+    <signal name="close-request" handler="exit"/>
+    <child>
+      <object class="GtkBox" id="main_layout_box">
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkPopoverMenuBar">
+            <property name="menu-model">menubar</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox" id="toolbar">
+            <property name="valign">center</property>
+            <style>
+              <class name="toolbar"/>
+            </style>
+            <child>
+              <object class="GtkButton" id="save_toolbutton">
+                <property name="tooltip-text" translatable="yes">Save the menu</property>
+                <property name="icon-name">document-save</property>
+                <signal name="clicked" handler="save"/>
+              </object>
+            </child>
+            <child>
+              <object class="GtkSeparator" id="separatortoolitem1">
+                <property name="orientation">vertical</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="new_menu_toolbutton">
+                <property name="tooltip-text" translatable="yes">New menu</property>
+                <property name="use-underline">1</property>
+                <property name="icon-name">folder-new</property>
+                <signal name="clicked" handler="add.menu"/>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="new_item_toolbutton">
+                <property name="tooltip-text" translatable="yes">New item</property>
+                <property name="use-underline">1</property>
+                <property name="icon-name">system-run</property>
+                <signal name="clicked" handler="add.item"/>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="new_separator_toolbutton">
+                <property name="tooltip-text" translatable="yes">New separator</property>
+                <property name="use-underline">1</property>
+                <property name="icon-name">text-x-generic</property>
+                <signal name="clicked" handler="add.separator"/>
+              </object>
+            </child>
+            <child>
+              <object class="GtkSeparator" id="separatortoolitem2">
+                <property name="orientation">vertical</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="move_up_toolbutton">
+                <property name="tooltip-text" translatable="yes">Move up</property>
+                <property name="icon-name">go-up</property>
+                <signal name="clicked" handler="up"/>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="move_down_toolbutton">
+                <property name="tooltip-text" translatable="yes">Move down</property>
+                <property name="icon-name">go-down</property>
+                <signal name="clicked" handler="down"/>
+              </object>
+            </child>
+            <child>
+              <object class="GtkSeparator" id="separatortoolitem3">
+                <property name="orientation">vertical</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="remove_toolbutton">
+                <property name="tooltip-text" translatable="yes">Removes a menu or an item</property>
+                <property name="icon-name">remove</property>
+                <signal name="clicked" handler="remove"/>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox" id="treeview_box">
+            <property name="vexpand">1</property>
+            <property name="orientation">vertical</property>
+            <child>
+              <object class="GtkScrolledWindow" id="treeview_scrolled_window">
+                <property name="vexpand">1</property>
+                <property name="hscrollbar-policy">always</property>
+                <property name="vscrollbar-policy">always</property>
+                <property name="child">
+                  <object class="GtkTreeView" id="treeview">
+                    <property name="enable-search">0</property>
+                    <signal name="cursor_changed" handler="treeview_changed"/>
+                  </object>
+                </property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkGrid" id="properties_grid">
+                <property name="column-homogeneous">1</property>
+                <property name="row-spacing">2</property>
+                <property name="column-spacing">10</property>
+                <child>
+                  <object class="GtkLabel" id="label_label">
+                    <property name="label" translatable="yes">_Label</property>
+                    <property name="use-underline">1</property>
+                    <property name="mnemonic-widget">label_entry</property>
+                    <property name="xalign">0</property>
+                    <layout>
+                      <property name="column">0</property>
+                      <property name="row">0</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="id_label">
+                    <property name="label" translatable="yes">_ID</property>
+                    <property name="use-underline">1</property>
+                    <property name="mnemonic-widget">id_entry</property>
+                    <property name="xalign">0</property>
+                    <layout>
+                      <property name="column">0</property>
+                      <property name="row">1</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="action_label">
+                    <property name="label" translatable="yes">_Action</property>
+                    <property name="use-underline">1</property>
+                    <property name="mnemonic-widget">action_combo</property>
+                    <property name="xalign">0</property>
+                    <layout>
+                      <property name="column">0</property>
+                      <property name="row">2</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="execute_label">
+                    <property name="label" translatable="yes">_Execute</property>
+                    <property name="use-underline">1</property>
+                    <property name="mnemonic-widget">execute_entry</property>
+                    <property name="xalign">0</property>
+                    <layout>
+                      <property name="column">0</property>
+                      <property name="row">3</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkEntry" id="label_entry">
+                    <property name="sensitive">0</property>
+                    <property name="text" translatable="yes"></property>
+                    <signal name="changed" handler="label_changed"/>
+                    <layout>
+                      <property name="column-span">10</property>
+                      <property name="column">1</property>
+                      <property name="row">0</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkEntry" id="id_entry">
+                    <property name="sensitive">0</property>
+                    <property name="text" translatable="yes"></property>
+                    <signal name="changed" handler="id_changed"/>
+                    <layout>
+                      <property name="column-span">10</property>
+                      <property name="column">1</property>
+                      <property name="row">1</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkComboBoxText" id="action_combo">
+                    <property name="sensitive">0</property>
+                    <items>
+                      <item translatable="no">Execute</item>
+                      <item translatable="no">Reconfigure</item>
+                      <item translatable="no">Restart</item>
+                    </items>
+                    <signal name="changed" handler="action_changed"/>
+                    <layout>
+                      <property name="column-span">10</property>
+                      <property name="column">1</property>
+                      <property name="row">2</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkBox" id="execute_box">
+                    <child>
+                      <object class="GtkEntry" id="execute_entry">
+                        <property name="hexpand">1</property>
+                        <property name="sensitive">0</property>
+                        <property name="text" translatable="yes"></property>
+                        <signal name="changed" handler="execute_changed"/>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="execute_search_button">
+                        <property name="halign">center</property>
+                        <property name="sensitive">0</property>
+                        <property name="label" translatable="yes">...</property>
+                        <property name="use-underline">1</property>
+                        <signal name="clicked" handler="search_clicked"/>
+                      </object>
+                    </child>
+                    <layout>
+                      <property name="column-span">10</property>
+                      <property name="column">1</property>
+                      <property name="row">3</property>
+                    </layout>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+  <object class="GtkAboutDialog" id="aboutdialog">
+    <property name="destroy-with-parent">1</property>
+    <property name="name" translatable="yes">Openbox Menu Editor</property>
+    <property name="program-name">Obmenu</property>
+    <property name="comments" translatable="yes">Thank you for using this sofware.
+     Send any feedback to m.kolme@gmail.com</property>
+    <property name="license" translatable="yes">    Obmenu: Openbox Menu Editor
+        Copyright (C) 2005-2006  Manuel Colmenero
+
+        This program is free software; you can redistribute it and/or modify
+        it under the terms of the GNU General Public License as published by
+        the Free Software Foundation; either version 2 of the License, or
+        (at your option) any later version.
+
+        This program is distributed in the hope that it will be useful,
+        but WITHOUT ANY WARRANTY; without even the implied warranty of
+        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+        GNU General Public License for more details.
+
+        You should have received a copy of the GNU General Public License
+        along with this program; if not, write to the Free Software
+        Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA</property>
+    <property name="website">http://obmenu.sourceforge.net/</property>
+    <property name="website-label" translatable="yes">Website</property>
+    <property name="authors">Manuel Colmenero &lt;m.kolme@gmail.com&gt;</property>
+    <property name="translator-credits" translatable="yes" comments="TRANSLATORS: Replace this string with your names, one name per line.">translator-credits</property>
+    <property name="logo">icons/mnu48.png</property>
+    <signal name="close-request" handler="hide_about"/>
+  </object>
+</interface>

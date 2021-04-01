@@ -20,7 +20,7 @@
 
 import obxml, sys, os
 
-menu = obxml.ObMenu()
+menu = obxml.Obmenu()
 menu.newPipe()
 if len(sys.argv) != 4:
 	menu.createItem(None, "ERROR: Wrong number of arguments", "Execute", "true")

@@ -20,8 +20,12 @@
 
 import gi, obxml, random, time, os, sys, gettext
 
-gi.require_version('Gtk', '3.0')
-from gi.repository import Gtk, Gio, GLib, GObject
+try:
+	gi.require_version('Gtk', '4.0')
+	from gi.repository import Gtk, Gio, GLib, GObject
+except:
+	gi.require_version('Gtk', '3.0')
+	from gi.repository import Gtk, Gio, GLib, GObject
 
 from gettext import dgettext, gettext as _
 
@@ -74,12 +78,49 @@ class App(Gtk.Application):
 		self.action_combo.set_sensitive(False)
 		self.auto_change = False
 
-	def confirm(self, message):
+	def on_confirm(self, dialog, response):
+		if response == Gtk.ResponseType.YES:
+			self.confirmed = True
+		else:
+			self.confirmed = False
+		dialog.destroy()
+		if self.confirmed and self.do_exit:
+			app.quit()
+
+	def confirm(self, message, exit=False):
 		dlg = Gtk.MessageDialog(message_type=Gtk.MessageType.WARNING, buttons=Gtk.ButtonsType.YES_NO, text=message)
-		res = dlg.run()
-		dlg.destroy()
-		if res == Gtk.ResponseType.YES: return True
-		else: return False
+		if Gtk.get_major_version() >= 4:
+			self.do_exit = exit
+			dlg.connect("response", self.on_confirm)
+			dlg.show()
+		else:
+			res = dlg.run()
+			dlg.destroy()
+			if res == Gtk.ResponseType.YES: return True
+			else: return False
+
+	def on_file_chosen(self, dialog, response):
+		if response == Gtk.ResponseType.OK:
+			self.menu_path = dialog.get_file().get_path()
+
+		if dialog.get_action() == Gtk.FileChooserAction.OPEN:
+			self.unsaved_menu = False
+			self._sth_changed(False)
+
+			# Load in memory the real xml menu
+			self.menu = obxml.Obmenu()
+			self.menu.loadMenu(self.menu_path)
+
+			self.deleteTree() #Not really deleting this time, just initializing
+			self.createTree(None, None)
+			self.clear_fields()
+		else:
+			self.unsaved_menu = False
+			self.menu.saveMenu(self.menu_path)
+			self._sth_changed(False)
+
+		dialog.destroy()
+
 
 	def ask_for_path(self, title, op):
 		if op == 0:
@@ -89,11 +130,14 @@ class App(Gtk.Application):
 		dlg = Gtk.FileChooserDialog(title=title, action=action)
 		dlg.add_button(dgettext(self.gtk_domain, "_OK"), Gtk.ResponseType.OK)
 		dlg.add_button(dgettext(self.gtk_domain, "_Cancel"), Gtk.ResponseType.CANCEL)
-		dlg.set_default_response(1)
-		res = dlg.run()
-		flnm = dlg.get_filename()
-		dlg.destroy()
-		if res == Gtk.ResponseType.OK: return flnm
+		dlg.set_default_response(Gtk.ResponseType.OK)
+		if Gtk.get_major_version() >= 4:
+			dlg.connect("response", self.on_file_chosen)
+			dlg.show()
+		else:
+			flnm = dlg.get_filename()
+			dlg.destroy()
+			if res == Gtk.ResponseType.OK: self.menu_path = flnm
 
 	#  New file clicked
 	def new(self, params, data):
@@ -111,38 +155,44 @@ class App(Gtk.Application):
 		if self.sth_changed:
 			res = self.confirm(_("Changes in %s will be lost. Continue?") % (self.menu_path))
 			if not res: return
-		path = self.ask_for_path(_("Open"), 0)
-		if not path: return
-		self.menu_path = path
-		self.unsaved_menu = False
-		self._sth_changed(False)
+		self.ask_for_path(_("Open"), 0)
+		if Gtk.get_major_version() < 4:
+			self.unsaved_menu = False
+			self._sth_changed(False)
 
-		# Load in memory the real xml menu
-		self.menu = obxml.ObMenu()
-		self.menu.loadMenu(self.menu_path)
+			# Load in memory the real xml menu
+			self.menu = obxml.Obmenu()
+			self.menu.loadMenu(self.menu_path)
 
-		self.deleteTree() #Not really deleting this time, just initialiting
-		self.createTree(None, None)
-		self.clear_fields()
+			self.deleteTree() #Not really deleting this time, just initialiting
+			self.createTree(None, None)
+			self.clear_fields()
 
 	# save the menu
+	# It takes three parameters from the menu, but only two from the
+	# toolbar, so make the third argument default to None
 	def save(self, params, data=None):
-		if self.unsaved_menu:
-			path = self.ask_for_path(_("Save as..."), 1)
-			if not path: return
-			self.menu_path = path
-			self.unsaved_menu = False
-		self.menu.saveMenu(self.menu_path)
+		if Gtk.get_major_version() < 4:
+			if self.unsaved_menu:
+				path = self.ask_for_path(_("Save as..."), 1)
+				if not path: return
+				self.menu_path = path
+				self.unsaved_menu = False
+			self.menu.saveMenu(self.menu_path)
+		else:
+			if self.unsaved_menu:
+				self.ask_for_path(_("Save as..."), 1)
 		self._sth_changed(False)
 
 	# save as
 	def save_as(self, params, data):
 		path = self.ask_for_path(_("Save as..."), 1)
-		if not path: return
-		self.menu_path = path
-		self.unsaved_menu = False
-		self._sth_changed(False)
-		self.menu.saveMenu(self.menu_path)
+		if Gtk.Version < 4:
+			if not path: return
+			self.menu_path = path
+			self.unsaved_menu = False
+			self._sth_changed(False)
+			self.menu.saveMenu(self.menu_path)
 
 	def reconfigure_openbox(self, param, data):
 		import signal
@@ -151,17 +201,23 @@ class App(Gtk.Application):
 			os.kill(int(lines[0]), signal.SIGUSR2)
 
 	# quit signal
-	def exit (self, bt, arg2):
-		if self.sth_changed:
-			res = self.confirm(_("There are unsaved changes. Exit anyway?"))
-			if not res: return True
+	# event is required by GTK 3's delete-event but not by GTK 4's
+	# close-request
+	def exit (self, bt, event=None):
+		self.confirmed = Gtk.get_major_version() < 4
 		if self.settings:
 			self.settings.set_value("last-opened-menu", GLib.Variant.new_string(self.menu_path))
-		self.quit()
+		if self.sth_changed:
+			self.confirmed = True
+			res = self.confirm(_("There are unsaved changes. Exit anyway?"), True)
+			if Gtk.get_major_version() < 4:
+				if not res: return True
+		if Gtk.get_major_version() < 4 or not self.sth_changed:
+			self.quit()
 
 	# File->Quit menu signal
 	def mnu_quit (self, params, data):
-		self.exit(None, None)
+		self.exit(None)
 
 	# id_entry changed signal
 	def change_id(self, pa):
@@ -262,12 +318,6 @@ class App(Gtk.Application):
 		if path:
 			self.execute_entry.set_text(path)
 
-	# treeview key pressed signal
-	def tree_key_pressed(self, treeview, ev):
-		# if Delete key has been pressed
-		if ev.keyval == 65535:
-			self.remove(None)
-
 	# treeview clicked signal
 	def treeview_changed(self, param):
 		(model, ite) = param.get_selection().get_selected()
@@ -317,7 +367,11 @@ class App(Gtk.Application):
 			n = model.get_path(ite)[-1]
 		else:
 			menu = None
-			parent = model.get_iter_root()
+			# If there's no root menu available, allow the creation of a new one
+			try:
+				parent = model.get_iter_root()
+			except:
+				parent = None
 			n = 0
 
 		nmid="%s-%d%d%d" % (menu, random.randint(0,99), time.gmtime()[4], time.gmtime()[5])
@@ -449,7 +503,7 @@ class App(Gtk.Application):
 			model.move_after(ite,upper)
 
 	# remove button clicked
-	def remove(self, param):
+	def remove(self, param, data=None):
 		(model, ite) = self.treeview.get_selection().get_selected()
 		if not ite: return
 		self._sth_changed(True)
@@ -470,7 +524,9 @@ class App(Gtk.Application):
 		if self.treeview.is_focus():
 			self.remove(None)
 
-	def hide_about(self, widget, event):
+	# event is required by GTK 3's delete-event but not by GTK 4's
+	# close-request
+	def hide_about(self, widget, event=None):
 		widget.hide()
 		return True
 
@@ -481,7 +537,7 @@ class App(Gtk.Application):
 		Gtk.Application.do_startup(self)
 
 		# Look for the data files!
-		if os.path.isfile("window.glade"):
+		if os.path.isfile("obmenu.ui"):
 			# They're here.. looks like a pre-installation execution
 			self.datapath = os.getcwd()
 		elif os.path.isdir(os.path.abspath(os.path.dirname(__file__) + "/../share/obmenu")):
@@ -504,11 +560,7 @@ class App(Gtk.Application):
 
 		gettext.textdomain("obmenu")
 		gettext.bindtextdomain("%s/share/locale" % sys.prefix)
-		self.gtk_domain = "gtk%d0" % Gtk.MAJOR_VERSION
-
-		self.builder = Gtk.Builder()
-		self.builder.add_from_file(self.datapath + "/window.glade")
-		self.set_menubar(self.builder.get_object("menubar"))
+		self.gtk_domain = "gtk%d0" % Gtk.get_major_version()
 
 		signals = {
 			"new": self.new,
@@ -525,23 +577,53 @@ class App(Gtk.Application):
 			"action_changed": self.change_action,
 			"search_clicked": self.search_clicked,
 			"treeview_changed": self.treeview_changed,
-			"tree_key_pressed": self.tree_key_pressed,
 			"add.menu": self.new_menu,
 			"add.item": self.new_item,
 			"add.separator": self.new_separator,
 			"add.pipe": self.new_pipe,
 			"add.link": self.new_link,
-			"remove_clicked": self.remove,
+			"remove": self.remove,
 			"up": self.up,
 			"down": self.down,
-			"hide_about": self.hide_about,
 			"about": self.show_about,
+			"hide_about": self.hide_about,
 			"exit": self.exit }
 		for signal in signals:
 			action = Gio.SimpleAction.new(signal, None)
 			action.connect("activate", signals[signal])
 			self.add_action(action)
-		self.builder.connect_signals(signals)
+
+		if Gtk.get_major_version() >= 4:
+			self.builder = Gtk.Builder(signals)
+			self.builder.add_from_file(self.datapath + "/obmenu.ui")
+		else:
+			self.builder = Gtk.Builder()
+			self.builder.add_from_file(self.datapath + "/obmenu.glade")
+			self.set_menubar(self.builder.get_object("menubar"))
+			self.builder.connect_signals(signals)
+
+		# PyGObject seems to lack an equivalent of the C GTK_CHECK_VERSION macro.
+		# Gtk.check_version() checks for ABI compatibility with the requested version.
+		if Gtk.get_major_version() > 3 or Gtk.get_minor_version() >= 12:
+			accels = {
+				"app.new": ["<Control>n"],
+				"app.open": ["<Control>o"],
+				"app.save": ["<Control>s"],
+				"app.save.as": ["<Control><Shift>s"],
+				"app.reconfigure": ["<Control>c"],
+				"app.quit": ["<Control>q"],
+				"app.up": ["<Control>Up"],
+				"app.down": ["<Control>Down"],
+				"app.add.menu": ["<Control>m"],
+				"app.add.item": ["<Control>i"],
+				"app.add.separator": ["<Control>r"],
+				"app.add.pipe": ["<Control>p"],
+				"app.add.link": ["<Control>l"],
+				"app.remove": ["Delete"],
+				"app.about": ["F1"]
+			}
+			for accel in accels:
+				app.set_accels_for_action(accel, accels[accel])
 
 	# Application activation
 	def do_activate(self):
@@ -554,23 +636,22 @@ class App(Gtk.Application):
 		self.execute_srch = self.builder.get_object("execute_search_button")
 		self.id_entry = self.builder.get_object("id_entry")
 
+		self.menu = obxml.Obmenu()
 		self.menu_path = ""
+		self.settings = None
 		try:
 			if self.menu_file.query_exists():
 				self.menu_path = self.menu_file.get_path()
 		except:
 			# No files specified on the command line
-			self.menu = None
+			#
 			# If the GSettings schema isn't installed, don't go kaboom
 			if Gio.SettingsSchemaSource.lookup(Gio.SettingsSchemaSource.get_default(), self.appid, False):
 				self.settings = Gio.Settings.new(self.appid)
 				self.menu_path = GLib.Variant.get_string(self.settings.get_value("last-opened-menu"))
-			else:
-				self.settings = None
 
 		if self.menu_path:
 			# Load in memory the real xml menu
-			self.menu = obxml.ObMenu()
 			self.menu.loadMenu(self.menu_path)
 			self.unsaved_menu = False
 		else:
@@ -609,8 +690,7 @@ class App(Gtk.Application):
 		self._sth_changed(False)
 
 		# Create the menu tree
-		if self.menu:
-			self.createTree(None, None)
+		self.createTree(None, None)
 
 		# Let's roll!
 		self.add_window(self.appwindow)
@@ -628,8 +708,9 @@ class App(Gtk.Application):
 	def __init__(self):
 		self.appid = "io.sourceforge.obmenu"
 		Gtk.Application.__init__(self, application_id=self.appid,
-				flags=Gio.ApplicationFlags.HANDLES_OPEN)
-		GLib.set_prgname(self.appid)
+				flags=Gio.ApplicationFlags.HANDLES_OPEN | Gio.ApplicationFlags.NON_UNIQUE)
+		if Gtk.get_major_version() < 4:
+			GLib.set_prgname(self.appid)
 
 if __name__ == "__main__":
 	app = App()

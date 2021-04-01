@@ -304,7 +304,7 @@
               <property name="visible_horizontal">True</property>
               <property name="visible_vertical">True</property>
               <property name="is_important">False</property>
-              <signal name="clicked" handler="remove_clicked"/>
+              <signal name="clicked" handler="remove"/>
             </object>
             <packing>
               <property name="expand">False</property>
@@ -349,7 +349,6 @@
                   <property name="hover_selection">False</property>
                   <property name="hover_expand">False</property>
                   <signal name="cursor_changed" handler="treeview_changed"/>
-                  <signal name="key_press_event" handler="tree_key_pressed"/>
                 </object>
               </child>
             </object>

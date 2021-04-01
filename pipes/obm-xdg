@@ -446,7 +446,7 @@ if __name__ == "__main__":
 	if role in ("replace", "import"):
 
 		mnu.loadItems()
-		obmenu = obxml.ObMenu()
+		obmenu = obxml.Obmenu()
 		obmenu.newMenu()
 
 		if role == "replace":
@@ -497,7 +497,7 @@ if __name__ == "__main__":
 				sys.exit()
 
 		mnu.loadItems()
-		obmenu = obxml.ObMenu()
+		obmenu = obxml.Obmenu()
 
 		obmenu.newPipe()
 		mnu._create_obmenu(obmenu)

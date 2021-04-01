@@ -19,12 +19,12 @@
 #    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 
-# ObMenu can be used as a module in python scripts, for example, to
+# Obmenu can be used as a module in python scripts, for example, to
 # Generate dynamic menus (pipemenus)
 
 import xml.dom.minidom
 
-class ObMenu:
+class Obmenu:
 
 	# Internal functions =============================================
 	# (These mess with the xml tree)
@@ -343,7 +343,7 @@ class ObMenu:
 		return lst
 
 	# replace all old_id's in file with new_id's
-	# parent shuld start with None
+	# parent should start with None
 	def replaceId(self, old_id, new_id, parent=None):
 		if not parent: parent = self.dom.documentElement
 		for item in parent.childNodes:
@@ -352,6 +352,9 @@ class ObMenu:
 					item.setAttribute("id", new_id)
 				elif item.hasChildNodes():
 					self.replaceId(old_id, new_id, item)
+
+	def __init__(self):
+		self.newMenu()
 
 if __name__ == "__main__":
 	print("This is a module. Use obmenu instead.")

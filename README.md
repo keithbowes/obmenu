@@ -13,7 +13,7 @@ update it for Python 3/GTK 3 and to allow it to work with
 
   [Python](http://python.org),
   [PyGObject](https://pygobject.readthedocs.io),
-  [GTK](http://gtk.org/) >= 3.0
+  [GTK](http://gtk.org/) >= 3.4
 
   PyGObject 3 or higher is recommended, but older versions may also work.
   For Python 2.7 (not recommended) or older versions of Python 3, you'll need a

@@ -60,7 +60,7 @@ def clasifica(lista, humbral):
 			lgrupos.append( ( "%s-%s" % (primera, k), grupo) )
 		return lgrupos
 
-menu = obxml.ObMenu()
+menu = obxml.Obmenu()
 menu.newPipe()
 
 if len(sys.argv) == 3:
