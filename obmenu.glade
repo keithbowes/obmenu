@@ -602,7 +602,7 @@
       <property name="destroy_with_parent">True</property>
       <property name="name" translatable="yes">Openbox Menu Editor</property>
       <property name="program-name">Obmenu</property>
-      <property name="comments" translatable="yes">Thank you for using this sofware.
+      <property name="comments" translatable="yes">Thank you for using this software.
      Send any feedback to m.kolme@gmail.com</property>
       <property name="license" translatable="yes">    Obmenu: Openbox Menu Editor
         Copyright (C) 2005-2006  Manuel Colmenero

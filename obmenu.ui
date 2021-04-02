@@ -7,25 +7,21 @@
       <section>
         <item>
           <attribute name="label" translatable="yes">_New</attribute>
-          <attribute name="accel">&lt;Control&gt;n</attribute>
           <attribute name="action">app.new</attribute>
           <attribute name="icon">document-new</attribute>
         </item>
         <item>
           <attribute name="label" translatable="yes">_Open</attribute>
-          <attribute name="accel">&lt;Control&gt;o</attribute>
           <attribute name="action">app.open</attribute>
           <attribute name="icon">document-open</attribute>
         </item>
         <item>
           <attribute name="label" translatable="yes">_Save</attribute>
-          <attribute name="accel">&lt;Control&gt;s</attribute>
           <attribute name="action">app.save</attribute>
           <attribute name="icon">document-save</attribute>
         </item>
         <item>
           <attribute name="label" translatable="yes">Save _As</attribute>
-          <attribute name="accel">&lt;Control&gt;&lt;Shift&gt;s</attribute>
           <attribute name="action">app.save.as</attribute>
           <attribute name="icon">document-save-as</attribute>
         </item>
@@ -33,7 +29,6 @@
       <section>
         <item>
           <attribute name="label" translatable="yes">_Reconfigure Openbox</attribute>
-          <attribute name="accel">&lt;Control&gt;c</attribute>
           <attribute name="action">app.reconfigure</attribute>
           <attribute name="icon">view-refresh</attribute>
         </item>
@@ -41,7 +36,6 @@
       <section>
         <item>
           <attribute name="label" translatable="yes">_Quit</attribute>
-          <attribute name="accel">&lt;Control&gt;q</attribute>
           <attribute name="action">app.quit</attribute>
           <attribute name="icon">gtk-quit</attribute>
         </item>
@@ -52,13 +46,11 @@
       <section>
         <item>
           <attribute name="label" translatable="yes">Move _up</attribute>
-          <attribute name="accel">&lt;Control&gt;Up</attribute>
           <attribute name="action">app.up</attribute>
           <attribute name="icon">go-up</attribute>
         </item>
         <item>
           <attribute name="label" translatable="yes">Move dow_n</attribute>
-          <attribute name="accel">&lt;Control&gt;Down</attribute>
           <attribute name="action">app.down</attribute>
           <attribute name="icon">go-down</attribute>
         </item>
@@ -70,31 +62,26 @@
           <section>
             <item>
               <attribute name="label" translatable="yes">_Menu</attribute>
-              <attribute name="accel">&lt;Control&gt;m</attribute>
               <attribute name="action">app.add.menu</attribute>
               <attribute name="icon">folder-new</attribute>
             </item>
             <item>
               <attribute name="label" translatable="yes">_Item</attribute>
-              <attribute name="accel">&lt;Control&gt;i</attribute>
               <attribute name="action">app.add.item</attribute>
               <attribute name="icon">system-run</attribute>
             </item>
             <item>
               <attribute name="label" translatable="yes">_Separator</attribute>
-              <attribute name="accel">&lt;Control&gt;r</attribute>
               <attribute name="action">app.add.separator</attribute>
               <attribute name="icon">text-x-generic</attribute>
             </item>
             <item>
               <attribute name="label" translatable="yes">_Pipe Menu</attribute>
-              <attribute name="accel">&lt;Control&gt;p</attribute>
               <attribute name="action">app.add.pipe</attribute>
               <attribute name="icon">document-share</attribute>
             </item>
             <item>
               <attribute name="label" translatable="yes">_Link</attribute>
-              <attribute name="accel">&lt;Control&gt;l</attribute>
               <attribute name="action">app.add.link</attribute>
               <attribute name="icon">insert-link</attribute>
             </item>
@@ -104,7 +91,6 @@
       <section>
         <item>
           <attribute name="label" translatable="yes">_Delete</attribute>
-          <attribute name="accel">Delete</attribute>
           <attribute name="action">app.remove</attribute>
           <attribute name="icon">remove</attribute>
         </item>
@@ -115,7 +101,6 @@
       <section>
         <item>
           <attribute name="label" translatable="yes">_About</attribute>
-          <attribute name="accel">F1</attribute>
           <attribute name="action">app.about</attribute>
           <attribute name="icon">help-about</attribute>
         </item>
@@ -134,6 +119,9 @@
         <child>
           <object class="GtkPopoverMenuBar">
             <property name="menu-model">menubar</property>
+            <accessibility>
+              <property name="label">Main Menu</property>
+            </accessibility>
           </object>
         </child>
         <child>
@@ -230,7 +218,6 @@
             </child>
             <child>
               <object class="GtkGrid" id="properties_grid">
-                <property name="column-homogeneous">1</property>
                 <property name="row-spacing">2</property>
                 <property name="column-spacing">10</property>
                 <child>
@@ -358,7 +345,7 @@
     <property name="destroy-with-parent">1</property>
     <property name="name" translatable="yes">Openbox Menu Editor</property>
     <property name="program-name">Obmenu</property>
-    <property name="comments" translatable="yes">Thank you for using this sofware.
+    <property name="comments" translatable="yes">Thank you for using this software.
      Send any feedback to m.kolme@gmail.com</property>
     <property name="license" translatable="yes">    Obmenu: Openbox Menu Editor
         Copyright (C) 2005-2006  Manuel Colmenero

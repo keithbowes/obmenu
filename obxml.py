@@ -22,7 +22,7 @@
 # Obmenu can be used as a module in python scripts, for example, to
 # Generate dynamic menus (pipemenus)
 
-import xml.dom.minidom
+import os, xml.dom.minidom
 
 class Obmenu:
 
@@ -149,9 +149,10 @@ class Obmenu:
 	# Most of them are self-explanatory
 
 	def loadMenu(self, filename):
-		fil = open(filename)
-		self.dom = xml.dom.minidom.parseString(fil.read())
-		fil.close()
+		if os.path.exists(filename):
+			fil = open(filename)
+			self.dom = xml.dom.minidom.parseString(fil.read())
+			fil.close()
 
 	def newMenu(self):
 		self.dom = xml.dom.minidom.parseString(
@@ -163,11 +164,12 @@ class Obmenu:
 		"<?xml version=\"1.0\" ?><openbox_pipe_menu></openbox_pipe_menu>")
 
 	def saveMenu(self, filename):
-		output = open(filename, "w")
-		for line in self.dom.toprettyxml("\t","\n").splitlines():
-			if line.strip() != "":
-				output.write("%s\n" %(line))
-		output.close()
+		if os.path.exists(filename):
+			output = open(filename, "w")
+			for line in self.dom.toprettyxml("\t","\n").splitlines():
+				if line.strip() != "":
+					output.write("%s\n" %(line))
+			output.close()
 
 	def printXml(self):
 		for line in self.dom.toprettyxml("\t","\n").splitlines():

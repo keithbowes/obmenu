@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Obmenu 1.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-31 23:15-0400\n"
-"PO-Revision-Date: 2021-03-31 23:20-0400\n"
+"PO-Revision-Date: 2021-04-01 18:34-0400\n"
 "Last-Translator: Keith Bowes <keith@localhost>\n"
 "Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
 "Language: de\n"
@@ -52,7 +52,7 @@ msgstr "Datei wählen"
 
 #: ../obmenu:379 ../obmenu:381
 msgid "New Menu"
-msgstr "Neus Menü"
+msgstr "Neues Menü"
 
 #: ../obmenu:380 ../obmenu:382 ../obmenu:401 ../obmenu:402
 msgid "New Item"
@@ -68,7 +68,7 @@ msgstr "Neuer Rohr"
 
 #: ../obmenu:669
 msgid "Label"
-msgstr "Etikette"
+msgstr "Etikett"
 
 #: ../obmenu:674
 msgid "Type"
@@ -176,7 +176,7 @@ msgstr "Das Menü speichern"
 
 #: ../obmenu.glade:193 ../obmenu.ui:159
 msgid "New menu"
-msgstr "Neus Menü"
+msgstr "Neues Menü"
 
 #: ../obmenu.glade:210 ../obmenu.ui:167
 msgid "New item"
@@ -200,11 +200,11 @@ msgstr "Entfernt ein Menü oder einen Eintrag"
 
 #: ../obmenu.glade:372 ../obmenu.ui:238
 msgid "_Label"
-msgstr "_Etikette"
+msgstr "_Etikett"
 
 #: ../obmenu.glade:397 ../obmenu.ui:250
 msgid "_ID"
-msgstr "_Auszeichnung"
+msgstr "_Bezeichnung"
 
 #: ../obmenu.glade:422 ../obmenu.ui:262
 msgid "_Action"

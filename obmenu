@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #
-#  Openbox Menu Editor 1.1
+#  Openbox Menu Editor 1.1.1
 #
 #  Copyright 2005 Manuel Colmenero
 #
@@ -18,16 +18,30 @@
 #    along with this program; if not, write to the Free Software
 #    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-import gi, obxml, random, time, os, sys, gettext
+import gi, obxml, random, time, os, sys
+
+# Try setting OBMENU_GTK_VERSION if PyGObject loads the wrong GTK version.
+if os.getenv('OBMENU_GTK_VERSION'):
+	gtk_version = os.getenv('OBMENU_GTK_VERSION')
+# These versions are incompatible with GTK 4, so force GTK 3.
+elif gi.version_info < (3, 40, 0):
+	gtk_version = "3.0"
+else:
+	# Don't specify the version; PyGObject should use the highest possible
+	# version, though it will give a warning.
+	gtk_version = ""
+if gtk_version:
+	gi.require_version('Gtk', gtk_version)
+from gi.repository import Gtk, Gio, GLib
+gtk_version = None
 
 try:
-	gi.require_version('Gtk', '4.0')
-	from gi.repository import Gtk, Gio, GLib, GObject
+	import locale
+	from locale import textdomain, bindtextdomain, dgettext, gettext as _
+	locale.setlocale(locale.LC_ALL, "")
 except:
-	gi.require_version('Gtk', '3.0')
-	from gi.repository import Gtk, Gio, GLib, GObject
-
-from gettext import dgettext, gettext as _
+	import gettext
+	from gettext import textdomain, bindtextdomain, dgettext, gettext as _
 
 class App(Gtk.Application):
 	# Recursively creates the treeview model
@@ -44,8 +58,7 @@ class App(Gtk.Application):
 
 	def deleteTree(self):
 		# treemodel.iter(label, type, [action], [execute], parent, [menu-id])
-		self.treemodel=Gtk.TreeStore(GObject.TYPE_STRING, GObject.TYPE_STRING,
-				GObject.TYPE_STRING, GObject.TYPE_STRING, GObject.TYPE_STRING, GObject.TYPE_STRING)
+		self.treemodel=Gtk.TreeStore(str, str, str, str, str, str)
 		self.treeview.set_model(self.treemodel)
 
 	# Sets the state of "menu modified"
@@ -78,72 +91,7 @@ class App(Gtk.Application):
 		self.action_combo.set_sensitive(False)
 		self.auto_change = False
 
-	def on_confirm(self, dialog, response):
-		if response == Gtk.ResponseType.YES:
-			self.confirmed = True
-		else:
-			self.confirmed = False
-		dialog.destroy()
-		if self.confirmed and self.do_exit:
-			app.quit()
-
-	def confirm(self, message, exit=False):
-		dlg = Gtk.MessageDialog(message_type=Gtk.MessageType.WARNING, buttons=Gtk.ButtonsType.YES_NO, text=message)
-		if Gtk.get_major_version() >= 4:
-			self.do_exit = exit
-			dlg.connect("response", self.on_confirm)
-			dlg.show()
-		else:
-			res = dlg.run()
-			dlg.destroy()
-			if res == Gtk.ResponseType.YES: return True
-			else: return False
-
-	def on_file_chosen(self, dialog, response):
-		if response == Gtk.ResponseType.OK:
-			self.menu_path = dialog.get_file().get_path()
-
-		if dialog.get_action() == Gtk.FileChooserAction.OPEN:
-			self.unsaved_menu = False
-			self._sth_changed(False)
-
-			# Load in memory the real xml menu
-			self.menu = obxml.Obmenu()
-			self.menu.loadMenu(self.menu_path)
-
-			self.deleteTree() #Not really deleting this time, just initializing
-			self.createTree(None, None)
-			self.clear_fields()
-		else:
-			self.unsaved_menu = False
-			self.menu.saveMenu(self.menu_path)
-			self._sth_changed(False)
-
-		dialog.destroy()
-
-
-	def ask_for_path(self, title, op):
-		if op == 0:
-			action = Gtk.FileChooserAction.OPEN
-		else:
-			action = Gtk.FileChooserAction.SAVE
-		dlg = Gtk.FileChooserDialog(title=title, action=action)
-		dlg.add_button(dgettext(self.gtk_domain, "_OK"), Gtk.ResponseType.OK)
-		dlg.add_button(dgettext(self.gtk_domain, "_Cancel"), Gtk.ResponseType.CANCEL)
-		dlg.set_default_response(Gtk.ResponseType.OK)
-		if Gtk.get_major_version() >= 4:
-			dlg.connect("response", self.on_file_chosen)
-			dlg.show()
-		else:
-			flnm = dlg.get_filename()
-			dlg.destroy()
-			if res == Gtk.ResponseType.OK: self.menu_path = flnm
-
-	#  New file clicked
-	def new(self, params, data):
-		if self.sth_changed:
-			res = self.confirm(_("Changes in %s will be lost. Continue?") % (self.menu_path))
-			if not res: return
+	def clear_view(self):
 		self.deleteTree()
 		self.menu.newMenu()
 		self.unsaved_menu = True
@@ -151,48 +99,95 @@ class App(Gtk.Application):
 		self._sth_changed(True)
 		self.clear_fields()
 
+	def on_confirm(self, dialog, response):
+		dialog.destroy()
+		if response == Gtk.ResponseType.YES:
+			if self.confirm_action == "exit":
+				app.quit()
+			elif self.confirm_action == "new":
+				self.clear_view()
+			elif self.confirm_action == "open":
+				self.ask_for_path(_("Open"), Gtk.FileChooserAction.OPEN)
+				self.unsaved_menu = False
+				self._sth_changed(False)
+
+				# Load in memory the real xml menu
+				self.menu = obxml.Obmenu()
+				self.menu.loadMenu(self.menu_path)
+
+				self.deleteTree() #Not really deleting this time, just initializing
+				self.createTree(None, None)
+				self.clear_fields()
+
+	def confirm(self, message, action):
+		dlg = Gtk.MessageDialog(message_type=Gtk.MessageType.WARNING, buttons=Gtk.ButtonsType.YES_NO, text=message)
+		self.confirm_action = action
+		dlg.set_transient_for(self.appwindow);
+		dlg.connect("response", self.on_confirm)
+		dlg.show()
+
+	def on_file_chosen(self, dialog, response):
+		if response == Gtk.ResponseType.OK:
+			self.menu_path = dialog.get_file().get_path()
+
+			if dialog.get_action() == Gtk.FileChooserAction.OPEN:
+				self.unsaved_menu = False
+				self._sth_changed(False)
+
+				# Load in memory the real xml menu
+				self.menu = obxml.Obmenu()
+				self.menu.loadMenu(self.menu_path)
+
+				self.deleteTree() #Not really deleting this time, just initializing
+				self.createTree(None, None)
+				self.clear_fields()
+			else:
+				self.unsaved_menu = False
+				self.menu.saveMenu(self.menu_path)
+				self._sth_changed(False)
+
+		dialog.destroy()
+
+	def on_search_clicked(self, dialog, response):
+		if response == Gtk.ResponseType.OK:
+			self.execute_entry.set_text(dialog.get_file().get_path())
+		dialog.destroy()
+
+	def ask_for_path(self, title, action, cb=None):
+		dlg = Gtk.FileChooserDialog(title=title, action=action)
+		dlg.add_button(dgettext(self.gtk_domain, "_OK"), Gtk.ResponseType.OK)
+		dlg.add_button(dgettext(self.gtk_domain, "_Cancel"), Gtk.ResponseType.CANCEL)
+		dlg.set_default_response(Gtk.ResponseType.OK)
+		dlg.set_transient_for(self.appwindow)
+		dlg.connect("response", cb or self.on_file_chosen)
+		dlg.show()
+
+	#  New file clicked
+	def new(self, params, data):
+		if self.sth_changed:
+			self.confirm(_("Changes in %s will be lost. Continue?") % (self.menu_path), "new")
+		else:
+			self.clear_view()
+
 	def open(self, params, data):
 		if self.sth_changed:
-			res = self.confirm(_("Changes in %s will be lost. Continue?") % (self.menu_path))
-			if not res: return
-		self.ask_for_path(_("Open"), 0)
-		if Gtk.get_major_version() < 4:
-			self.unsaved_menu = False
-			self._sth_changed(False)
-
-			# Load in memory the real xml menu
-			self.menu = obxml.Obmenu()
-			self.menu.loadMenu(self.menu_path)
-
-			self.deleteTree() #Not really deleting this time, just initialiting
-			self.createTree(None, None)
-			self.clear_fields()
+			self.confirm(_("Changes in %s will be lost. Continue?") % (self.menu_path), "open")
+		else:
+			self.ask_for_path(_("Open"), Gtk.FileChooserAction.OPEN)
 
 	# save the menu
 	# It takes three parameters from the menu, but only two from the
 	# toolbar, so make the third argument default to None
 	def save(self, params, data=None):
-		if Gtk.get_major_version() < 4:
-			if self.unsaved_menu:
-				path = self.ask_for_path(_("Save as..."), 1)
-				if not path: return
-				self.menu_path = path
-				self.unsaved_menu = False
-			self.menu.saveMenu(self.menu_path)
+		if self.unsaved_menu:
+			self.ask_for_path(_("Save as..."), Gtk.FileChooserAction.SAVE)
 		else:
-			if self.unsaved_menu:
-				self.ask_for_path(_("Save as..."), 1)
+			self.menu.saveMenu(self.menu_path)
 		self._sth_changed(False)
 
 	# save as
 	def save_as(self, params, data):
-		path = self.ask_for_path(_("Save as..."), 1)
-		if Gtk.Version < 4:
-			if not path: return
-			self.menu_path = path
-			self.unsaved_menu = False
-			self._sth_changed(False)
-			self.menu.saveMenu(self.menu_path)
+		self.ask_for_path(_("Save as..."), Gtk.FileChooserAction.SAVE)
 
 	def reconfigure_openbox(self, param, data):
 		import signal
@@ -204,15 +199,11 @@ class App(Gtk.Application):
 	# event is required by GTK 3's delete-event but not by GTK 4's
 	# close-request
 	def exit (self, bt, event=None):
-		self.confirmed = Gtk.get_major_version() < 4
 		if self.settings:
 			self.settings.set_value("last-opened-menu", GLib.Variant.new_string(self.menu_path))
 		if self.sth_changed:
-			self.confirmed = True
-			res = self.confirm(_("There are unsaved changes. Exit anyway?"), True)
-			if Gtk.get_major_version() < 4:
-				if not res: return True
-		if Gtk.get_major_version() < 4 or not self.sth_changed:
+			self.confirm(_("There are unsaved changes. Exit anyway?"), "exit")
+		else:
 			self.quit()
 
 	# File->Quit menu signal
@@ -314,9 +305,7 @@ class App(Gtk.Application):
 
 	# button [...] clicked signal
 	def search_clicked(self, arg):
-		path = self.ask_for_path(_("Select File"), 0)
-		if path:
-			self.execute_entry.set_text(path)
+		dlg = self.ask_for_path(_("Select File"), Gtk.FileChooserAction.OPEN, self.on_search_clicked)
 
 	# treeview clicked signal
 	def treeview_changed(self, param):
@@ -558,8 +547,12 @@ class App(Gtk.Application):
 			print("       check that everything was installed all right")
 			sys.exit(1)
 
-		gettext.textdomain("obmenu")
-		gettext.bindtextdomain("%s/share/locale" % sys.prefix)
+		if os.getenv("TEXTDOMAINDIR"):
+			textdomaindir = os.getenv("TEXTDOMAINDIR")
+		else:
+			textdomaindir = os.path.abspath("../share/locale")
+		textdomain("obmenu")
+		bindtextdomain("obmenu", textdomaindir)
 		self.gtk_domain = "gtk%d0" % Gtk.get_major_version()
 
 		signals = {
@@ -658,8 +651,7 @@ class App(Gtk.Application):
 			self.unsaved_menu = True
 
 		# treemodel.iter(label, type, [action], [execute], parent, [menu-id])
-		self.treemodel=Gtk.TreeStore(GObject.TYPE_STRING, GObject.TYPE_STRING,
-				GObject.TYPE_STRING, GObject.TYPE_STRING, GObject.TYPE_STRING, GObject.TYPE_STRING)
+		self.treemodel=Gtk.TreeStore(str, str, str, str, str, str)
 		self.treeview.set_model(self.treemodel)
 
 		# Set the columns
@@ -700,7 +692,7 @@ class App(Gtk.Application):
 	def do_open(self, files, n_files, hint):
 		if n_files > 1:
 			print(_("Error: Obmenu can presently open only one file at a time."))
-			print(_("Only the first specified will be opened."))
+			print(_("       Only the first specified will be opened."))
 		self.menu_file = files[0]
 		self.do_activate()
 
