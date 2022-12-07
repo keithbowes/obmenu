@@ -1,4 +1,4 @@
-# OBMENU 1.1
+# OBMENU
 
 Obmenu is a menu editor for Openbox and Wayland Openbox clones (like
 [Waybox](https://github.com/wizbright/waybox)) written in Python. It allows you
@@ -25,13 +25,22 @@ to edit menus in an intuitive way.
 
 Type this command in a shell:
 
-`python setup.py install --user`
+`make install-user`
 
 or to install system-wide:
 
-`sudo python setup.py install`
+`sudo make install`
+
+To just install the GSettings schema (required to remember the last opened menu
+file) to use Obmenu without installing it:
+
+`sudo make install-schema`
 
 ## CHANGELOG
+
+### 1.1.2
+
+- Bug fixes.
 
 ### 1.1.1
 

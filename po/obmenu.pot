@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-31 23:15-0400\n"
+"POT-Creation-Date: 2021-04-02 11:23-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,77 +17,77 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../obmenu:131
+#: ../obmenu:100
+msgid "Untitled"
+msgstr ""
+
+#: ../obmenu:112 ../obmenu:178
+msgid "Open"
+msgstr ""
+
+#: ../obmenu:160
 msgid "_OK"
 msgstr ""
 
-#: ../obmenu:132
+#: ../obmenu:161
 msgid "_Cancel"
 msgstr ""
 
-#: ../obmenu:145 ../obmenu:156
+#: ../obmenu:170 ../obmenu:176
 #, c-format
 msgid "Changes in %s will be lost. Continue?"
 msgstr ""
 
-#: ../obmenu:150
-msgid "Untitled"
-msgstr ""
-
-#: ../obmenu:158
-msgid "Open"
-msgstr ""
-
-#: ../obmenu:177 ../obmenu:184 ../obmenu:189
+#: ../obmenu:185 ../obmenu:192
 msgid "Save as..."
 msgstr ""
 
-#: ../obmenu:212
+#: ../obmenu:207
 msgid "There are unsaved changes. Exit anyway?"
 msgstr ""
 
-#: ../obmenu:317
+#: ../obmenu:310
 msgid "Select File"
 msgstr ""
 
-#: ../obmenu:379 ../obmenu:381
+#: ../obmenu:370 ../obmenu:372
 msgid "New Menu"
 msgstr ""
 
-#: ../obmenu:380 ../obmenu:382 ../obmenu:401 ../obmenu:402
+#: ../obmenu:371 ../obmenu:373 ../obmenu:392 ../obmenu:393
 msgid "New Item"
 msgstr ""
 
-#: ../obmenu:380 ../obmenu:382 ../obmenu:401 ../obmenu:462
+#: ../obmenu:371 ../obmenu:373 ../obmenu:392 ../obmenu:453
 msgid "command"
 msgstr ""
 
-#: ../obmenu:462 ../obmenu:463
+#: ../obmenu:453 ../obmenu:454
 msgid "New Pipe"
 msgstr ""
 
-#: ../obmenu:669
+#: ../obmenu:665
 msgid "Label"
 msgstr ""
 
-#: ../obmenu:674
+#: ../obmenu:670
 msgid "Type"
 msgstr ""
 
-#: ../obmenu:679
+#: ../obmenu:675
 msgid "Action"
 msgstr ""
 
-#: ../obmenu:684
+#: ../obmenu:680
 msgid "Execute"
 msgstr ""
 
-#: ../obmenu:702
+#: ../obmenu:698
 msgid "Error: Obmenu can presently open only one file at a time."
 msgstr ""
 
-#: ../obmenu:703
-msgid "Only the first specified will be opened."
+#: ../obmenu:699
+msgid "       Only the first specified will be opened."
 msgstr ""
 
 #: ../obmenu.glade:6 ../obmenu.ui:6
@@ -98,133 +98,133 @@ msgstr ""
 msgid "_New"
 msgstr ""
 
-#: ../obmenu.glade:15 ../obmenu.ui:15
+#: ../obmenu.glade:15 ../obmenu.ui:14
 msgid "_Open"
 msgstr ""
 
-#: ../obmenu.glade:21 ../obmenu.ui:21
+#: ../obmenu.glade:21 ../obmenu.ui:19
 msgid "_Save"
 msgstr ""
 
-#: ../obmenu.glade:27 ../obmenu.ui:27
+#: ../obmenu.glade:27 ../obmenu.ui:24
 msgid "Save _As"
 msgstr ""
 
-#: ../obmenu.glade:35 ../obmenu.ui:35
+#: ../obmenu.glade:35 ../obmenu.ui:31
 msgid "_Reconfigure Openbox"
 msgstr ""
 
-#: ../obmenu.glade:43 ../obmenu.ui:43
+#: ../obmenu.glade:43 ../obmenu.ui:38
 msgid "_Quit"
 msgstr ""
 
-#: ../obmenu.glade:51 ../obmenu.ui:51
+#: ../obmenu.glade:51 ../obmenu.ui:45
 msgid "_Edit"
 msgstr ""
 
-#: ../obmenu.glade:54 ../obmenu.ui:54
+#: ../obmenu.glade:54 ../obmenu.ui:48
 msgid "Move _up"
 msgstr ""
 
-#: ../obmenu.glade:60 ../obmenu.ui:60
+#: ../obmenu.glade:60 ../obmenu.ui:53
 msgid "Move dow_n"
 msgstr ""
 
-#: ../obmenu.glade:68 ../obmenu.ui:68
+#: ../obmenu.glade:68 ../obmenu.ui:60
 msgid "_Add"
 msgstr ""
 
-#: ../obmenu.glade:72 ../obmenu.ui:72
+#: ../obmenu.glade:72 ../obmenu.ui:64
 msgid "_Menu"
 msgstr ""
 
-#: ../obmenu.glade:78 ../obmenu.ui:78
+#: ../obmenu.glade:78 ../obmenu.ui:69
 msgid "_Item"
 msgstr ""
 
-#: ../obmenu.glade:84 ../obmenu.ui:84
+#: ../obmenu.glade:84 ../obmenu.ui:74
 msgid "_Separator"
 msgstr ""
 
-#: ../obmenu.glade:90 ../obmenu.ui:90
+#: ../obmenu.glade:90 ../obmenu.ui:79
 msgid "_Pipe Menu"
 msgstr ""
 
-#: ../obmenu.glade:96 ../obmenu.ui:96
+#: ../obmenu.glade:96 ../obmenu.ui:84
 msgid "_Link"
 msgstr ""
 
-#: ../obmenu.glade:106 ../obmenu.ui:106
+#: ../obmenu.glade:106 ../obmenu.ui:93
 msgid "_Delete"
 msgstr ""
 
-#: ../obmenu.glade:114 ../obmenu.ui:114
+#: ../obmenu.glade:114 ../obmenu.ui:100
 msgid "_Help"
 msgstr ""
 
-#: ../obmenu.glade:117 ../obmenu.ui:117
+#: ../obmenu.glade:117 ../obmenu.ui:103
 msgid "_About"
 msgstr ""
 
-#: ../obmenu.glade:129 ../obmenu.glade:603 ../obmenu.ui:126 ../obmenu.ui:359
+#: ../obmenu.glade:129 ../obmenu.glade:603 ../obmenu.ui:111 ../obmenu.ui:346
 msgid "Openbox Menu Editor"
 msgstr ""
 
-#: ../obmenu.glade:164 ../obmenu.ui:147
+#: ../obmenu.glade:164 ../obmenu.ui:135
 msgid "Save the menu"
 msgstr ""
 
-#: ../obmenu.glade:193 ../obmenu.ui:159
+#: ../obmenu.glade:193 ../obmenu.ui:147
 msgid "New menu"
 msgstr ""
 
-#: ../obmenu.glade:210 ../obmenu.ui:167
+#: ../obmenu.glade:210 ../obmenu.ui:155
 msgid "New item"
 msgstr ""
 
-#: ../obmenu.glade:227 ../obmenu.ui:175
+#: ../obmenu.glade:227 ../obmenu.ui:163
 msgid "New separator"
 msgstr ""
 
-#: ../obmenu.glade:257 ../obmenu.ui:188
+#: ../obmenu.glade:257 ../obmenu.ui:176
 msgid "Move up"
 msgstr ""
 
-#: ../obmenu.glade:273 ../obmenu.ui:195
+#: ../obmenu.glade:273 ../obmenu.ui:183
 msgid "Move down"
 msgstr ""
 
-#: ../obmenu.glade:302 ../obmenu.ui:207
+#: ../obmenu.glade:302 ../obmenu.ui:195
 msgid "Removes a menu or an item"
 msgstr ""
 
-#: ../obmenu.glade:372 ../obmenu.ui:238
+#: ../obmenu.glade:372 ../obmenu.ui:225
 msgid "_Label"
 msgstr ""
 
-#: ../obmenu.glade:397 ../obmenu.ui:250
+#: ../obmenu.glade:397 ../obmenu.ui:237
 msgid "_ID"
 msgstr ""
 
-#: ../obmenu.glade:422 ../obmenu.ui:262
+#: ../obmenu.glade:422 ../obmenu.ui:249
 msgid "_Action"
 msgstr ""
 
-#: ../obmenu.glade:447 ../obmenu.ui:274
+#: ../obmenu.glade:447 ../obmenu.ui:261
 msgid "_Execute"
 msgstr ""
 
-#: ../obmenu.glade:564 ../obmenu.ui:338
+#: ../obmenu.glade:564 ../obmenu.ui:325
 msgid "..."
 msgstr ""
 
-#: ../obmenu.glade:605 ../obmenu.ui:361
+#: ../obmenu.glade:605 ../obmenu.ui:348
 msgid ""
-"Thank you for using this sofware.\n"
+"Thank you for using this software.\n"
 "     Send any feedback to m.kolme@gmail.com"
 msgstr ""
 
-#: ../obmenu.glade:607 ../obmenu.ui:363
+#: ../obmenu.glade:607 ../obmenu.ui:350
 msgid ""
 "    Obmenu: Openbox Menu Editor\n"
 "        Copyright (C) 2005-2006  Manuel Colmenero\n"
@@ -247,11 +247,11 @@ msgid ""
 "02111-1307  USA"
 msgstr ""
 
-#: ../obmenu.glade:624 ../obmenu.ui:380
+#: ../obmenu.glade:624 ../obmenu.ui:367
 msgid "Website"
 msgstr ""
 
 #. TRANSLATORS: Replace this string with your names, one name per line.
-#: ../obmenu.glade:626 ../obmenu.ui:382
+#: ../obmenu.glade:626 ../obmenu.ui:369
 msgid "translator-credits"
 msgstr ""

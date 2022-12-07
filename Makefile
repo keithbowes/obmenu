@@ -3,10 +3,9 @@
 
 PREFIX ?= $(shell echo 'import sys; print(sys.prefix)' | python)
 
-appid=io.sourceforge.obmenu
-desktopfile=$(appid).desktop
-schemadir=$(PREFIX)/share/glib-2.0/schemas
-schemafile=$(appid).gschema.xml
+desktopfile=$(wildcard *.desktop)
+schemadir=$(realpath $(dir $(shell which glib-compile-schemas))/../share/glib-2.0/schemas)
+schemafile=$(wildcard *.gschema.xml)
 
 all:
 	cd po && $(MAKE)
@@ -21,7 +20,7 @@ install-desktop:
 	cp -f $(desktopfile) $(PREFIX)/share/applications
 
 install-schema:
-	mkdir -p $(PREFIX)/share/glib-2.0/schemas
+	mkdir -p $(schemadir)
 	cp -f $(schemafile) $(schemadir)
 	glib-compile-schemas $(schemadir)
 

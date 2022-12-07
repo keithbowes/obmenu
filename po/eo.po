@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Obmenu 1.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-31 23:15-0400\n"
-"PO-Revision-Date: 2021-03-31 23:22-0400\n"
+"POT-Creation-Date: 2021-04-02 11:23-0400\n"
+"PO-Revision-Date: 2021-04-02 15:55-0400\n"
 "Last-Translator: Keith Bowes <keith@localhost>\n"
 "Language-Team: Esperanto <translation-team-eo@lists.sourceforge.net>\n"
 "Language: eo\n"
@@ -17,78 +17,78 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../obmenu:131
+#: ../obmenu:100
+msgid "Untitled"
+msgstr "Sennoma"
+
+#: ../obmenu:112 ../obmenu:178
+msgid "Open"
+msgstr "Malfermi"
+
+#: ../obmenu:160
 msgid "_OK"
 msgstr "_Bone"
 
-#: ../obmenu:132
+#: ../obmenu:161
 msgid "_Cancel"
 msgstr "_Nuligi"
 
-#: ../obmenu:145 ../obmenu:156
+#: ../obmenu:170 ../obmenu:176
 #, c-format
 msgid "Changes in %s will be lost. Continue?"
 msgstr "Ŝanĝoj de %s perdiĝos. Ĉu daŭrigi?"
 
-#: ../obmenu:150
-msgid "Untitled"
-msgstr "Sennoma"
-
-#: ../obmenu:158
-msgid "Open"
-msgstr "Malfermi"
-
-#: ../obmenu:177 ../obmenu:184 ../obmenu:189
+#: ../obmenu:185 ../obmenu:192
 msgid "Save as..."
 msgstr "Konservi kiel..."
 
-#: ../obmenu:212
+#: ../obmenu:207
 msgid "There are unsaved changes. Exit anyway?"
 msgstr "Ekzistas nekonservitajn ŝanĝojn. Ĉu senkonsidere fini?"
 
-#: ../obmenu:317
+#: ../obmenu:310
 msgid "Select File"
 msgstr "Elekti dosieron"
 
-#: ../obmenu:379 ../obmenu:381
+#: ../obmenu:370 ../obmenu:372
 msgid "New Menu"
 msgstr "Nova menuo"
 
-#: ../obmenu:380 ../obmenu:382 ../obmenu:401 ../obmenu:402
+#: ../obmenu:371 ../obmenu:373 ../obmenu:392 ../obmenu:393
 msgid "New Item"
 msgstr "Nova ero"
 
-#: ../obmenu:380 ../obmenu:382 ../obmenu:401 ../obmenu:462
+#: ../obmenu:371 ../obmenu:373 ../obmenu:392 ../obmenu:453
 msgid "command"
 msgstr "komando"
 
-#: ../obmenu:462 ../obmenu:463
+#: ../obmenu:453 ../obmenu:454
 msgid "New Pipe"
 msgstr "Nova tubo"
 
-#: ../obmenu:669
+#: ../obmenu:665
 msgid "Label"
 msgstr "Etikedo"
 
-#: ../obmenu:674
+#: ../obmenu:670
 msgid "Type"
 msgstr "Tipo"
 
-#: ../obmenu:679
+#: ../obmenu:675
 msgid "Action"
 msgstr "Ago"
 
-#: ../obmenu:684
+#: ../obmenu:680
 msgid "Execute"
 msgstr "Plenumi"
 
-#: ../obmenu:702
+#: ../obmenu:698
 msgid "Error: Obmenu can presently open only one file at a time."
 msgstr "Eraro: Obmenu nune povas fermi nur unu dosieron samtempe."
 
-#: ../obmenu:703
-msgid "Only the first specified will be opened."
-msgstr "Nur la unua specifita fermiĝos."
+#: ../obmenu:699
+msgid "       Only the first specified will be opened."
+msgstr "       Nur la unua specifita fermiĝos."
 
 #: ../obmenu.glade:6 ../obmenu.ui:6
 msgid "_File"
@@ -98,135 +98,135 @@ msgstr "_Dosiero"
 msgid "_New"
 msgstr "_Nova"
 
-#: ../obmenu.glade:15 ../obmenu.ui:15
+#: ../obmenu.glade:15 ../obmenu.ui:14
 msgid "_Open"
 msgstr "_Malfermi"
 
-#: ../obmenu.glade:21 ../obmenu.ui:21
+#: ../obmenu.glade:21 ../obmenu.ui:19
 msgid "_Save"
-msgstr "_Konservi"
+msgstr "Kon_servi"
 
-#: ../obmenu.glade:27 ../obmenu.ui:27
+#: ../obmenu.glade:27 ../obmenu.ui:24
 msgid "Save _As"
 msgstr "Konservi _kiel"
 
-#: ../obmenu.glade:35 ../obmenu.ui:35
+#: ../obmenu.glade:35 ../obmenu.ui:31
 msgid "_Reconfigure Openbox"
 msgstr "_Reŝargo de Openbox"
 
-#: ../obmenu.glade:43 ../obmenu.ui:43
+#: ../obmenu.glade:43 ../obmenu.ui:38
 msgid "_Quit"
 msgstr "_Fini"
 
-#: ../obmenu.glade:51 ../obmenu.ui:51
+#: ../obmenu.glade:51 ../obmenu.ui:45
 msgid "_Edit"
 msgstr "_Redakti"
 
-#: ../obmenu.glade:54 ../obmenu.ui:54
+#: ../obmenu.glade:54 ../obmenu.ui:48
 msgid "Move _up"
 msgstr "Movi _supren"
 
-#: ../obmenu.glade:60 ../obmenu.ui:60
+#: ../obmenu.glade:60 ../obmenu.ui:53
 msgid "Move dow_n"
 msgstr "Movi _malsupren"
 
-#: ../obmenu.glade:68 ../obmenu.ui:68
+#: ../obmenu.glade:68 ../obmenu.ui:60
 msgid "_Add"
 msgstr "_Aldoni"
 
-#: ../obmenu.glade:72 ../obmenu.ui:72
+#: ../obmenu.glade:72 ../obmenu.ui:64
 msgid "_Menu"
 msgstr "_Menuo"
 
-#: ../obmenu.glade:78 ../obmenu.ui:78
+#: ../obmenu.glade:78 ../obmenu.ui:69
 msgid "_Item"
 msgstr "_Eron"
 
-#: ../obmenu.glade:84 ../obmenu.ui:84
+#: ../obmenu.glade:84 ../obmenu.ui:74
 msgid "_Separator"
 msgstr "A_partigilon"
 
-#: ../obmenu.glade:90 ../obmenu.ui:90
+#: ../obmenu.glade:90 ../obmenu.ui:79
 msgid "_Pipe Menu"
 msgstr "_Tubo-menuon"
 
-#: ../obmenu.glade:96 ../obmenu.ui:96
+#: ../obmenu.glade:96 ../obmenu.ui:84
 msgid "_Link"
 msgstr "_Ligilon"
 
-#: ../obmenu.glade:106 ../obmenu.ui:106
+#: ../obmenu.glade:106 ../obmenu.ui:93
 msgid "_Delete"
 msgstr "_Forigi"
 
-#: ../obmenu.glade:114 ../obmenu.ui:114
+#: ../obmenu.glade:114 ../obmenu.ui:100
 msgid "_Help"
 msgstr "_Helpo"
 
-#: ../obmenu.glade:117 ../obmenu.ui:117
+#: ../obmenu.glade:117 ../obmenu.ui:103
 msgid "_About"
 msgstr "_Pri"
 
-#: ../obmenu.glade:129 ../obmenu.glade:603 ../obmenu.ui:126 ../obmenu.ui:359
+#: ../obmenu.glade:129 ../obmenu.glade:603 ../obmenu.ui:111 ../obmenu.ui:346
 msgid "Openbox Menu Editor"
 msgstr "Menuo-redaktilo por Openbox"
 
-#: ../obmenu.glade:164 ../obmenu.ui:147
+#: ../obmenu.glade:164 ../obmenu.ui:135
 msgid "Save the menu"
 msgstr "Konservi la menuon"
 
-#: ../obmenu.glade:193 ../obmenu.ui:159
+#: ../obmenu.glade:193 ../obmenu.ui:147
 msgid "New menu"
 msgstr "Novan menuon"
 
-#: ../obmenu.glade:210 ../obmenu.ui:167
+#: ../obmenu.glade:210 ../obmenu.ui:155
 msgid "New item"
 msgstr "Novan eron"
 
-#: ../obmenu.glade:227 ../obmenu.ui:175
+#: ../obmenu.glade:227 ../obmenu.ui:163
 msgid "New separator"
 msgstr "Novan apartigilon"
 
-#: ../obmenu.glade:257 ../obmenu.ui:188
+#: ../obmenu.glade:257 ../obmenu.ui:176
 msgid "Move up"
 msgstr "Movi supren"
 
-#: ../obmenu.glade:273 ../obmenu.ui:195
+#: ../obmenu.glade:273 ../obmenu.ui:183
 msgid "Move down"
 msgstr "Movi malsupren"
 
-#: ../obmenu.glade:302 ../obmenu.ui:207
+#: ../obmenu.glade:302 ../obmenu.ui:195
 msgid "Removes a menu or an item"
 msgstr "Forigas menuon aŭ eron"
 
-#: ../obmenu.glade:372 ../obmenu.ui:238
+#: ../obmenu.glade:372 ../obmenu.ui:225
 msgid "_Label"
 msgstr "_Etikedo"
 
-#: ../obmenu.glade:397 ../obmenu.ui:250
+#: ../obmenu.glade:397 ../obmenu.ui:237
 msgid "_ID"
 msgstr "_Identigilo"
 
-#: ../obmenu.glade:422 ../obmenu.ui:262
+#: ../obmenu.glade:422 ../obmenu.ui:249
 msgid "_Action"
 msgstr "_Ago"
 
-#: ../obmenu.glade:447 ../obmenu.ui:274
+#: ../obmenu.glade:447 ../obmenu.ui:261
 msgid "_Execute"
 msgstr "_Plenumi"
 
-#: ../obmenu.glade:564 ../obmenu.ui:338
+#: ../obmenu.glade:564 ../obmenu.ui:325
 msgid "..."
 msgstr "..."
 
-#: ../obmenu.glade:605 ../obmenu.ui:361
+#: ../obmenu.glade:605 ../obmenu.ui:348
 msgid ""
-"Thank you for using this sofware.\n"
+"Thank you for using this software.\n"
 "     Send any feedback to m.kolme@gmail.com"
 msgstr ""
 "Dankon pro la uzo de ĉi tiu programo.\n"
 "    Sendu komentojn al mi ĉe m.kolme@gmail.com"
 
-#: ../obmenu.glade:607 ../obmenu.ui:363
+#: ../obmenu.glade:607 ../obmenu.ui:350
 msgid ""
 "    Obmenu: Openbox Menu Editor\n"
 "        Copyright (C) 2005-2006  Manuel Colmenero\n"
@@ -270,11 +270,11 @@ msgstr ""
 "                   Boston, MA 02111-1307\n"
 "                   USA"
 
-#: ../obmenu.glade:624 ../obmenu.ui:380
+#: ../obmenu.glade:624 ../obmenu.ui:367
 msgid "Website"
 msgstr "TTT-ejo"
 
 #. TRANSLATORS: Replace this string with your names, one name per line.
-#: ../obmenu.glade:626 ../obmenu.ui:382
+#: ../obmenu.glade:626 ../obmenu.ui:369
 msgid "translator-credits"
 msgstr "translator-credits"

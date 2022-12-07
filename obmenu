@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #
-#  Openbox Menu Editor 1.1.1
+#  Openbox Menu Editor
 #
 #  Copyright 2005 Manuel Colmenero
 #
@@ -27,13 +27,10 @@ if os.getenv('OBMENU_GTK_VERSION'):
 elif gi.version_info < (3, 40, 0):
 	gtk_version = "3.0"
 else:
-	# Don't specify the version; PyGObject should use the highest possible
-	# version, though it will give a warning.
-	gtk_version = ""
-if gtk_version:
-	gi.require_version('Gtk', gtk_version)
-from gi.repository import Gtk, Gio, GLib
+	gtk_version = "4.0"
+gi.require_version('Gtk', gtk_version)
 gtk_version = None
+from gi.repository import Gtk, Gio, GLib
 
 try:
 	import locale
@@ -44,6 +41,8 @@ except:
 	from gettext import textdomain, bindtextdomain, dgettext, gettext as _
 
 class App(Gtk.Application):
+	version = '1.1.2'
+
 	# Recursively creates the treeview model
 	def createTree(self, padre, menuid):
 		for it in self.menu.getMenu(menuid):
@@ -127,7 +126,7 @@ class App(Gtk.Application):
 		dlg.show()
 
 	def on_file_chosen(self, dialog, response):
-		if response == Gtk.ResponseType.OK:
+		if response == Gtk.ResponseType.ACCEPT:
 			self.menu_path = dialog.get_file().get_path()
 
 			if dialog.get_action() == Gtk.FileChooserAction.OPEN:
@@ -154,11 +153,13 @@ class App(Gtk.Application):
 		dialog.destroy()
 
 	def ask_for_path(self, title, action, cb=None):
-		dlg = Gtk.FileChooserDialog(title=title, action=action)
-		dlg.add_button(dgettext(self.gtk_domain, "_OK"), Gtk.ResponseType.OK)
-		dlg.add_button(dgettext(self.gtk_domain, "_Cancel"), Gtk.ResponseType.CANCEL)
-		dlg.set_default_response(Gtk.ResponseType.OK)
-		dlg.set_transient_for(self.appwindow)
+		if Gtk.get_major_version() >= 4:
+			dlg = Gtk.FileChooserNative(title=title, transient_for=self.appwindow, action=action)
+		else:
+			dlg = Gtk.FileChooserDialog(title=title, transient_for=self.appwindow, action=action)
+			dlg.add_button(dgettext(self.gtk_domain, "_OK"), Gtk.ResponseType.ACCEPT)
+			dlg.add_button(dgettext(self.gtk_domain, "_Cancel"), Gtk.ResponseType.CANCEL)
+			dlg.set_default_response(Gtk.ResponseType.OK)
 		dlg.connect("response", cb or self.on_file_chosen)
 		dlg.show()
 
@@ -520,7 +521,9 @@ class App(Gtk.Application):
 		return True
 
 	def show_about(self, param, data):
-		self.builder.get_object("aboutdialog").show()
+		aboutdialog = self.builder.get_object("aboutdialog")
+		aboutdialog.set_version(self.version)
+		aboutdialog.show()
 
 	def do_startup(self):
 		Gtk.Application.do_startup(self)
@@ -529,28 +532,24 @@ class App(Gtk.Application):
 		if os.path.isfile("obmenu.ui"):
 			# They're here.. looks like a pre-installation execution
 			self.datapath = os.getcwd()
-		elif os.path.isdir(os.path.abspath(os.path.dirname(__file__) + "/../share/obmenu")):
-			self.datapath = os.path.abspath(os.path.dirname(__file__) + "/../share/obmenu")
-		elif os.path.isdir("%s/share/obmenu" % sys.prefix):
-			self.datatpath = "%s/share/obmenu" % sys.prefix
-		elif os.path.isdir("/usr/local/share/obmenu"):
-			self.datapath = "/usr/local/share/obmenu"
-		elif os.path.isdir("/usr/share/obmenu"):
-			self.datapath = "/usr/share/obmenu"
-		elif os.getenv("XDG_DATA_HOME") and os.path.isdir("%s/%s" % (os.getenv("XDG_DATA_HOME"), "obmenu")):
-			self.datapath = "%s/%s" % (os.getenv("XDG_DATA_HOME"), "obmenu")
-		elif os.path.isdir(os.path.expanduser("~/.local/share/obmenu")):
-			self.datapath = os.path.expanduser("~/.local/share/obmenu")
 		else:
-			# These will be untranslated, as things weren't installed correctly
-			print("ERROR: the data files were not found!")
-			print("       check that everything was installed all right")
-			sys.exit(1)
+			self.datapath = ""
+			data_dirs = [os.path.dirname(__file__) + "/../share", GLib.get_user_data_dir()]
+			data_dirs += GLib.get_system_data_dirs()
+			for data_dir in data_dirs:
+				if os.path.isfile(os.path.abspath("%s/obmenu/obmenu.ui" % data_dir)):
+					self.datapath = os.path.abspath("%s/obmenu" % data_dir)
+					break
+			if not self.datapath:
+				# These will be untranslated, as things weren't installed correctly
+				print("ERROR: the data files were not found!")
+				print("       check that everything was installed all right")
+				sys.exit(1)
 
 		if os.getenv("TEXTDOMAINDIR"):
 			textdomaindir = os.getenv("TEXTDOMAINDIR")
 		else:
-			textdomaindir = os.path.abspath("../share/locale")
+			textdomaindir = os.path.abspath(os.path.dirname(__file__) + "/../share/locale")
 		textdomain("obmenu")
 		bindtextdomain("obmenu", textdomaindir)
 		self.gtk_domain = "gtk%d0" % Gtk.get_major_version()
@@ -701,8 +700,6 @@ class App(Gtk.Application):
 		self.appid = "io.sourceforge.obmenu"
 		Gtk.Application.__init__(self, application_id=self.appid,
 				flags=Gio.ApplicationFlags.HANDLES_OPEN | Gio.ApplicationFlags.NON_UNIQUE)
-		if Gtk.get_major_version() < 4:
-			GLib.set_prgname(self.appid)
 
 if __name__ == "__main__":
 	app = App()
