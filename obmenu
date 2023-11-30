@@ -123,45 +123,76 @@ class App(Gtk.Application):
 		self.confirm_action = action
 		dlg.set_transient_for(self.appwindow);
 		dlg.connect("response", self.on_confirm)
-		dlg.show()
+		if Gtk.get_major_version() >= 4:
+			dlg.set_visible(True)
+		else:
+			dlg.show()
 
-	def on_file_chosen(self, dialog, response):
-		if response == Gtk.ResponseType.ACCEPT:
+	def on_file_chosen(self, dialog, action):
+		# Returns None if the version matches or a message describing the version mismatch
+		if Gtk.check_version(4, 10, 0) is None:
+			if self.menu_path is None:
+				return
+		else:
+			if action != Gtk.ResponseType.ACCEPT:
+				return
 			self.menu_path = dialog.get_file().get_path()
+			action = dialog.get_action()
 
-			if dialog.get_action() == Gtk.FileChooserAction.OPEN:
-				self.unsaved_menu = False
-				self._sth_changed(False)
+		if action == Gtk.FileChooserAction.OPEN:
+			self.unsaved_menu = False
+			self._sth_changed(False)
 
-				# Load in memory the real xml menu
-				self.menu = obxml.Obmenu()
-				self.menu.loadMenu(self.menu_path)
+			# Load in memory the real xml menu
+			self.menu = obxml.Obmenu()
+			self.menu.loadMenu(self.menu_path)
 
-				self.deleteTree() #Not really deleting this time, just initializing
-				self.createTree(None, None)
-				self.clear_fields()
-			else:
-				self.unsaved_menu = False
-				self.menu.saveMenu(self.menu_path)
-				self._sth_changed(False)
+			self.deleteTree() #Not really deleting this time, just initializing
+			self.createTree(None, None)
+			self.clear_fields()
+		else:
+			self.unsaved_menu = False
+			self.menu.saveMenu(self.menu_path)
+			self._sth_changed(False)
 
-		dialog.destroy()
+		if Gtk.check_version(4, 10, 0) is not None:
+			dialog.destroy()
 
 	def on_search_clicked(self, dialog, response):
 		if response == Gtk.ResponseType.OK:
 			self.execute_entry.set_text(dialog.get_file().get_path())
 		dialog.destroy()
 
+	def get_selected_filename(self, source_object, res, data):
+		(dlg, action, cb) = data
+		if action == Gtk.FileChooserAction.OPEN:
+			self.menu_path = dlg.open_finish(res).get_path()
+		elif action == Gtk.FileChooserAction.SAVE:
+			self.menu_path = dlg.save_finish(res).get_path()
+		if cb is None:
+			self.on_file_chosen(dlg, action)
+		else:
+			cb(dlg, action)
+
 	def ask_for_path(self, title, action, cb=None):
-		if Gtk.get_major_version() >= 4:
-			dlg = Gtk.FileChooserNative(title=title, transient_for=self.appwindow, action=action)
+		if Gtk.check_version(4, 10, 0) is None:
+			dlg = Gtk.FileDialog()
+			if action == Gtk.FileChooserAction.OPEN:
+				dlg.open(self.appwindow, None, self.get_selected_filename, (dlg, action, cb))
+			elif action == Gtk.FileChooserAction.SAVE:
+				dlg.save(self.appwindow, None, self.get_selected_filename, (dlg, action, cb))
+			dlg.set_title(title)
+		elif Gtk.get_major_version() >= 4:
+			dlg = Gtk.FileChooserNative(title=title, transient_for=self.appwindow, action = action)
+			dlg.connect("response", cb or self.on_file_chosen)
+			dlg.show()
 		else:
 			dlg = Gtk.FileChooserDialog(title=title, transient_for=self.appwindow, action=action)
 			dlg.add_button(dgettext(self.gtk_domain, "_OK"), Gtk.ResponseType.ACCEPT)
 			dlg.add_button(dgettext(self.gtk_domain, "_Cancel"), Gtk.ResponseType.CANCEL)
 			dlg.set_default_response(Gtk.ResponseType.OK)
-		dlg.connect("response", cb or self.on_file_chosen)
-		dlg.show()
+			dlg.connect("response", cb or self.on_file_chosen)
+			dlg.show()
 
 	#  New file clicked
 	def new(self, params, data):
@@ -517,7 +548,10 @@ class App(Gtk.Application):
 	# event is required by GTK 3's delete-event but not by GTK 4's
 	# close-request
 	def hide_about(self, widget, event=None):
-		widget.hide()
+		if Gtk.get_major_version() >= 4:
+			widget.set_visible(False)
+		else:
+			widget.hide()
 		return True
 
 	def show_about(self, param, data):
@@ -685,7 +719,10 @@ class App(Gtk.Application):
 
 		# Let's roll!
 		self.add_window(self.appwindow)
-		self.appwindow.show()
+		if Gtk.get_major_version() >= 4:
+			self.appwindow.set_visible(True)
+		else:
+			self.appwindow.show()
 
 	# Callback called when command-line arguments are provided
 	def do_open(self, files, n_files, hint):

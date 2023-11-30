@@ -164,12 +164,11 @@ class Obmenu:
 		"<?xml version=\"1.0\" ?><openbox_pipe_menu></openbox_pipe_menu>")
 
 	def saveMenu(self, filename):
-		if os.path.exists(filename):
-			output = open(filename, "w")
-			for line in self.dom.toprettyxml("\t","\n").splitlines():
-				if line.strip() != "":
-					output.write("%s\n" %(line))
-			output.close()
+		output = open(filename, "w")
+		for line in self.dom.toprettyxml("\t","\n").splitlines():
+			if line.strip() != "":
+				output.write("%s\n" %(line))
+		output.close()
 
 	def printXml(self):
 		for line in self.dom.toprettyxml("\t","\n").splitlines():
