@@ -8,7 +8,7 @@ to edit menus in an intuitive way.
 
   [Python](http://python.org),
   [PyGObject](https://pygobject.readthedocs.io),
-  [GTK](http://gtk.org/) >= 3.4
+  [GTK](http://gtk.org/) 3 >= 3.12 or GTK 4 >= 4.10 (set the OBMENU_GTK4 environment variable to use experimental GTK 4 support)
 
   PyGObject 3 or higher is recommended, but older versions may also work.
   For Python 2.7 (not recommended) or older versions of Python 3, you'll need a

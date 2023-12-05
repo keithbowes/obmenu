@@ -20,16 +20,16 @@
 
 import gi, obxml, random, time, os, sys
 
-# Try setting OBMENU_GTK_VERSION if PyGObject loads the wrong GTK version.
-if os.getenv('OBMENU_GTK_VERSION'):
-	gtk_version = os.getenv('OBMENU_GTK_VERSION')
+# Set OBMENU_GTK4 for experimental use of GTK 4.
+obmenu_gtk4 = bool(os.getenv('OBMENU_GTK4'))
 # These versions are incompatible with GTK 4, so force GTK 3.
-elif gi.version_info < (3, 40, 0):
-	gtk_version = "3.0"
+if gi.version_info < (3, 40, 0):
+	obmenu_gtk4 = False
+
+if obmenu_gtk4:
+	gi.require_version('Gtk', '4.0')
 else:
-	gtk_version = "4.0"
-gi.require_version('Gtk', gtk_version)
-gtk_version = None
+	gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk, Gio, GLib
 
 try:
@@ -123,14 +123,13 @@ class App(Gtk.Application):
 		self.confirm_action = action
 		dlg.set_transient_for(self.appwindow);
 		dlg.connect("response", self.on_confirm)
-		if Gtk.get_major_version() >= 4:
+		if obmenu_gtk4:
 			dlg.set_visible(True)
 		else:
 			dlg.show()
 
 	def on_file_chosen(self, dialog, action):
-		# Returns None if the version matches or a message describing the version mismatch
-		if Gtk.check_version(4, 10, 0) is None:
+		if obmenu_gtk4:
 			if self.menu_path is None:
 				return
 		else:
@@ -155,7 +154,7 @@ class App(Gtk.Application):
 			self.menu.saveMenu(self.menu_path)
 			self._sth_changed(False)
 
-		if Gtk.check_version(4, 10, 0) is not None:
+		if not obmenu_gtk4:
 			dialog.destroy()
 
 	def on_search_clicked(self, dialog, response):
@@ -175,17 +174,13 @@ class App(Gtk.Application):
 			cb(dlg, action)
 
 	def ask_for_path(self, title, action, cb=None):
-		if Gtk.check_version(4, 10, 0) is None:
+		if obmenu_gtk4:
 			dlg = Gtk.FileDialog()
 			if action == Gtk.FileChooserAction.OPEN:
 				dlg.open(self.appwindow, None, self.get_selected_filename, (dlg, action, cb))
 			elif action == Gtk.FileChooserAction.SAVE:
 				dlg.save(self.appwindow, None, self.get_selected_filename, (dlg, action, cb))
 			dlg.set_title(title)
-		elif Gtk.get_major_version() >= 4:
-			dlg = Gtk.FileChooserNative(title=title, transient_for=self.appwindow, action = action)
-			dlg.connect("response", cb or self.on_file_chosen)
-			dlg.show()
 		else:
 			dlg = Gtk.FileChooserDialog(title=title, transient_for=self.appwindow, action=action)
 			dlg.add_button(dgettext(self.gtk_domain, "_OK"), Gtk.ResponseType.ACCEPT)
@@ -548,7 +543,7 @@ class App(Gtk.Application):
 	# event is required by GTK 3's delete-event but not by GTK 4's
 	# close-request
 	def hide_about(self, widget, event=None):
-		if Gtk.get_major_version() >= 4:
+		if obmenu_gtk4:
 			widget.set_visible(False)
 		else:
 			widget.hide()
@@ -619,7 +614,7 @@ class App(Gtk.Application):
 			action.connect("activate", signals[signal])
 			self.add_action(action)
 
-		if Gtk.get_major_version() >= 4:
+		if obmenu_gtk4:
 			self.builder = Gtk.Builder(signals)
 			self.builder.add_from_file(self.datapath + "/obmenu.ui")
 		else:
@@ -628,28 +623,25 @@ class App(Gtk.Application):
 			self.set_menubar(self.builder.get_object("menubar"))
 			self.builder.connect_signals(signals)
 
-		# PyGObject seems to lack an equivalent of the C GTK_CHECK_VERSION macro.
-		# Gtk.check_version() checks for ABI compatibility with the requested version.
-		if Gtk.get_major_version() > 3 or Gtk.get_minor_version() >= 12:
-			accels = {
-				"app.new": ["<Control>n"],
-				"app.open": ["<Control>o"],
-				"app.save": ["<Control>s"],
-				"app.save.as": ["<Control><Shift>s"],
-				"app.reconfigure": ["<Control>c"],
-				"app.quit": ["<Control>q"],
-				"app.up": ["<Control>Up"],
-				"app.down": ["<Control>Down"],
-				"app.add.menu": ["<Control>m"],
-				"app.add.item": ["<Control>i"],
-				"app.add.separator": ["<Control>r"],
-				"app.add.pipe": ["<Control>p"],
-				"app.add.link": ["<Control>l"],
-				"app.remove": ["Delete"],
-				"app.about": ["F1"]
-			}
-			for accel in accels:
-				app.set_accels_for_action(accel, accels[accel])
+		accels = {
+			"app.new": ["<Control>n"],
+			"app.open": ["<Control>o"],
+			"app.save": ["<Control>s"],
+			"app.save.as": ["<Control><Shift>s"],
+			"app.reconfigure": ["<Control>c"],
+			"app.quit": ["<Control>q"],
+			"app.up": ["<Control>Up"],
+			"app.down": ["<Control>Down"],
+			"app.add.menu": ["<Control>m"],
+			"app.add.item": ["<Control>i"],
+			"app.add.separator": ["<Control>r"],
+			"app.add.pipe": ["<Control>p"],
+			"app.add.link": ["<Control>l"],
+			"app.remove": ["Delete"],
+			"app.about": ["F1"]
+		}
+		for accel in accels:
+			app.set_accels_for_action(accel, accels[accel])
 
 	# Application activation
 	def do_activate(self):
@@ -719,7 +711,7 @@ class App(Gtk.Application):
 
 		# Let's roll!
 		self.add_window(self.appwindow)
-		if Gtk.get_major_version() >= 4:
+		if obmenu_gtk4:
 			self.appwindow.set_visible(True)
 		else:
 			self.appwindow.show()
