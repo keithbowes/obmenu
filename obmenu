@@ -20,18 +20,6 @@
 
 import gi, obxml, random, time, os, sys
 
-# Set OBMENU_GTK4 for experimental use of GTK 4.
-obmenu_gtk4 = bool(os.getenv('OBMENU_GTK4'))
-# These versions are incompatible with GTK 4, so force GTK 3.
-if gi.version_info < (3, 40, 0):
-	obmenu_gtk4 = False
-
-if obmenu_gtk4:
-	gi.require_version('Gtk', '4.0')
-else:
-	gi.require_version('Gtk', '3.0')
-from gi.repository import Gtk, Gio, GLib
-
 try:
 	import locale
 	from locale import textdomain, bindtextdomain, dgettext, gettext as _
@@ -40,25 +28,55 @@ except:
 	import gettext
 	from gettext import textdomain, bindtextdomain, dgettext, gettext as _
 
+if gi.version_info < (3, 40, 0):
+	print(_("PyGObject 3.40.0 or higher is required"), file=sys.err)
+	exit(1)
+
+gi.require_version('Gtk', '4.0')
+from gi.repository import Gtk, Gio, GLib, GObject
+
+class MenuInfo:
+	hijo = None
+	hijos = 0
+
 class App(Gtk.Application):
-	version = '1.1.2'
+	version = '1.2.0'
 
 	# Recursively creates the treeview model
-	def createTree(self, padre, menuid):
+	def createTree(self, menuid):
 		for it in self.menu.getMenu(menuid):
 			if it["type"] == "item":
-				self.treemodel.append(padre, (it["label"], 'item',it["action"],it["execute"],it["parent"],""))
+				label = GObject.Object()
+				label.data = [it["label"], _('item'), it["action"], it["execute"], it["parent"], "", None]
+				self.treemodel.get_model().append(label)
 			elif it["type"] == "separator":
-				self.treemodel.append(padre, ("", "separator", "", "", it["parent"], ""))
+				label = GObject.Object()
+				label.data = ["", _("separator"), "", "", it["parent"], "", None]
+				self.treemodel.get_model().append(label)
 			elif it["type"] == "menu":
-				hijo=self.treemodel.append(padre, (it["label"], 'menu',it["action"],it["execute"], it["parent"], it["id"]))
+				menuinfo = MenuInfo()
+				expander = Gtk.TreeExpander.new()
+				label = GObject.Object()
+				label.data = [it["label"], _('menu'), it["action"], it["execute"], it["parent"], it["id"], expander]
+				hijo=self.treemodel.get_model().append(label)
+				menuinfo.hijo=hijo
+				menuinfo.hijos = menuinfo.hijos + 1
+				expander.set_list_row(self.treemodel.get_child_row(menuinfo.hijos))
 				if self.menu.getMenu(it["id"]) and it["action"] == "":
-					self.createTree(hijo, it["id"])
+					self.createTree(it["id"])
 
-	def deleteTree(self):
+	def create_list_model(self, item, user_data, param=None):
+		model = Gio.ListStore()
+		return model
+
+	def initTree(self):
 		# treemodel.iter(label, type, [action], [execute], parent, [menu-id])
-		self.treemodel=Gtk.TreeStore(str, str, str, str, str, str)
-		self.treeview.set_model(self.treemodel)
+		listmodel = Gio.ListStore()
+		self.treemodel = Gtk.TreeListModel.new(listmodel, False, False, self.create_list_model, None, None)
+		self.treemodel.connect("notify::label", self.treeview_notify, None)
+		selection_model = Gtk.SingleSelection()
+		selection_model.set_model(self.treemodel)
+		self.treeview.set_model(selection_model)
 
 	# Sets the state of "menu modified"
 	# Refreshes the window's title
@@ -114,8 +132,8 @@ class App(Gtk.Application):
 				self.menu = obxml.Obmenu()
 				self.menu.loadMenu(self.menu_path)
 
-				self.deleteTree() #Not really deleting this time, just initializing
-				self.createTree(None, None)
+				self.initTree()
+				self.createTree(None)
 				self.clear_fields()
 
 	def confirm(self, message, action):
@@ -123,20 +141,11 @@ class App(Gtk.Application):
 		self.confirm_action = action
 		dlg.set_transient_for(self.appwindow);
 		dlg.connect("response", self.on_confirm)
-		if obmenu_gtk4:
-			dlg.set_visible(True)
-		else:
-			dlg.show()
+		dlg.set_visible(True)
 
 	def on_file_chosen(self, dialog, action):
-		if obmenu_gtk4:
-			if self.menu_path is None:
-				return
-		else:
-			if action != Gtk.ResponseType.ACCEPT:
-				return
-			self.menu_path = dialog.get_file().get_path()
-			action = dialog.get_action()
+		if self.menu_path is None:
+			return
 
 		if action == Gtk.FileChooserAction.OPEN:
 			self.unsaved_menu = False
@@ -146,16 +155,13 @@ class App(Gtk.Application):
 			self.menu = obxml.Obmenu()
 			self.menu.loadMenu(self.menu_path)
 
-			self.deleteTree() #Not really deleting this time, just initializing
-			self.createTree(None, None)
+			self.initTree()
+			self.createTree(None)
 			self.clear_fields()
 		else:
 			self.unsaved_menu = False
 			self.menu.saveMenu(self.menu_path)
 			self._sth_changed(False)
-
-		if not obmenu_gtk4:
-			dialog.destroy()
 
 	def on_search_clicked(self, dialog, response):
 		if response == Gtk.ResponseType.OK:
@@ -165,29 +171,27 @@ class App(Gtk.Application):
 	def get_selected_filename(self, source_object, res, data):
 		(dlg, action, cb) = data
 		if action == Gtk.FileChooserAction.OPEN:
-			self.menu_path = dlg.open_finish(res).get_path()
+			try:
+				self.menu_path = dlg.open_finish(res).get_path()
+			except:
+				self.menu_path = None
 		elif action == Gtk.FileChooserAction.SAVE:
-			self.menu_path = dlg.save_finish(res).get_path()
+			try:
+				self.menu_path = dlg.save_finish(res).get_path()
+			except:
+				self.menu_path = None
 		if cb is None:
 			self.on_file_chosen(dlg, action)
 		else:
 			cb(dlg, action)
 
 	def ask_for_path(self, title, action, cb=None):
-		if obmenu_gtk4:
 			dlg = Gtk.FileDialog()
 			if action == Gtk.FileChooserAction.OPEN:
 				dlg.open(self.appwindow, None, self.get_selected_filename, (dlg, action, cb))
 			elif action == Gtk.FileChooserAction.SAVE:
 				dlg.save(self.appwindow, None, self.get_selected_filename, (dlg, action, cb))
 			dlg.set_title(title)
-		else:
-			dlg = Gtk.FileChooserDialog(title=title, transient_for=self.appwindow, action=action)
-			dlg.add_button(dgettext(self.gtk_domain, "_OK"), Gtk.ResponseType.ACCEPT)
-			dlg.add_button(dgettext(self.gtk_domain, "_Cancel"), Gtk.ResponseType.CANCEL)
-			dlg.set_default_response(Gtk.ResponseType.OK)
-			dlg.connect("response", cb or self.on_file_chosen)
-			dlg.show()
 
 	#  New file clicked
 	def new(self, params, data):
@@ -223,9 +227,7 @@ class App(Gtk.Application):
 			os.kill(int(lines[0]), signal.SIGUSR2)
 
 	# quit signal
-	# event is required by GTK 3's delete-event but not by GTK 4's
-	# close-request
-	def exit (self, bt, event=None):
+	def exit (self, bt):
 		if self.settings:
 			self.settings.set_value("last-opened-menu", GLib.Variant.new_string(self.menu_path))
 		if self.sth_changed:
@@ -284,7 +286,8 @@ class App(Gtk.Application):
 		model.set(ite, 0, lb)
 
 	# action_combo_box changed signal
-	def change_action(self, pa):
+	def change_action(self, pa, data=None):
+		print("change_action")
 		if self.auto_change: return
 		self._sth_changed(True)
 		(model, ite) = self.treeview.get_selection().get_selected()
@@ -334,11 +337,15 @@ class App(Gtk.Application):
 	def search_clicked(self, arg):
 		dlg = self.ask_for_path(_("Select File"), Gtk.FileChooserAction.OPEN, self.on_search_clicked)
 
+	def treeview_notify(self, model, pspec, user_data):
+		print("%s %s %s" % (model, model.get_property(pspec.name), user_data))
+
 	# treeview clicked signal
-	def treeview_changed(self, param):
-		(model, ite) = param.get_selection().get_selected()
+	def treeview_changed(self, column_view, position):
+		model = column_view.get_model().get_model()
+		ite = model.get_model().get_item(position)
 		if not ite: return
-		(label, tipe, action, exe, menu, mid) = model.get(ite,0,1,2,3,4,5)
+		(label, tipe, action, exe, parent, mid, expander) = ite.data
 
 		self.auto_change = True
 
@@ -349,20 +356,24 @@ class App(Gtk.Application):
 		self.action_combo.set_sensitive(tipe == "item")
 		self.id_entry.set_sensitive(tipe == "menu")
 		self.id_entry.set_text(mid)
+		if not parent is None:
+			self.parent_id_entry.set_text(parent)
+		else:
+			self.parent_id_entry.set_text("")
 
 		if tipe == "item":
 			self.execute_entry.set_sensitive(False)
 			self.execute_srch.set_sensitive(False)
 			if action.lower() == "execute":
-				self.action_combo.set_active(0)
+				self.action_combo.set_selected(0)
 				self.execute_entry.set_sensitive(True)
 				self.execute_srch.set_sensitive(True)
 			elif action.lower() == "reconfigure":
-				self.action_combo.set_active(1)
+				self.action_combo.set_selected(1)
 			elif action.lower() == "restart":
-				self.action_combo.set_active(2)
+				self.action_combo.set_selected(2)
 			elif action.lower() == "exit":
-				self.action_combo.set_active(3)
+				self.action_combo.set_selected(3)
 			else:
 				self.action_combo.set_sensitive(False)
 		elif tipe == "menu":
@@ -372,6 +383,9 @@ class App(Gtk.Application):
 			self.execute_entry.set_sensitive(False)
 			self.execute_srch.set_sensitive(False)
 		self.auto_change = False
+
+	def treeitem_activated(self, columnview, position, user_data):
+		pass
 
 	# new menu button clicked
 	def new_menu(self, param, data=None):
@@ -487,7 +501,8 @@ class App(Gtk.Application):
 
 	# up button clicked
 	def up(self, param, data=None):
-		(model, ite) = self.treeview.get_selection().get_selected()
+		model = self.treeview.get_model().get_model()
+		ite = self.treeview.get_model().get_selection()
 		if not ite: return
 		(label, tipe, action, exe, menu, mid) = model.get(ite,0,1,2,3,4,5)
 		if menu == "None": menu = None
@@ -504,14 +519,17 @@ class App(Gtk.Application):
 
 	# down button clicked
 	def down(self, param, data=None):
-		(model, ite) = self.treeview.get_selection().get_selected()
+		position = self.treeview.get_model().get_selected()
+		model = self.treemodel
+		ite = self.treemodel.get_child_row(position).get_item()
 		if not ite: return
-		(label, tipe, action, exe, menu, mid) = model.get(ite,0,1,2,3,4,5)
-		p = model.get_path(ite)
-		n = p[len(p)-1]
-		if n < self.menu._get_menu_len(menu) -1:
+		(label, tipe, action, exe, menu, mid, expander) = list(ite.data)
+		p = position + 1
+		upper = model.get_item(p)
+		model.move_after(ite,upper)
+		if p < self.menu._get_menu_len(menu) - 1:
 			self._sth_changed(True)
-			self.menu.interchange(menu, n, n+1)
+			self.menu.interchange(menu, p, p+1)
 			l = list(p)
 			l[len(l)-1] += 1
 			p = tuple(l)
@@ -519,40 +537,36 @@ class App(Gtk.Application):
 			model.move_after(ite,upper)
 
 	# remove button clicked
-	def remove(self, param, data=None):
-		(model, ite) = self.treeview.get_selection().get_selected()
+	def remove(self, button, position=-1):
+		if position == -1:
+			position = self.treeview.get_model().get_selected()
+		model = self.treemodel.get_model()
+		row = self.treemodel.get_child_row(position)
+		ite = row.get_item()
 		if not ite: return
-		self._sth_changed(True)
-		(label, tipe, action, exe, menu, mid) = model.get(ite,0,1,2,3,4,5)
-		path = model.get_path(ite)
-		n = path[len(path)-1]
+		(label, tipe, action, exe, menu, mid, expander) = list(ite.data)
+		n = position - 1
+		model.remove(position)
 		if tipe == "menu":
-			if model.iter_has_child(ite):
-				self.menu.removeMenu(mid)
-			else:
-				self.menu.removeItem(menu, n)
+			self.menu.removeMenu(mid)
 		else:
-			self.menu.removeItem(menu, n)
-		model.remove(ite)
+			self.menu.removeItem(menu, 0)
+		model.remove(position)
+		expander.set_visible(False)
 		self.clear_fields()
 
 	def mnu_remove(self, param, data):
 		if self.treeview.is_focus():
 			self.remove(None)
 
-	# event is required by GTK 3's delete-event but not by GTK 4's
-	# close-request
-	def hide_about(self, widget, event=None):
-		if obmenu_gtk4:
-			widget.set_visible(False)
-		else:
-			widget.hide()
+	def hide_about(self, widget):
+		widget.set_visible(False)
 		return True
 
 	def show_about(self, param, data):
 		aboutdialog = self.builder.get_object("aboutdialog")
 		aboutdialog.set_version(self.version)
-		aboutdialog.show()
+		aboutdialog.set_visible(True)
 
 	def do_startup(self):
 		Gtk.Application.do_startup(self)
@@ -571,8 +585,8 @@ class App(Gtk.Application):
 					break
 			if not self.datapath:
 				# These will be untranslated, as things weren't installed correctly
-				print("ERROR: the data files were not found!")
-				print("       check that everything was installed all right")
+				print("ERROR: the data files were not found!", file=sys.err)
+				print("       check that everything was installed all right", file=sys.err)
 				sys.exit(1)
 
 		if os.getenv("TEXTDOMAINDIR"):
@@ -614,14 +628,8 @@ class App(Gtk.Application):
 			action.connect("activate", signals[signal])
 			self.add_action(action)
 
-		if obmenu_gtk4:
-			self.builder = Gtk.Builder(signals)
-			self.builder.add_from_file(self.datapath + "/obmenu.ui")
-		else:
-			self.builder = Gtk.Builder()
-			self.builder.add_from_file(self.datapath + "/obmenu.glade")
-			self.set_menubar(self.builder.get_object("menubar"))
-			self.builder.connect_signals(signals)
+		self.builder = Gtk.Builder(signals)
+		self.builder.add_from_file(self.datapath + "/obmenu.ui")
 
 		accels = {
 			"app.new": ["<Control>n"],
@@ -643,6 +651,16 @@ class App(Gtk.Application):
 		for accel in accels:
 			app.set_accels_for_action(accel, accels[accel])
 
+	def setup_listitem_cb(self, factory, item, data):
+		label = Gtk.Label()
+		label.set_label("")
+		item.set_child(label)
+
+	def bind_listitem_cb(self, factory, item, data):
+		row = item.get_item()
+		label = item.get_child()
+		label.set_label(row.get_item().data[data])
+
 	# Application activation
 	def do_activate(self):
 		# Set the basics for GTK
@@ -653,6 +671,7 @@ class App(Gtk.Application):
 		self.execute_entry = self.builder.get_object("execute_entry")
 		self.execute_srch = self.builder.get_object("execute_search_button")
 		self.id_entry = self.builder.get_object("id_entry")
+		self.parent_id_entry = self.builder.get_object("parent_id_entry")
 
 		self.menu = obxml.Obmenu()
 		self.menu_path = ""
@@ -675,31 +694,38 @@ class App(Gtk.Application):
 		else:
 			self.unsaved_menu = True
 
-		# treemodel.iter(label, type, [action], [execute], parent, [menu-id])
-		self.treemodel=Gtk.TreeStore(str, str, str, str, str, str)
-		self.treeview.set_model(self.treemodel)
+		self.initTree()
+		self.treeview.grab_focus()
 
 		# Set the columns
-		self.treeview.set_headers_visible(True)
-
-		renderer=Gtk.CellRendererText()
-		column=Gtk.TreeViewColumn(dgettext(self.gtk_domain, "Label"),renderer, text=0)
+		factory = Gtk.SignalListItemFactory()
+		factory.connect("setup", self.setup_listitem_cb, 0)
+		factory.connect("bind", self.bind_listitem_cb, 0)
+		column = Gtk.ColumnViewColumn.new(dgettext(self.gtk_domain, "Label"), factory)
 		column.set_resizable(True)
 		self.treeview.append_column(column)
 
-		renderer=Gtk.CellRendererText()
-		column=Gtk.TreeViewColumn(dgettext(self.gtk_domain, "Type"),renderer,text=1)
+		factory = Gtk.SignalListItemFactory()
+		factory.connect("setup", self.setup_listitem_cb, 1)
+		factory.connect("bind", self.bind_listitem_cb, 1)
+		column = Gtk.ColumnViewColumn.new(dgettext(self.gtk_domain, "Type"), factory)
+		column.set_resizable(True)
 		column.set_resizable(True)
 		self.treeview.append_column(column)
 
-		renderer=Gtk.CellRendererText()
-		column=Gtk.TreeViewColumn(dgettext(self.gtk_domain, "Action"),renderer,text=2)
+		factory = Gtk.SignalListItemFactory()
+		factory.connect("setup", self.setup_listitem_cb, 2)
+		factory.connect("bind", self.bind_listitem_cb, 2)
+		column = Gtk.ColumnViewColumn.new(dgettext(self.gtk_domain, "Action"), factory)
 		column.set_resizable(True)
 		self.treeview.append_column(column)
 
-		renderer=Gtk.CellRendererText()
-		column=Gtk.TreeViewColumn(_("Execute"),renderer,text=3)
+		factory = Gtk.SignalListItemFactory()
+		factory.connect("setup", self.setup_listitem_cb, 3)
+		factory.connect("bind", self.bind_listitem_cb, 3)
+		column = Gtk.ColumnViewColumn.new(_("Execute"), factory)
 		column.set_resizable(True)
+		column.set_expand(True)
 		self.treeview.append_column(column)
 
 		# Some states of the app
@@ -707,20 +733,17 @@ class App(Gtk.Application):
 		self._sth_changed(False)
 
 		# Create the menu tree
-		self.createTree(None, None)
+		self.createTree(None)
 
 		# Let's roll!
 		self.add_window(self.appwindow)
-		if obmenu_gtk4:
-			self.appwindow.set_visible(True)
-		else:
-			self.appwindow.show()
+		self.appwindow.set_visible(True)
 
 	# Callback called when command-line arguments are provided
 	def do_open(self, files, n_files, hint):
 		if n_files > 1:
-			print(_("Error: Obmenu can presently open only one file at a time."))
-			print(_("       Only the first specified will be opened."))
+			print(_("Error: Obmenu can presently open only one file at a time."), file=sys.err)
+			print(_("       Only the first specified will be opened."), file=sys.err)
 		self.menu_file = files[0]
 		self.do_activate()
 
