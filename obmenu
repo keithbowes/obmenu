@@ -21,7 +21,11 @@
 import gi, obxml, random, time, os, sys
 
 # Set OBMENU_GTK4 for experimental use of GTK 4.
-obmenu_gtk4 = bool(os.getenv('OBMENU_GTK4'))
+obmenu_gtk4 = os.getenv('OBMENU_GTK4')
+if obmenu_gtk4 is None or obmenu_gtk4 == "0" or obmenu_gtk4 == "":
+	obmenu_gtk4 = False
+else:
+	obmenu_gtk4 = True
 # These versions are incompatible with GTK 4, so force GTK 3.
 if gi.version_info < (3, 40, 0):
 	obmenu_gtk4 = False
