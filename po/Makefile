@@ -21,7 +21,7 @@ install: all
 		install -m 644 $l.mo $(localedir)/$l/LC_MESSAGES/obmenu.mo;)
 
 uninstall:
-	rm -f $(wildcard $(DESTDIR)$(PREFIX)/share/locale/*/obmenu.mo)
+	rm -f $(wildcard $(DESTDIR)$(PREFIX)/share/locale/*/LC_MESSAGES/obmenu.mo)
 
 update-po: $(pofiles)
 
