@@ -9,7 +9,7 @@ schemafile=$(wildcard *.gschema.xml)
 
 all:
 	cd po && $(MAKE)
-	./setup.py build
+	pyproject-build -nwx
 
 clean:
 	cd po && $(MAKE) clean
@@ -25,11 +25,11 @@ install-schema:
 	glib-compile-schemas $(schemadir)
 
 install: install-desktop install-schema
-	./setup.py install --prefix=$(PREFIX) --record install_log.txt
+	pip install --prefix=$(PREFIX) .
 	cd po && $(MAKE) install
 	
-install-user: install-schema
-	./setup.py install --user --record install_log.txt
+install-user:
+	pip install --user --ignore-installed .
 	cd po && $(MAKE) install PREFIX=$(shell echo 'import site; print(site.USER_BASE)' | python)
 
 uninstall-desktop:
