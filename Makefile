@@ -13,7 +13,7 @@ all:
 
 clean:
 	cd po && $(MAKE) clean
-	rm -fr build __pycache__
+	rm -fr build dist __pycache__ Obmenu.egg-info
 
 install-desktop:
 	mkdir -p $(PREFIX)/share/applications
@@ -40,5 +40,4 @@ uninstall-schema:
 	glib-compile-schemas $(schemadir)
 
 uninstall: uninstall-desktop uninstall-schema
-	xargs rm -fr < install_log.txt
-	rm -f install_log.txt
+	pip uninstall obmenu

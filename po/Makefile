@@ -18,11 +18,10 @@ clean:
 
 install: all
 	$(foreach l,$(linguas),mkdir -p $(localedir)/$l/LC_MESSAGES;\
-		install -m 644 $l.mo $(localedir)/$l/LC_MESSAGES/obmenu.mo;\
-		echo "$(localedir)/$l/LC_MESSAGES/obmenu.mo" >> ../install_log.txt;)
+		install -m 644 $l.mo $(localedir)/$l/LC_MESSAGES/obmenu.mo;)
 
 uninstall:
-	rm -f $(DESTDIR)$(PREFIX)/share/locale/*/obmenu.mo
+	rm -f $(wildcard $(DESTDIR)$(PREFIX)/share/locale/*/obmenu.mo)
 
 update-po: $(pofiles)
 
