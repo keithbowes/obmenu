@@ -2,6 +2,7 @@
 	uninstall-desktop uninstall-schema uninstall
 
 PREFIX ?= $(shell echo 'import sys; print(sys.prefix)' | python)
+USER_PREFIX ?= $(shell echo 'import site; print(site.USER_BASE)' | python)
 
 desktopfile=$(wildcard *.desktop)
 schemadir=$(realpath $(dir $(shell which glib-compile-schemas))/../share/glib-2.0/schemas)
@@ -30,7 +31,7 @@ install: install-desktop install-schema
 	
 install-user:
 	pip install --user --ignore-installed .
-	cd po && $(MAKE) install PREFIX=$(shell echo 'import site; print(site.USER_BASE)' | python)
+	cd po && $(MAKE) install PREFIX=$(USER_PREFIX)
 
 uninstall-desktop:
 	rm -f $(PREFIX)/share/applications/$(desktopfile)
@@ -40,4 +41,6 @@ uninstall-schema:
 	glib-compile-schemas $(schemadir)
 
 uninstall: uninstall-desktop uninstall-schema
+	-cd po && $(MAKE) uninstall
+	-cd po && $(MAKE) uninstall PREFIX=$(USER_PREFIX)
 	pip uninstall obmenu
