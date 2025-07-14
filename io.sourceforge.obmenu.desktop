@@ -1,9 +1,10 @@
 [Desktop Entry]
 Name=Obmenu
+Type=Application
 Comment=Openbox menu editor
 Comment[de]=Openbox-Menüeditor
 Comment[eo]=Menuo-redaktilo por Openbox
 Comment[es]=Editor de menús de Openbox
 Exec=obmenu
-Categories=GTK;System;Settings;
+Categories=Settings;
 MimeType=text/xml;

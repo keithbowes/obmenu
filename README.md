@@ -1,8 +1,9 @@
 # OBMENU
 
 Obmenu is a menu editor for Openbox and Wayland Openbox clones (like
-[Waybox](https://github.com/wizbright/waybox)) written in Python. It allows you
-to edit menus in an intuitive way.
+[Waybox](https://github.com/wizbright/waybox) or
+[LabWC](https://github.com/labwc/labwc/)) written in Python. It allows you to
+edit menus in an intuitive way.
 
 ## REQUIREMENTS
 
