@@ -35,35 +35,36 @@ if gi.version_info < (3, 40, 0):
 gi.require_version('Gtk', '4.0')
 from gi.repository import Gtk, Gio, GLib, GObject
 
-class MenuInfo:
-	hijo = None
-	hijos = 0
-
 class App(Gtk.Application):
 	version = '1.2.0'
 
 	# Recursively creates the treeview model
-	def createTree(self, menuid):
+	def createTree(self, menuid, padre):
 		for it in self.menu.getMenu(menuid):
 			if it["type"] == "item":
-				label = GObject.Object()
-				label.data = [it["label"], _('item'), it["action"], it["execute"], it["parent"], "", None]
-				self.treemodel.get_model().append(label)
+				hijo = GObject.Object()
+				hijo.data = [it["label"], _('item'), it["action"], it["execute"], it["parent"], ""]
+				hijo.expander = None
+				hijo.padre = padre
+				self.treemodel.get_model().append(hijo)
 			elif it["type"] == "separator":
-				label = GObject.Object()
-				label.data = ["", _("separator"), "", "", it["parent"], "", None]
-				self.treemodel.get_model().append(label)
+				hijo = GObject.Object()
+				hijo.data = ["", _("separator"), "", "", it["parent"], ""]
+				hijo.expander = None
+				hijo.padre = padre
+				self.treemodel.get_model().append(hijo)
 			elif it["type"] == "menu":
-				menuinfo = MenuInfo()
 				expander = Gtk.TreeExpander.new()
-				label = GObject.Object()
-				label.data = [it["label"], _('menu'), it["action"], it["execute"], it["parent"], it["id"], expander]
-				hijo=self.treemodel.get_model().append(label)
-				menuinfo.hijo=hijo
-				menuinfo.hijos = menuinfo.hijos + 1
-				expander.set_list_row(self.treemodel.get_child_row(menuinfo.hijos))
+				expander.set_indent_for_depth(True)
+				expander.set_indent_for_icon(True)
+				expander.set_vexpand(True)
+				hijo = GObject.Object()
+				hijo.data = [it["label"], _('menu'), it["action"], it["execute"], it["parent"], it["id"]]
+				hijo.expander = expander
+				model = self.treemodel.get_model()
+				model.append(hijo)
 				if self.menu.getMenu(it["id"]) and it["action"] == "":
-					self.createTree(it["id"])
+					self.createTree(it["id"], hijo)
 
 	def create_list_model(self, item, user_data, param=None):
 		model = Gio.ListStore()
@@ -71,12 +72,12 @@ class App(Gtk.Application):
 
 	def initTree(self):
 		# treemodel.iter(label, type, [action], [execute], parent, [menu-id])
-		listmodel = Gio.ListStore()
-		self.treemodel = Gtk.TreeListModel.new(listmodel, False, False, self.create_list_model, None, None)
-		self.treemodel.connect("notify::label", self.treeview_notify, None)
+		listmodel = self.create_list_model(None, None)
+		self.treemodel = Gtk.TreeListModel.new(listmodel, False, True, self.create_list_model, None, None)
 		selection_model = Gtk.SingleSelection()
 		selection_model.set_model(self.treemodel)
 		self.treeview.set_model(selection_model)
+		self.treeview.set_single_click_activate(True)
 
 	# Sets the state of "menu modified"
 	# Refreshes the window's title
@@ -133,7 +134,7 @@ class App(Gtk.Application):
 				self.menu.loadMenu(self.menu_path)
 
 				self.initTree()
-				self.createTree(None)
+				self.createTree(None, None)
 				self.clear_fields()
 
 	def confirm(self, message, action):
@@ -156,7 +157,7 @@ class App(Gtk.Application):
 			self.menu.loadMenu(self.menu_path)
 
 			self.initTree()
-			self.createTree(None)
+			self.createTree(None, None)
 			self.clear_fields()
 		else:
 			self.unsaved_menu = False
@@ -345,7 +346,7 @@ class App(Gtk.Application):
 		model = column_view.get_model().get_model()
 		ite = model.get_model().get_item(position)
 		if not ite: return
-		(label, tipe, action, exe, parent, mid, expander) = ite.data
+		(label, tipe, action, exe, parent, mid) = ite.data
 
 		self.auto_change = True
 
@@ -523,7 +524,7 @@ class App(Gtk.Application):
 		model = self.treemodel
 		ite = self.treemodel.get_child_row(position).get_item()
 		if not ite: return
-		(label, tipe, action, exe, menu, mid, expander) = list(ite.data)
+		(label, tipe, action, exe, menu, mid) = list(ite.data)
 		p = position + 1
 		upper = model.get_item(p)
 		model.move_after(ite,upper)
@@ -544,7 +545,7 @@ class App(Gtk.Application):
 		row = self.treemodel.get_child_row(position)
 		ite = row.get_item()
 		if not ite: return
-		(label, tipe, action, exe, menu, mid, expander) = list(ite.data)
+		(label, tipe, action, exe, menu, mid) = list(ite.data)
 		n = position - 1
 		model.remove(position)
 		if tipe == "menu":
@@ -652,14 +653,31 @@ class App(Gtk.Application):
 			app.set_accels_for_action(accel, accels[accel])
 
 	def setup_listitem_cb(self, factory, item, data):
-		label = Gtk.Label()
-		label.set_label("")
+		label = Gtk.Label(halign=Gtk.Align.START)
 		item.set_child(label)
 
 	def bind_listitem_cb(self, factory, item, data):
 		row = item.get_item()
+		row.set_expanded(False)
+		self.treemodel.connect("notify::label", self.treeview_notify, None)
+		expander = row.get_item().expander
 		label = item.get_child()
-		label.set_label(row.get_item().data[data])
+		try:
+			label.set_label(row.get_item().data[data])
+		except:
+			pass
+		if not expander is None:
+			if expander.get_child() is None:
+				menuname = Gtk.Label.new(row.get_item().data[0])
+				expander.set_child(menuname)
+			else:
+				pass
+				expander.get_child().set_label(row.get_item().data[0])
+			item.set_child(expander)
+		else:
+			expander = row.get_item().padre.expander
+			expander.set_list_row(row)
+			item.set_child(label)
 
 	# Application activation
 	def do_activate(self):
@@ -710,7 +728,6 @@ class App(Gtk.Application):
 		factory.connect("bind", self.bind_listitem_cb, 1)
 		column = Gtk.ColumnViewColumn.new(dgettext(self.gtk_domain, "Type"), factory)
 		column.set_resizable(True)
-		column.set_resizable(True)
 		self.treeview.append_column(column)
 
 		factory = Gtk.SignalListItemFactory()
@@ -733,7 +750,7 @@ class App(Gtk.Application):
 		self._sth_changed(False)
 
 		# Create the menu tree
-		self.createTree(None)
+		self.createTree(None, None)
 
 		# Let's roll!
 		self.add_window(self.appwindow)
