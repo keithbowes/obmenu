@@ -39,7 +39,7 @@ class App(Gtk.Application):
 	version = '1.2.0'
 
 	# Recursively creates the treeview model
-	def createTree(self, menuid, model):
+	def createTree(self, model, menuid):
 		if model is None:
 			model = self.treemodel.get_model()
 		for it in self.menu.getMenu(menuid):
@@ -55,12 +55,13 @@ class App(Gtk.Application):
 				hijo = GObject.Object()
 				hijo.data = [it["label"], _('menu'), it["action"], it["execute"], it["parent"], it["id"]]
 				model.append(hijo)
+			hijo.model = model
 
 	def create_list_model(self, item, user_data, param=None):
 		(label, tipe, action, execute, parent, mid) = item.data
 		if tipe == _('menu') and self.menu.getMenu(mid) and action == "":
 			model = Gio.ListStore()
-			self.createTree(mid, model)
+			self.createTree(model, mid)
 			return model
 		return None
 
@@ -71,7 +72,7 @@ class App(Gtk.Application):
 		selection_model = Gtk.SingleSelection()
 		selection_model.set_model(self.treemodel)
 		self.treeview.set_model(selection_model)
-		self.treeview.set_single_click_activate(True)
+		self.treeview.set_single_click_activate(False)
 
 	# Sets the state of "menu modified"
 	# Refreshes the window's title
@@ -332,13 +333,11 @@ class App(Gtk.Application):
 	def search_clicked(self, arg):
 		dlg = self.ask_for_path(_("Select File"), Gtk.FileChooserAction.OPEN, self.on_search_clicked)
 
-	def treeview_notify(self, model, pspec, user_data):
-		print("%s %s %s" % (model, model.get_property(pspec.name), user_data))
-
 	# treeview clicked signal
 	def treeview_changed(self, column_view, position):
 		model = column_view.get_model()
-		ite = model.get_item(position).get_item()
+		row = model.get_item(position)
+		ite = row.get_item()
 		if not ite: return
 		(label, tipe, action, exe, parent, mid) = ite.data
 
@@ -351,10 +350,6 @@ class App(Gtk.Application):
 		self.action_combo.set_sensitive(tipe == "item")
 		self.id_entry.set_sensitive(tipe == "menu")
 		self.id_entry.set_text(mid)
-		if not parent is None:
-			self.parent_id_entry.set_text(parent)
-		else:
-			self.parent_id_entry.set_text("")
 
 		if tipe == "item":
 			self.execute_entry.set_sensitive(False)
@@ -379,35 +374,41 @@ class App(Gtk.Application):
 			self.execute_srch.set_sensitive(False)
 		self.auto_change = False
 
-	def treeitem_activated(self, columnview, position, user_data):
-		pass
-
 	# new menu button clicked
 	def new_menu(self, param, data=None):
-		(model, ite) = self.treeview.get_selection().get_selected()
-
-		if ite:
-			(label, tipe, action, exe, menu, mid) = model.get(ite,0,1,2,3,4,5)
-			parent = model.iter_parent(ite)
-			n = model.get_path(ite)[-1]
+		model = self.treeview.get_model()
+		position = model.get_selected()
+		row = model.get_item(position)
+		if row:
+			ite = row.get_item()
+			(label, tipe, action, exe, menu, mid) = ite.data
+			store_model = ite.model
+			(found, row_position) = store_model.find(ite)
+			n = position
 		else:
+			found = False
 			menu = None
-			# If there's no root menu available, allow the creation of a new one
-			try:
-				parent = model.get_iter_root()
-			except:
-				parent = None
 			n = 0
 
 		nmid="%s-%d%d%d" % (menu, random.randint(0,99), time.gmtime()[4], time.gmtime()[5])
+		hijo = GObject.Object()
+		hijo.data = [_("New Menu"), "menu", "", "", menu, nmid]
+		hijo.model = Gio.ListStore()
 
-		n_menu = self.treemodel.insert_before(parent, ite,(_("New Menu"), "menu", "", "", menu, nmid))
-		itm = self.treemodel.append(n_menu, (_("New Item"), "item", "Execute", _("command"), nmid, ""))
+		if found:
+			store_model.insert(row_position + 1, hijo)
+
 		self.menu.createMenu(menu, _("New Menu"), nmid, n)
 		self.menu.createItem(nmid, _("New Item"), "Execute", _("command"))
+		if not found: self.createTree(None, None)
+		if found:
+			# FIXME: Show the menu with its item without collapsing and expanding the parent
+			parent = row.get_parent()
+			parent.set_expanded(False)
+			parent.set_expanded(True)
+			position = model.get_selected()
+			model.set_selected(position - 1)
 
-		path = model.get_path(n_menu)
-		self.treeview.set_cursor(path, None, False)
 		self.label_entry.select_region(0, -1)
 		self.label_entry.grab_focus()
 
@@ -415,19 +416,26 @@ class App(Gtk.Application):
 
 	# new item button clicked
 	def new_item(self, param, data=None):
-		(model, ite) = self.treeview.get_selection().get_selected()
+		model = self.treeview.get_model()
+		position = model.get_selected()
+		row = model.get_item(position)
+		if not row: return
+		ite = row.get_item()
 		if not ite: return
-		(label, tipe, action, exe, menu, mid) = model.get(ite,0,1,2,3,4,5)
+		(label, tipe, action, exe, menu, mid) = ite.data
 		if menu == None: return
+		store_model = ite.model
 
-		n = model.get_path(ite)[-1]
-		parent = model.iter_parent(ite)
+		n = position
 
 		self.menu.createItem(menu, _("New Item"), "Execute", _("command"), n)
-		itm = self.treemodel.insert_before(parent, ite, (_("New Item"), 'item','Execute','command', menu, ""))
 
-		path = model.get_path(itm)
-		self.treeview.set_cursor(path, None, False)
+		new = GObject.Object()
+		new.data = [_("New Item"), 'item', "Execute", _("command"), menu, ""]
+		new.model = store_model
+		(found, row_position) = store_model.find(ite)
+		store_model.insert(row_position + 1, new)
+		model.set_selected(position + 1)
 		self.label_entry.select_region(0, -1)
 		self.label_entry.grab_focus()
 
@@ -435,19 +443,26 @@ class App(Gtk.Application):
 
 	# new separator button clicked
 	def new_separator(self, param, data=None):
-		(model, ite) = self.treeview.get_selection().get_selected()
+		model = self.treeview.get_model()
+		position = model.get_selected()
+		row = model.get_item(position)
+		ite = row.get_item()
 		if not ite: return
-		(label, tipe, action, exe, menu, mid) = model.get(ite,0,1,2,3,4,5)
+		(label, tipe, action, exe, menu, mid) = ite.data
 		if menu == None: return
+		store_model = ite.model
 
-		n = model.get_path(ite)[-1]
-		parent = model.iter_parent(ite)
+		n = position
 
 		self.menu.createSep(menu, n)
-		itm = self.treemodel.insert_before(parent, ite, ("", 'separator', '','', menu, ""))
 
-		path = model.get_path(itm)
-		self.treeview.set_cursor(path, None, False)
+		new = GObject.Object()
+		new.data =  ["", _('separator'), "", "", "", ""]
+		new.model = store_model
+		(found, row_position) = store_model.find(ite)
+		store_model.insert(row_position + 1, new)
+		model.set_selected(position + 1)
+
 		self.treeview.grab_focus()
 
 		self._sth_changed(True)
@@ -496,63 +511,64 @@ class App(Gtk.Application):
 
 	# up button clicked
 	def up(self, param, data=None):
-		model = self.treeview.get_model().get_model()
-		ite = self.treeview.get_model().get_selection()
+		model = self.treeview.get_model()
+		position = model.get_selected()
+		row = model.get_item(position)
+		ite = row.get_item()
 		if not ite: return
-		(label, tipe, action, exe, menu, mid) = model.get(ite,0,1,2,3,4,5)
+		(label, tipe, action, exe, menu, mid) = ite.data
 		if menu == "None": menu = None
-		p = model.get_path(ite)
-		n = p[len(p)-1]
+		store_model = ite.model
+
+		n = position - 1
 		if n > 0:
 			self._sth_changed(True)
 			self.menu.interchange(menu, n, n-1)
-			l = list(p)
-			l[len(l)-1] -= 1
-			p = tuple(l)
-			upper = model.get_iter(p)
-			model.move_before(ite,upper)
+			(found, row_position) = store_model.find(ite)
+			store_model.remove(row_position)
+			store_model.insert(row_position - 1, ite)
+			model.set_selected(position - 1)
+
 
 	# down button clicked
 	def down(self, param, data=None):
-		position = self.treeview.get_model().get_selected()
-		model = self.treemodel
-		ite = self.treemodel.get_child_row(position).get_item()
-		if not ite: return
-		(label, tipe, action, exe, menu, mid) = list(ite.data)
-		p = position + 1
-		upper = model.get_item(p)
-		model.move_after(ite,upper)
-		if p < self.menu._get_menu_len(menu) - 1:
-			self._sth_changed(True)
-			self.menu.interchange(menu, p, p+1)
-			l = list(p)
-			l[len(l)-1] += 1
-			p = tuple(l)
-			upper = model.get_iter(p)
-			model.move_after(ite,upper)
-
-	# remove button clicked
-	def remove(self, button, position=-1):
-		if position == -1:
-			position = self.treeview.get_model().get_selected()
-		model = self.treemodel.get_model()
-		row = self.treemodel.get_child_row(position)
+		model = self.treeview.get_model()
+		position = model.get_selected()
+		row = model.get_item(position)
 		ite = row.get_item()
 		if not ite: return
 		(label, tipe, action, exe, menu, mid) = list(ite.data)
-		n = position - 1
-		model.remove(position)
+		store_model = ite.model
+
+		p = position
+		if p < self.menu._get_menu_len(menu) - 1:
+			self._sth_changed(True)
+			self.menu.interchange(menu, p-1, p)
+
+			(found, row_position) = store_model.find(ite)
+			store_model.remove(row_position)
+			store_model.insert(row_position + 1, ite)
+			model.set_selected(p + 1)
+
+	# remove button clicked
+	def remove(self, button, user_data = None):
+		model = self.treeview.get_model()
+		position = model.get_selected()
+		row = model.get_item(position)
+		ite = row.get_item()
+		if not ite: return
+		(label, tipe, action, exe, menu, mid) = list(ite.data)
+		selected_model = ite.model
+
+		(found, found_pos) = selected_model.find(ite)
+		selected_model.remove(found_pos)
+
 		if tipe == "menu":
 			self.menu.removeMenu(mid)
 		else:
 			self.menu.removeItem(menu, 0)
-		model.remove(position)
-		expander.set_visible(False)
 		self.clear_fields()
-
-	def mnu_remove(self, param, data):
-		if self.treeview.is_focus():
-			self.remove(None)
+		self._sth_changed(True)
 
 	def hide_about(self, widget):
 		widget.set_visible(False)
@@ -584,9 +600,7 @@ class App(Gtk.Application):
 				print("       check that everything was installed all right", file=sys.err)
 				sys.exit(1)
 
-		if os.getenv("TEXTDOMAINDIR"):
-			textdomaindir = os.getenv("TEXTDOMAINDIR")
-		else:
+		if not (textdomaindir := os.getenv("TEXTDOMAINDIR")):
 			textdomaindir = os.path.abspath(os.path.dirname(__file__) + "/../share/locale")
 		textdomain("obmenu")
 		bindtextdomain("obmenu", textdomaindir)
@@ -599,7 +613,6 @@ class App(Gtk.Application):
 			"save.as": self.save_as,
 			"reconfigure": self.reconfigure_openbox,
 			"quit": self.mnu_quit,
-			"remove": self.mnu_remove,
 			"label_changed": self.change_label,
 			"id_changed": self.change_id,
 			"action_changed": self.change_action,
@@ -658,17 +671,14 @@ class App(Gtk.Application):
 	def bind_listitem_cb(self, factory, item, data):
 		row = item.get_item()
 		row.set_expanded(False)
-		self.treemodel.connect("notify::label", self.treeview_notify, None)
 
 		child = item.get_child()
-		try:
-			# The child is an expander
+		if isinstance(child, Gtk.TreeExpander):
 			expander = child
 			label = expander.get_child()
 			expander.set_list_row(row)
 			expander.set_child(label)
-		except:
-			# The child is a label
+		elif isinstance(child, Gtk.Label):
 			label = child
 		label.set_text(row.get_item().data[data])
 
@@ -682,7 +692,6 @@ class App(Gtk.Application):
 		self.execute_entry = self.builder.get_object("execute_entry")
 		self.execute_srch = self.builder.get_object("execute_search_button")
 		self.id_entry = self.builder.get_object("id_entry")
-		self.parent_id_entry = self.builder.get_object("parent_id_entry")
 
 		self.menu = obxml.Obmenu()
 		self.menu_path = ""
@@ -714,6 +723,7 @@ class App(Gtk.Application):
 		factory.connect("bind", self.bind_listitem_cb, 0)
 		column = Gtk.ColumnViewColumn.new(dgettext(self.gtk_domain, "Label"), factory)
 		column.set_resizable(True)
+		column.set_expand(True)
 		self.treeview.append_column(column)
 
 		factory = Gtk.SignalListItemFactory()
@@ -721,6 +731,7 @@ class App(Gtk.Application):
 		factory.connect("bind", self.bind_listitem_cb, 1)
 		column = Gtk.ColumnViewColumn.new(dgettext(self.gtk_domain, "Type"), factory)
 		column.set_resizable(True)
+		column.set_expand(True)
 		self.treeview.append_column(column)
 
 		factory = Gtk.SignalListItemFactory()
@@ -728,6 +739,7 @@ class App(Gtk.Application):
 		factory.connect("bind", self.bind_listitem_cb, 2)
 		column = Gtk.ColumnViewColumn.new(dgettext(self.gtk_domain, "Action"), factory)
 		column.set_resizable(True)
+		column.set_expand(True)
 		self.treeview.append_column(column)
 
 		factory = Gtk.SignalListItemFactory()
