@@ -1,14 +1,14 @@
 # Spanish translations for Obmenu package.
 # Copyright (C) 2021 THE Obmenu'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the Obmenu package.
-# Keith Bowes <keith@localhost>, 2021.
+# Keith Bowes <keith@localhost>, 2021–2026.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Obmenu 1.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-09 17:21-0400\n"
-"PO-Revision-Date: 2026-03-09 17:29-0400\n"
+"POT-Creation-Date: 2026-03-09 19:40-0400\n"
+"PO-Revision-Date: 2026-03-09 19:45-0400\n"
 "Last-Translator: Keith Bowes <keith@localhost>\n"
 "Language-Team: Spanish <es@tp.org.es>\n"
 "Language: es\n"
@@ -21,9 +21,20 @@ msgstr ""
 msgid "PyGObject 3.40.0 or higher is required"
 msgstr "PyGObject 3.40.0 o más alta es requerido"
 
-#: ../obmenu:52
+#: ../obmenu:46 ../obmenu:48 ../obmenu:275 ../obmenu:294 ../obmenu:324
+#: ../obmenu:349 ../obmenu:350 ../obmenu:354 ../obmenu:433 ../obmenu:486
+msgid "item"
+msgstr "entrada"
+
+#: ../obmenu:50 ../obmenu:52 ../obmenu:459
 msgid "separator"
 msgstr "separador"
+
+#: ../obmenu:54 ../obmenu:56 ../obmenu:62 ../obmenu:245 ../obmenu:277
+#: ../obmenu:328 ../obmenu:349 ../obmenu:351 ../obmenu:369 ../obmenu:395
+#: ../obmenu:514 ../obmenu:580
+msgid "menu"
+msgstr "menú"
 
 #: ../obmenu:111
 msgid "Untitled"
@@ -46,47 +57,59 @@ msgstr "Guardar como..."
 msgid "There are unsaved changes. Exit anyway?"
 msgstr "Hay cambios no guardados. Salir de todos modos?"
 
+#: ../obmenu:250
+msgid "link"
+msgstr "enlace"
+
 #: ../obmenu:334
 msgid "Select File"
 msgstr "Elegir Archivo"
+
+#: ../obmenu:349 ../obmenu:486
+msgid "Link"
+msgstr "Enlace"
 
 #: ../obmenu:395 ../obmenu:401
 msgid "New Menu"
 msgstr "Nuevo Menú"
 
-#: ../obmenu:402 ../obmenu:431 ../obmenu:434
+#: ../obmenu:402 ../obmenu:430 ../obmenu:433
 msgid "New Item"
 msgstr "Nueva Entrada"
 
-#: ../obmenu:402 ../obmenu:431 ../obmenu:434 ../obmenu:502
+#: ../obmenu:402 ../obmenu:430 ../obmenu:433 ../obmenu:512 ../obmenu:514
 msgid "command"
 msgstr "comando"
 
-#: ../obmenu:502 ../obmenu:503
+#: ../obmenu:512 ../obmenu:514
 msgid "New Pipe"
 msgstr "Tubo Nuevo"
 
-#: ../obmenu:724
+#: ../obmenu:514
+msgid "Pipemenu"
+msgstr "Tubo"
+
+#: ../obmenu:741
 msgid "Label"
 msgstr "Etiqueta"
 
-#: ../obmenu:732
+#: ../obmenu:749
 msgid "Type"
 msgstr "Tipo"
 
-#: ../obmenu:740
+#: ../obmenu:757
 msgid "Action"
 msgstr "Acción"
 
-#: ../obmenu:748
+#: ../obmenu:765
 msgid "Execute"
 msgstr "Ejecutar"
 
-#: ../obmenu:767
+#: ../obmenu:784
 msgid "Error: Obmenu can presently open only one file at a time."
 msgstr "Error: Obmenu puede actualmente abrir solo un archive a vez."
 
-#: ../obmenu:768
+#: ../obmenu:785
 msgid "       Only the first specified will be opened."
 msgstr "       Solo el primero será abierto."
 

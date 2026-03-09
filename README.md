@@ -9,7 +9,7 @@ edit menus in an intuitive way.
 
   [Python](http://python.org) >= 3.8,
   [PyGObject](https://pygobject.readthedocs.io) >= 3.40,
-  [GTK](http://gtk.org/) >= 4.10
+  [GTK](http://gtk.org/) >= 4.10 with GLib >= 2.64
 
   It should work with [PyPy](http://pypy.org), but there are no guarantees.
   If you use PyPy, you'll need the equivalents of the Python versions specified
@@ -33,6 +33,12 @@ file) to use Obmenu without installing it:
 `sudo make install-schema`
 
 ## CHANGELOG
+
+### 1.2.0
+
+- Removal of GTK 3 support.
+- Replaced the deprecated GtkTreeView and GtkComboBox with GtkColumnView and GtkDropdown.
+- Removal of the deprecated use of setup.py from the command line.
 
 ### 1.1.2
 

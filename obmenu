@@ -43,23 +43,23 @@ class App(Gtk.Application):
 		if model is None:
 			model = self.treemodel.get_model()
 		for it in self.menu.getMenu(menuid):
-			if it["type"] == "item":
+			if it["type"] == _("item"):
 				hijo = GObject.Object()
-				hijo.data = [it["label"], _('item'), it["action"], it["execute"], it["parent"], ""]
+				hijo.data = [it["label"], _("item"), it["action"], it["execute"], it["parent"], ""]
 				model.append(hijo)
-			elif it["type"] == "separator":
+			elif it["type"] == _("separator"):
 				hijo = GObject.Object()
 				hijo.data = ["", _("separator"), "", "", it["parent"], ""]
 				model.append(hijo)
-			elif it["type"] == "menu":
+			elif it["type"] == _("menu"):
 				hijo = GObject.Object()
-				hijo.data = [it["label"], _('menu'), it["action"], it["execute"], it["parent"], it["id"]]
+				hijo.data = [it["label"], _("menu"), it["action"], it["execute"], it["parent"], it["id"]]
 				model.append(hijo)
 			hijo.model = model
 
 	def create_list_model(self, item, user_data, param=None):
 		(label, tipe, action, execute, parent, mid) = item.data
-		if tipe == _('menu') and self.menu.getMenu(mid) and action == "":
+		if tipe == _("menu") and self.menu.getMenu(mid) and action == "":
 			model = Gio.ListStore()
 			self.createTree(model, mid)
 			return model
@@ -105,7 +105,7 @@ class App(Gtk.Application):
 		self.auto_change = False
 
 	def clear_view(self):
-		self.deleteTree()
+		self.initTree()
 		self.menu.newMenu()
 		self.unsaved_menu = True
 		self.menu_path = _("Untitled")
@@ -242,12 +242,12 @@ class App(Gtk.Application):
 
 		(model, ite) = self.treeview.get_selection().get_selected()
 		if not ite: return
-		if model.get_value(ite, 1).lower() != "menu": return
+		if model.get_value(ite, 1).lower() != _("menu"): return
 
 		old_id = model.get_value(ite, 5)
 		new_id = self.id_entry.get_text()
 
-		if model.get_value(ite, 2).lower() == "link":
+		if model.get_value(ite, 2).lower() == _("link"):
 			self.auto_change = True
 			if self.menu.getMenuLabel(new_id):
 				model.set(ite, 0, self.menu.getMenuLabel(new_id), 5, new_id)
@@ -272,9 +272,9 @@ class App(Gtk.Application):
 		lb = self.label_entry.get_text()
 		p = model.get_path(ite)
 		n = p[len(p)-1]
-		if tipe == "item":
+		if tipe == _("item"):
 			self.menu.setItemProps(menu, n, lb, aaa, eee)
-		elif tipe == "menu":
+		elif tipe == _("menu"):
 			if aaa == "":
 				self.menu.setMenuLabel(mid, lb)
 			else:
@@ -291,7 +291,7 @@ class App(Gtk.Application):
 		(label, tipe, aaa, eee, menu, mid) = model.get(ite,0,1,2,3,4,5)
 		p = model.get_path(ite)
 		n = p[len(p)-1]
-		if tipe == "item":
+		if tipe == _("item"):
 			ac = self.action_combo.get_active()
 			self.execute_entry.set_sensitive(False)
 			self.execute_srch.set_sensitive(False)
@@ -321,11 +321,11 @@ class App(Gtk.Application):
 		p = model.get_path(ite)
 		n = p[len(p)-1]
 		ex = self.execute_entry.get_text()
-		if tipe == "item":
+		if tipe == _("item"):
 			p = model.get_path(ite)
 			n = p[len(p)-1]
 			self.menu.setItemProps(menu, n, label, aaa, ex)
-		elif tipe == "menu":
+		elif tipe == _("menu"):
 			self.menu.setMenuExecute(menu, mid, ex)
 		model.set(ite, 3, ex)
 
@@ -346,12 +346,12 @@ class App(Gtk.Application):
 		self.label_entry.set_text(label)
 		self.execute_entry.set_text(exe)
 
-		self.label_entry.set_sensitive(tipe == "item" or (tipe == "menu" and action != "Link"))
-		self.action_combo.set_sensitive(tipe == "item")
-		self.id_entry.set_sensitive(tipe == "menu")
+		self.label_entry.set_sensitive(tipe == _("item") or (tipe == _("menu") and action != _("Link")))
+		self.action_combo.set_sensitive(tipe == _("item"))
+		self.id_entry.set_sensitive(tipe == _("menu"))
 		self.id_entry.set_text(mid)
 
-		if tipe == "item":
+		if tipe == _("item"):
 			self.execute_entry.set_sensitive(False)
 			self.execute_srch.set_sensitive(False)
 			if action.lower() == "execute":
@@ -366,7 +366,7 @@ class App(Gtk.Application):
 				self.action_combo.set_selected(3)
 			else:
 				self.action_combo.set_sensitive(False)
-		elif tipe == "menu":
+		elif tipe == _("menu"):
 			self.execute_entry.set_sensitive(action == "Pipemenu")
 			self.execute_srch.set_sensitive(action == "Pipemenu")
 		else:
@@ -392,7 +392,7 @@ class App(Gtk.Application):
 
 		nmid="%s-%d%d%d" % (menu, random.randint(0,99), time.gmtime()[4], time.gmtime()[5])
 		hijo = GObject.Object()
-		hijo.data = [_("New Menu"), "menu", "", "", menu, nmid]
+		hijo.data = [_("New Menu"), _("menu"), "", "", menu, nmid]
 		hijo.model = Gio.ListStore()
 
 		if found:
@@ -406,8 +406,7 @@ class App(Gtk.Application):
 			parent = row.get_parent()
 			parent.set_expanded(False)
 			parent.set_expanded(True)
-			position = model.get_selected()
-			model.set_selected(position - 1)
+			model.set_selected(position + 1)
 
 		self.label_entry.select_region(0, -1)
 		self.label_entry.grab_focus()
@@ -431,7 +430,7 @@ class App(Gtk.Application):
 		self.menu.createItem(menu, _("New Item"), "Execute", _("command"), n)
 
 		new = GObject.Object()
-		new.data = [_("New Item"), 'item', "Execute", _("command"), menu, ""]
+		new.data = [_("New Item"), _("item"), "Execute", _("command"), menu, ""]
 		new.model = store_model
 		(found, row_position) = store_model.find(ite)
 		store_model.insert(row_position + 1, new)
@@ -457,7 +456,7 @@ class App(Gtk.Application):
 		self.menu.createSep(menu, n)
 
 		new = GObject.Object()
-		new.data =  ["", _('separator'), "", "", "", ""]
+		new.data =  ["", _("separator"), "", "", "", ""]
 		new.model = store_model
 		(found, row_position) = store_model.find(ite)
 		store_model.insert(row_position + 1, new)
@@ -469,20 +468,28 @@ class App(Gtk.Application):
 
 	# new link button clicked
 	def new_link(self,param, data):
-		(model, ite) = self.treeview.get_selection().get_selected()
+		model = self.treeview.get_model()
+		position = model.get_selected()
+		row = model.get_item(position)
+		ite = row.get_item()
 		if not ite: return
-		(label, tipe, action, exe, menu, mid) = model.get(ite,0,1,2,3,4,5)
+		(label, tipe, action, exe, menu, mid) = ite.data
 		if menu == None: return
+		store_model = ite.model
 
-		n = model.get_path(ite)[-1]
-		parent = model.iter_parent(ite)
+		n = position
 		nmid="link-%d%d%d" % (random.randint(0,99), time.gmtime()[4], time.gmtime()[5])
 
 		self.menu.createLink(menu, nmid, n)
-		itm = self.treemodel.insert_before(parent, ite, (nmid, 'menu', 'Link','', menu, nmid))
 
-		path = model.get_path(itm)
-		self.treeview.set_cursor(path, None, False)
+		new = GObject.Object()
+		new.data = [nmid, _("item"), _("Link"), '', menu, nmid]
+		new.model = store_model
+
+		(found, row_position) = store_model.find(ite)
+		store_model.insert(row_position + 1, new)
+
+		model.set_selected(position + 1)
 		self.id_entry.select_region(0, -1)
 		self.id_entry.grab_focus()
 
@@ -490,20 +497,27 @@ class App(Gtk.Application):
 
 	# new pipe button clicked
 	def new_pipe(self,param, data):
-		(model, ite) = self.treeview.get_selection().get_selected()
+		model = self.treeview.get_model()
+		position = model.get_selected()
+		row = model.get_item(position)
+		ite = row.get_item()
 		if not ite: return
-		(label, tipe, action, exe, menu, mid) = model.get(ite,0,1,2,3,4,5)
+		(label, tipe, action, exe, menu, mid) = ite.data
 		if menu == None: return
+		store_model = ite.model
 
-		n = model.get_path(ite)[-1]
-		parent = model.iter_parent(ite)
+		n = position
 		nmid="pipe-%d%d%d" % (random.randint(0,99), time.gmtime()[4], time.gmtime()[5])
 
 		self.menu.createPipe(menu, nmid, _("New Pipe"), _("command"), n)
-		itm = self.treemodel.insert_before(parent, ite, (_("New Pipe"), 'menu', 'Pipemenu',_('command'), menu, nmid))
+		new = GObject.Object()
+		new.data = [_("New Pipe"), _("menu"), _("Pipemenu"), _("command"), menu, nmid]
+		new.model = store_model
 
-		path = model.get_path(itm)
-		self.treeview.set_cursor(path, None, False)
+		(found, row_position) = store_model.find(ite)
+		store_model.insert(row_position + 1, new)
+
+		model.set_selected(position + 1)
 		self.label_entry.select_region(0, -1)
 		self.label_entry.grab_focus()
 
@@ -558,15 +572,18 @@ class App(Gtk.Application):
 		ite = row.get_item()
 		if not ite: return
 		(label, tipe, action, exe, menu, mid) = list(ite.data)
-		selected_model = ite.model
+		store_model = ite.model
 
-		(found, found_pos) = selected_model.find(ite)
-		selected_model.remove(found_pos)
+		(found, found_pos) = store_model.find(ite)
+		store_model.remove(found_pos)
 
-		if tipe == "menu":
-			self.menu.removeMenu(mid)
+		if tipe == _("menu"):
+			if store_model.get_n_items() > 0:
+				self.menu.removeMenu(mid)
+			else:
+				self.menu.removeItem(menu, found_pos)
 		else:
-			self.menu.removeItem(menu, 0)
+			self.menu.removeItem(menu, found_pos)
 		self.clear_fields()
 		self._sth_changed(True)
 

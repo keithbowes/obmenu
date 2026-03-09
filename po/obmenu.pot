@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-09 17:21-0400\n"
+"POT-Creation-Date: 2026-03-09 19:40-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,8 +21,19 @@ msgstr ""
 msgid "PyGObject 3.40.0 or higher is required"
 msgstr ""
 
-#: ../obmenu:52
+#: ../obmenu:46 ../obmenu:48 ../obmenu:275 ../obmenu:294 ../obmenu:324
+#: ../obmenu:349 ../obmenu:350 ../obmenu:354 ../obmenu:433 ../obmenu:486
+msgid "item"
+msgstr ""
+
+#: ../obmenu:50 ../obmenu:52 ../obmenu:459
 msgid "separator"
+msgstr ""
+
+#: ../obmenu:54 ../obmenu:56 ../obmenu:62 ../obmenu:245 ../obmenu:277
+#: ../obmenu:328 ../obmenu:349 ../obmenu:351 ../obmenu:369 ../obmenu:395
+#: ../obmenu:514 ../obmenu:580
+msgid "menu"
 msgstr ""
 
 #: ../obmenu:111
@@ -46,47 +57,59 @@ msgstr ""
 msgid "There are unsaved changes. Exit anyway?"
 msgstr ""
 
+#: ../obmenu:250
+msgid "link"
+msgstr ""
+
 #: ../obmenu:334
 msgid "Select File"
+msgstr ""
+
+#: ../obmenu:349 ../obmenu:486
+msgid "Link"
 msgstr ""
 
 #: ../obmenu:395 ../obmenu:401
 msgid "New Menu"
 msgstr ""
 
-#: ../obmenu:402 ../obmenu:431 ../obmenu:434
+#: ../obmenu:402 ../obmenu:430 ../obmenu:433
 msgid "New Item"
 msgstr ""
 
-#: ../obmenu:402 ../obmenu:431 ../obmenu:434 ../obmenu:502
+#: ../obmenu:402 ../obmenu:430 ../obmenu:433 ../obmenu:512 ../obmenu:514
 msgid "command"
 msgstr ""
 
-#: ../obmenu:502 ../obmenu:503
+#: ../obmenu:512 ../obmenu:514
 msgid "New Pipe"
 msgstr ""
 
-#: ../obmenu:724
+#: ../obmenu:514
+msgid "Pipemenu"
+msgstr ""
+
+#: ../obmenu:741
 msgid "Label"
 msgstr ""
 
-#: ../obmenu:732
+#: ../obmenu:749
 msgid "Type"
 msgstr ""
 
-#: ../obmenu:740
+#: ../obmenu:757
 msgid "Action"
 msgstr ""
 
-#: ../obmenu:748
+#: ../obmenu:765
 msgid "Execute"
 msgstr ""
 
-#: ../obmenu:767
+#: ../obmenu:784
 msgid "Error: Obmenu can presently open only one file at a time."
 msgstr ""
 
-#: ../obmenu:768
+#: ../obmenu:785
 msgid "       Only the first specified will be opened."
 msgstr ""
 
