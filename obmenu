@@ -85,16 +85,6 @@ class App(Gtk.Application):
 		else:
 			self.appwindow.set_title("Obmenu")
 
-	# Auxiliary function for model.foreach()
-	def _change_id(self, model, path, it, id_pair):
-		(old_id, new_id) = id_pair
-		mid = model.get_value(it,5)
-		if mid == old_id:
-			model.set(it, 5, new_id)
-		parent = model.get_value(it,4)
-		if parent == old_id:
-			model.set(it, 4, new_id)
-
 	def clear_fields(self):
 		self.auto_change = True
 		self.label_entry
@@ -240,38 +230,52 @@ class App(Gtk.Application):
 		if self.auto_change: return
 		self._sth_changed(True)
 
-		(model, ite) = self.treeview.get_selection().get_selected()
+		model = self.treeview.get_model()
+		position = model.get_selected()
+		row = model.get_item(position)
+		ite = row.get_item()
 		if not ite: return
-		if model.get_value(ite, 1).lower() != _("menu"): return
+		(label, tipe, action, exe, menu, mid) = ite.data
+		if tipe.lower() != _("menu"): return
+		store_model = ite.model
 
-		old_id = model.get_value(ite, 5)
+		old_id = mid
 		new_id = self.id_entry.get_text()
+		ite.data = [label, tipe, action, exe, menu, new_id]
 
-		if model.get_value(ite, 2).lower() == _("link"):
+		if action.lower() == _("link"):
 			self.auto_change = True
 			if self.menu.getMenuLabel(new_id):
-				model.set(ite, 0, self.menu.getMenuLabel(new_id), 5, new_id)
 				self.label_entry.set_text(self.menu.getMenuLabel(new_id))
 			else:
-				model.set(ite, 0, new_id, 5, new_id)
 				self.label_entry.set_text(new_id)
 			self.auto_change = False
 			self.menu.setRefId( model.get_value(ite, 4), old_id, new_id)
 		else:
 			if old_id != new_id and not self.menu.isMenu(new_id):
 				self.menu.replaceId(old_id, new_id)
-				model.foreach(self._change_id, (old_id, new_id))
 
 	# label_entry changed signal
 	def change_label(self, pa):
 		if self.auto_change: return
 		self._sth_changed(True)
-		(model, ite) = self.treeview.get_selection().get_selected()
+
+		model = self.treeview.get_model()
+		position = model.get_selected()
+		row = model.get_item(position)
+		ite = row.get_item()
 		if not ite: return
-		(label, tipe, aaa, eee, menu, mid) = model.get(ite,0,1,2,3,4,5)
+		(label, tipe, aaa, eee, menu, mid) = ite.data
 		lb = self.label_entry.get_text()
-		p = model.get_path(ite)
-		n = p[len(p)-1]
+		store_model = ite.model
+
+		(found, found_pos) = store_model.find(ite)
+		store_model.remove(found_pos)
+		ite.data = [lb, tipe, aaa, eee, menu, mid]
+		store_model.insert(found_pos, ite)
+		model.set_selected(position)
+
+		n = position
 		if tipe == _("item"):
 			self.menu.setItemProps(menu, n, lb, aaa, eee)
 		elif tipe == _("menu"):
@@ -279,20 +283,23 @@ class App(Gtk.Application):
 				self.menu.setMenuLabel(mid, lb)
 			else:
 				self.menu.setRefLabel(menu, mid, lb)
-		model.set(ite, 0, lb)
 
 	# action_combo_box changed signal
 	def change_action(self, pa, data=None):
-		print("change_action")
 		if self.auto_change: return
 		self._sth_changed(True)
-		(model, ite) = self.treeview.get_selection().get_selected()
+
+		model = self.treeview.get_model()
+		position = model.get_selected()
+		row = model.get_item(position)
+		ite = row.get_item()
 		if not ite: return
-		(label, tipe, aaa, eee, menu, mid) = model.get(ite,0,1,2,3,4,5)
-		p = model.get_path(ite)
-		n = p[len(p)-1]
+		(label, tipe, aaa, eee, menu, mid) = ite.data
+		store_model = ite.model
+
+		n = position - 1
 		if tipe == _("item"):
-			ac = self.action_combo.get_active()
+			ac = self.action_combo.get_selected()
 			self.execute_entry.set_sensitive(False)
 			self.execute_srch.set_sensitive(False)
 			if ac == 0:
@@ -309,25 +316,40 @@ class App(Gtk.Application):
 				action = "Exit"
 				eee = ""
 			self.menu.setItemProps(menu, n, label, action, eee)
-			model.set(ite, 2, action, 3, eee)
+
+			(found, found_pos) = store_model.find(ite)
+			store_model.remove(found_pos)
+			ite.data = [label, tipe, action, eee, menu, mid]
+			store_model.insert(found_pos, ite)
+			model.set_selected(position)
 
 	# execute_entry changed signal
 	def change_execute(self, pa):
 		if self.auto_change: return
 		self._sth_changed(True)
-		(model, ite) = self.treeview.get_selection().get_selected()
+
+		model = self.treeview.get_model()
+		position = model.get_selected()
+		row = model.get_item(position)
+		ite = row.get_item()
 		if not ite: return
-		(label, tipe, aaa, eee, menu, mid) = model.get(ite,0,1,2,3,4,5)
-		p = model.get_path(ite)
-		n = p[len(p)-1]
+		(label, tipe, aaa, eee, menu, mid) = ite.data
+		store_model = ite.model
+
+		n = position - 1
 		ex = self.execute_entry.get_text()
 		if tipe == _("item"):
-			p = model.get_path(ite)
-			n = p[len(p)-1]
+			print("Setting item to %s" % ex)
 			self.menu.setItemProps(menu, n, label, aaa, ex)
 		elif tipe == _("menu"):
+			print("Setting menu to %s" % ex)
 			self.menu.setMenuExecute(menu, mid, ex)
-		model.set(ite, 3, ex)
+
+		(found, found_pos) = store_model.find(ite)
+		store_model.remove(found_pos)
+		ite.data = [label, tipe, aaa, ex, menu, mid]
+		store_model.insert(found_pos, ite)
+		model.set_selected(position)
 
 	# button [...] clicked signal
 	def search_clicked(self, arg):
@@ -634,7 +656,6 @@ class App(Gtk.Application):
 			"id_changed": self.change_id,
 			"action_changed": self.change_action,
 			"execute_changed": self.change_execute,
-			"action_changed": self.change_action,
 			"search_clicked": self.search_clicked,
 			"treeview_changed": self.treeview_changed,
 			"add.menu": self.new_menu,

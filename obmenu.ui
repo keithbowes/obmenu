@@ -291,7 +291,7 @@
                         </items>
                       </object>
                     </property>
-                    <signal name="activate" handler="action_changed"/>
+                    <signal name="notify::selected-item" handler="action_changed"/>
                     <layout>
                       <property name="column-span">10</property>
                       <property name="column">1</property>
