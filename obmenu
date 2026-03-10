@@ -470,6 +470,7 @@ class App(Gtk.Application):
 		model = self.treeview.get_model()
 		position = model.get_selected()
 		row = model.get_item(position)
+		if not row: return
 		ite = row.get_item()
 		if not ite: return
 		(label, tipe, action, exe, menu, mid) = ite.data
@@ -497,6 +498,7 @@ class App(Gtk.Application):
 		model = self.treeview.get_model()
 		position = model.get_selected()
 		row = model.get_item(position)
+		if not row: return
 		ite = row.get_item()
 		if not ite: return
 		(label, tipe, action, exe, menu, mid) = ite.data
@@ -527,6 +529,7 @@ class App(Gtk.Application):
 		model = self.treeview.get_model()
 		position = model.get_selected()
 		row = model.get_item(position)
+		if not row: return
 		ite = row.get_item()
 		if not ite: return
 		(label, tipe, action, exe, menu, mid) = ite.data
@@ -556,6 +559,7 @@ class App(Gtk.Application):
 		model = self.treeview.get_model()
 		position = model.get_selected()
 		row = model.get_item(position)
+		if not row: return
 		ite = row.get_item()
 		if not ite: return
 		(label, tipe, action, exe, menu, mid) = ite.data
@@ -577,6 +581,7 @@ class App(Gtk.Application):
 		model = self.treeview.get_model()
 		position = model.get_selected()
 		row = model.get_item(position)
+		if not row: return
 		ite = row.get_item()
 		if not ite: return
 		(label, tipe, action, exe, menu, mid) = list(ite.data)
@@ -597,6 +602,7 @@ class App(Gtk.Application):
 		model = self.treeview.get_model()
 		position = model.get_selected()
 		row = model.get_item(position)
+		if not row: return
 		ite = row.get_item()
 		if not ite: return
 		(label, tipe, action, exe, menu, mid) = list(ite.data)
