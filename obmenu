@@ -429,6 +429,7 @@ class App(Gtk.Application):
 			parent.set_expanded(False)
 			parent.set_expanded(True)
 			model.set_selected(position + 1)
+			self.treeview.emit("activate", (position + 1))
 
 		self.label_entry.select_region(0, -1)
 		self.label_entry.grab_focus()
@@ -457,6 +458,8 @@ class App(Gtk.Application):
 		(found, row_position) = store_model.find(ite)
 		store_model.insert(row_position + 1, new)
 		model.set_selected(position + 1)
+
+		self.treeview.emit("activate", (position + 1))
 		self.label_entry.select_region(0, -1)
 		self.label_entry.grab_focus()
 
@@ -483,13 +486,14 @@ class App(Gtk.Application):
 		(found, row_position) = store_model.find(ite)
 		store_model.insert(row_position + 1, new)
 		model.set_selected(position + 1)
+		self.treeview.emit("activate", (position + 1))
 
 		self.treeview.grab_focus()
 
 		self._sth_changed(True)
 
 	# new link button clicked
-	def new_link(self,param, data):
+	def new_link(self,param, data=None):
 		model = self.treeview.get_model()
 		position = model.get_selected()
 		row = model.get_item(position)
@@ -505,20 +509,21 @@ class App(Gtk.Application):
 		self.menu.createLink(menu, nmid, n)
 
 		new = GObject.Object()
-		new.data = [nmid, _("item"), _("Link"), '', menu, nmid]
+		new.data = [nmid, _("menu"), _("Link"), '', menu, nmid]
 		new.model = store_model
 
 		(found, row_position) = store_model.find(ite)
 		store_model.insert(row_position + 1, new)
 
 		model.set_selected(position + 1)
+		self.treeview.emit("activate", (position + 1))
 		self.id_entry.select_region(0, -1)
 		self.id_entry.grab_focus()
 
 		self._sth_changed(True)
 
 	# new pipe button clicked
-	def new_pipe(self,param, data):
+	def new_pipe(self,param, data=None):
 		model = self.treeview.get_model()
 		position = model.get_selected()
 		row = model.get_item(position)
@@ -540,6 +545,7 @@ class App(Gtk.Application):
 		store_model.insert(row_position + 1, new)
 
 		model.set_selected(position + 1)
+		self.treeview.emit("activate", (position + 1))
 		self.label_entry.select_region(0, -1)
 		self.label_entry.grab_focus()
 

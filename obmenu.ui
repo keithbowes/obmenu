@@ -167,6 +167,22 @@
               </object>
             </child>
             <child>
+              <object class="GtkButton" id="new_pipe_toolbutton">
+                <property name="tooltip-text" translatable="yes">New pipe</property>
+                <property name="use-underline">1</property>
+                <property name="icon-name">document-share</property>
+                <signal name="clicked" handler="add.pipe"/>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="new_link_toolbutton">
+                <property name="tooltip-text" translatable="yes">New link</property>
+                <property name="use-underline">1</property>
+                <property name="icon-name">insert-link</property>
+                <signal name="clicked" handler="add.link"/>
+              </object>
+            </child>
+            <child>
               <object class="GtkSeparator" id="separatortoolitem2">
                 <property name="orientation">vertical</property>
               </object>
@@ -275,7 +291,7 @@
                     <property name="xalign">0</property>
                     <layout>
                       <property name="column">0</property>
-                      <property name="row">3</property>
+                      <property name="row">2</property>
                     </layout>
                   </object>
                 </child>
@@ -295,7 +311,7 @@
                     <layout>
                       <property name="column-span">10</property>
                       <property name="column">1</property>
-                      <property name="row">3</property>
+                      <property name="row">2</property>
                     </layout>
                   </object>
                 </child>
@@ -307,7 +323,7 @@
                     <property name="xalign">0</property>
                     <layout>
                       <property name="column">0</property>
-                      <property name="row">4</property>
+                      <property name="row">3</property>
                     </layout>
                   </object>
                 </child>
@@ -333,7 +349,7 @@
                     <layout>
                       <property name="column-span">10</property>
                       <property name="column">1</property>
-                      <property name="row">4</property>
+                      <property name="row">3</property>
                     </layout>
                   </object>
                 </child>
