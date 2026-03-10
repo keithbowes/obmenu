@@ -102,14 +102,14 @@ class App(Gtk.Application):
 		self._sth_changed(True)
 		self.clear_fields()
 
-	def on_confirm(self, dialog, response):
-		dialog.destroy()
-		if response == Gtk.ResponseType.YES:
-			if self.confirm_action == "exit":
+	def on_confirm(self, dialog, result, data):
+		button = dialog.choose_finish(result)
+		if button != dialog.get_cancel_button():
+			if dialog.confirm_action == "exit":
 				app.quit()
-			elif self.confirm_action == "new":
+			elif dialog.confirm_action == "new":
 				self.clear_view()
-			elif self.confirm_action == "open":
+			elif dialog.confirm_action == "open":
 				self.ask_for_path(_("Open"), Gtk.FileChooserAction.OPEN)
 				self.unsaved_menu = False
 				self._sth_changed(False)
@@ -123,11 +123,12 @@ class App(Gtk.Application):
 				self.clear_fields()
 
 	def confirm(self, message, action):
-		dlg = Gtk.MessageDialog(message_type=Gtk.MessageType.WARNING, buttons=Gtk.ButtonsType.YES_NO, text=message)
-		self.confirm_action = action
-		dlg.set_transient_for(self.appwindow);
-		dlg.connect("response", self.on_confirm)
-		dlg.set_visible(True)
+		dlg = Gtk.AlertDialog()
+		dlg.confirm_action = action
+		dlg.set_message(message)
+		dlg.set_buttons([dgettext(self.gtk_domain, '_No'), dgettext(self.gtk_domain, '_Yes')])
+		dlg.set_cancel_button(0)
+		dlg.choose(self.appwindow, None, self.on_confirm, None)
 
 	def on_file_chosen(self, dialog, action):
 		if self.menu_path is None:
