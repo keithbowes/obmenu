@@ -9,7 +9,8 @@ edit menus in an intuitive way.
 
   [Python](http://python.org) >= 3.8,
   [PyGObject](https://pygobject.readthedocs.io) >= 3.40,
-  [GTK](http://gtk.org/) >= 4.10 with GLib >= 2.64
+  [GTK](http://gtk.org/) >= 4.10 with GLib >= 2.64,
+  [build](https://pypi.org/project/build/) (for building) and [pip](https://pypi.org/project/pip/) (for installing) Python modules
 
   It should work with [PyPy](http://pypy.org), but there are no guarantees.
   If you use PyPy, you'll need the equivalents of the Python versions specified
@@ -32,12 +33,33 @@ file) to use Obmenu without installing it:
 
 `sudo make install-schema`
 
+## KNOWN ISSUES
+
+* The New menu item just deletes the current menu structure. This is a leftover
+  from Manuel Colmenero's version. In the future, my hope is to implement
+  spawning new windows, but there are blockers to doing this immediately.
+
+### GTK 4 LIMITATIONS
+
+These are regressions in the GTK 4 version (compared with the GTK 2 and GTK 3
+versions) and can't be fixed by me, so please no bug reports about them.
+
+1. There are no menu icons.
+2. There's no text for toolbar icons.
+3. There are no scrollbar steppers.
+4. You must double click or press Enter on a treeview item to activate it. It's
+   not automatically activated by tabbing or arrow keys (or single click).
+5. New list models (representing menus) are created only when the parent is
+   expanded, so therefore to create new menus, I collapse and then re-expand
+   the parent row. This can cause other expanded rows under the parent row to
+   collapse.
+
 ## CHANGELOG
 
-### 1.2.0
+### 1.2.0 (FUTURE)
 
 - Removal of GTK 3 support.
-- Replaced the deprecated GtkTreeView and GtkComboBox with GtkColumnView and GtkDropdown.
+- Replaced the deprecated GtkTreeView, GtkComboBox, and GtkMessageDialog with GtkColumnView, GtkDropdown, and GtkAlertDialog.
 - Removal of the deprecated use of setup.py from the command line.
 
 ### 1.1.2

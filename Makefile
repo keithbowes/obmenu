@@ -48,6 +48,7 @@ uninstall: uninstall-desktop uninstall-schema
 	pip uninstall obmenu
 
 uninstall-user:
+	pip uninstall --yes obmenu
 	cd po && $(MAKE) uninstall PREFIX=$(USER_PREFIX)
 	$(MAKE) uninstall-desktop PREFIX=$(USER_PREFIX)
 	$(MAKE) uninstall-schema PREFIX=$(USER_PREFIX)

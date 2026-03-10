@@ -36,30 +36,28 @@ gi.require_version('Gtk', '4.0')
 from gi.repository import Gtk, Gio, GLib, GObject
 
 class App(Gtk.Application):
-	version = '1.2.0'
-
 	# Recursively creates the treeview model
 	def createTree(self, model, menuid):
 		if model is None:
 			model = self.treemodel.get_model()
 		for it in self.menu.getMenu(menuid):
-			if it["type"] == _("item"):
+			if it["type"] == "item":
 				hijo = GObject.Object()
-				hijo.data = [it["label"], _("item"), it["action"], it["execute"], it["parent"], ""]
+				hijo.data = [it["label"], "item", it["action"], it["execute"], it["parent"], ""]
 				model.append(hijo)
-			elif it["type"] == _("separator"):
+			elif it["type"] == "separator":
 				hijo = GObject.Object()
-				hijo.data = ["", _("separator"), "", "", it["parent"], ""]
+				hijo.data = ["", "separator", "", "", it["parent"], ""]
 				model.append(hijo)
-			elif it["type"] == _("menu"):
+			elif it["type"] == "menu":
 				hijo = GObject.Object()
-				hijo.data = [it["label"], _("menu"), it["action"], it["execute"], it["parent"], it["id"]]
+				hijo.data = [it["label"], "menu", it["action"], it["execute"], it["parent"], it["id"]]
 				model.append(hijo)
 			hijo.model = model
 
 	def create_list_model(self, item, user_data, param=None):
 		(label, tipe, action, execute, parent, mid) = item.data
-		if tipe == _("menu") and self.menu.getMenu(mid) and action == "":
+		if tipe == "menu" and self.menu.getMenu(mid) and action == "":
 			model = Gio.ListStore()
 			self.createTree(model, mid)
 			return model
@@ -237,14 +235,14 @@ class App(Gtk.Application):
 		ite = row.get_item()
 		if not ite: return
 		(label, tipe, action, exe, menu, mid) = ite.data
-		if tipe.lower() != _("menu"): return
+		if tipe.lower() != "menu": return
 		store_model = ite.model
 
 		old_id = mid
 		new_id = self.id_entry.get_text()
 		ite.data = [label, tipe, action, exe, menu, new_id]
 
-		if action.lower() == _("link"):
+		if action.lower() == "link":
 			self.auto_change = True
 			if self.menu.getMenuLabel(new_id):
 				self.label_entry.set_text(self.menu.getMenuLabel(new_id))
@@ -277,9 +275,9 @@ class App(Gtk.Application):
 		model.set_selected(position)
 
 		n = position
-		if tipe == _("item"):
+		if tipe == "item":
 			self.menu.setItemProps(menu, n, lb, aaa, eee)
-		elif tipe == _("menu"):
+		elif tipe == "menu":
 			if aaa == "":
 				self.menu.setMenuLabel(mid, lb)
 			else:
@@ -299,7 +297,7 @@ class App(Gtk.Application):
 		store_model = ite.model
 
 		n = position - 1
-		if tipe == _("item"):
+		if tipe == "item":
 			ac = self.action_combo.get_selected()
 			self.execute_entry.set_sensitive(False)
 			self.execute_srch.set_sensitive(False)
@@ -339,10 +337,10 @@ class App(Gtk.Application):
 
 		n = position - 1
 		ex = self.execute_entry.get_text()
-		if tipe == _("item"):
+		if tipe == "item":
 			print("Setting item to %s" % ex)
 			self.menu.setItemProps(menu, n, label, aaa, ex)
-		elif tipe == _("menu"):
+		elif tipe == "menu":
 			print("Setting menu to %s" % ex)
 			self.menu.setMenuExecute(menu, mid, ex)
 
@@ -369,12 +367,12 @@ class App(Gtk.Application):
 		self.label_entry.set_text(label)
 		self.execute_entry.set_text(exe)
 
-		self.label_entry.set_sensitive(tipe == _("item") or (tipe == _("menu") and action != _("Link")))
-		self.action_combo.set_sensitive(tipe == _("item"))
-		self.id_entry.set_sensitive(tipe == _("menu"))
+		self.label_entry.set_sensitive(tipe == "item" or (tipe == "menu" and action != "Link"))
+		self.action_combo.set_sensitive(tipe == "item")
+		self.id_entry.set_sensitive(tipe == "menu")
 		self.id_entry.set_text(mid)
 
-		if tipe == _("item"):
+		if tipe == "item":
 			self.execute_entry.set_sensitive(False)
 			self.execute_srch.set_sensitive(False)
 			if action.lower() == "execute":
@@ -389,7 +387,7 @@ class App(Gtk.Application):
 				self.action_combo.set_selected(3)
 			else:
 				self.action_combo.set_sensitive(False)
-		elif tipe == _("menu"):
+		elif tipe == "menu":
 			self.execute_entry.set_sensitive(action == "Pipemenu")
 			self.execute_srch.set_sensitive(action == "Pipemenu")
 		else:
@@ -415,7 +413,7 @@ class App(Gtk.Application):
 
 		nmid="%s-%d%d%d" % (menu, random.randint(0,99), time.gmtime()[4], time.gmtime()[5])
 		hijo = GObject.Object()
-		hijo.data = [_("New Menu"), _("menu"), "", "", menu, nmid]
+		hijo.data = [_("New Menu"), "menu", "", "", menu, nmid]
 		hijo.model = Gio.ListStore()
 
 		if found:
@@ -454,7 +452,7 @@ class App(Gtk.Application):
 		self.menu.createItem(menu, _("New Item"), "Execute", _("command"), n)
 
 		new = GObject.Object()
-		new.data = [_("New Item"), _("item"), "Execute", _("command"), menu, ""]
+		new.data = [_("New Item"), "item", "Execute", _("command"), menu, ""]
 		new.model = store_model
 		(found, row_position) = store_model.find(ite)
 		store_model.insert(row_position + 1, new)
@@ -483,7 +481,7 @@ class App(Gtk.Application):
 		self.menu.createSep(menu, n)
 
 		new = GObject.Object()
-		new.data =  ["", _("separator"), "", "", "", ""]
+		new.data =  ["", "separator", "", "", "", ""]
 		new.model = store_model
 		(found, row_position) = store_model.find(ite)
 		store_model.insert(row_position + 1, new)
@@ -512,7 +510,7 @@ class App(Gtk.Application):
 		self.menu.createLink(menu, nmid, n)
 
 		new = GObject.Object()
-		new.data = [nmid, _("menu"), _("Link"), '', menu, nmid]
+		new.data = [nmid, "menu", "Link", "", menu, nmid]
 		new.model = store_model
 
 		(found, row_position) = store_model.find(ite)
@@ -542,7 +540,7 @@ class App(Gtk.Application):
 
 		self.menu.createPipe(menu, nmid, _("New Pipe"), _("command"), n)
 		new = GObject.Object()
-		new.data = [_("New Pipe"), _("menu"), _("Pipemenu"), _("command"), menu, nmid]
+		new.data = [_("New Pipe"),"menu", "Pipemenu", _("command"), menu, nmid]
 		new.model = store_model
 
 		(found, row_position) = store_model.find(ite)
@@ -612,7 +610,7 @@ class App(Gtk.Application):
 		(found, found_pos) = store_model.find(ite)
 		store_model.remove(found_pos)
 
-		if tipe == _("menu"):
+		if tipe == "menu":
 			if store_model.get_n_items() > 0:
 				self.menu.removeMenu(mid)
 			else:
@@ -822,7 +820,9 @@ class App(Gtk.Application):
 
 	# Application init
 	def __init__(self):
+		import obmenu_version
 		self.appid = "io.sourceforge.obmenu"
+		self.version = obmenu_version.VERSION
 		Gtk.Application.__init__(self, application_id=self.appid,
 				flags=Gio.ApplicationFlags.HANDLES_OPEN | Gio.ApplicationFlags.NON_UNIQUE)
 

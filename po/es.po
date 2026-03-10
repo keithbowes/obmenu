@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Obmenu 1.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-09 19:40-0400\n"
-"PO-Revision-Date: 2026-03-09 19:45-0400\n"
+"POT-Creation-Date: 2026-03-10 16:34-0400\n"
+"PO-Revision-Date: 2026-03-10 16:52-0400\n"
 "Last-Translator: Keith Bowes <keith@localhost>\n"
 "Language-Team: Spanish <es@tp.org.es>\n"
 "Language: es\n"
@@ -21,95 +21,68 @@ msgstr ""
 msgid "PyGObject 3.40.0 or higher is required"
 msgstr "PyGObject 3.40.0 o más alta es requerido"
 
-#: ../obmenu:46 ../obmenu:48 ../obmenu:275 ../obmenu:294 ../obmenu:324
-#: ../obmenu:349 ../obmenu:350 ../obmenu:354 ../obmenu:433 ../obmenu:486
-msgid "item"
-msgstr "entrada"
-
-#: ../obmenu:50 ../obmenu:52 ../obmenu:459
-msgid "separator"
-msgstr "separador"
-
-#: ../obmenu:54 ../obmenu:56 ../obmenu:62 ../obmenu:245 ../obmenu:277
-#: ../obmenu:328 ../obmenu:349 ../obmenu:351 ../obmenu:369 ../obmenu:395
-#: ../obmenu:514 ../obmenu:580
-msgid "menu"
-msgstr "menú"
-
-#: ../obmenu:111
+#: ../obmenu:99
 msgid "Untitled"
 msgstr "Sin título"
 
-#: ../obmenu:123 ../obmenu:203
+#: ../obmenu:111 ../obmenu:192
 msgid "Open"
 msgstr "Abrir"
 
-#: ../obmenu:195 ../obmenu:201
+#: ../obmenu:184 ../obmenu:190
 #, c-format
 msgid "Changes in %s will be lost. Continue?"
 msgstr "Cambios de %s estará perdidos. Continuar?"
 
-#: ../obmenu:210 ../obmenu:217
+#: ../obmenu:199 ../obmenu:206
 msgid "Save as..."
 msgstr "Guardar como..."
 
-#: ../obmenu:230
+#: ../obmenu:219
 msgid "There are unsaved changes. Exit anyway?"
 msgstr "Hay cambios no guardados. Salir de todos modos?"
 
-#: ../obmenu:250
-msgid "link"
-msgstr "enlace"
-
-#: ../obmenu:334
+#: ../obmenu:355
 msgid "Select File"
 msgstr "Elegir Archivo"
 
-#: ../obmenu:349 ../obmenu:486
-msgid "Link"
-msgstr "Enlace"
-
-#: ../obmenu:395 ../obmenu:401
+#: ../obmenu:416 ../obmenu:422
 msgid "New Menu"
 msgstr "Nuevo Menú"
 
-#: ../obmenu:402 ../obmenu:430 ../obmenu:433
+#: ../obmenu:423 ../obmenu:452 ../obmenu:455
 msgid "New Item"
 msgstr "Nueva Entrada"
 
-#: ../obmenu:402 ../obmenu:430 ../obmenu:433 ../obmenu:512 ../obmenu:514
+#: ../obmenu:423 ../obmenu:452 ../obmenu:455 ../obmenu:541 ../obmenu:543
 msgid "command"
 msgstr "comando"
 
-#: ../obmenu:512 ../obmenu:514
+#: ../obmenu:541 ../obmenu:543
 msgid "New Pipe"
 msgstr "Tubo Nuevo"
 
-#: ../obmenu:514
-msgid "Pipemenu"
-msgstr "Tubo"
-
-#: ../obmenu:741
+#: ../obmenu:773
 msgid "Label"
 msgstr "Etiqueta"
 
-#: ../obmenu:749
+#: ../obmenu:781
 msgid "Type"
 msgstr "Tipo"
 
-#: ../obmenu:757
+#: ../obmenu:789
 msgid "Action"
 msgstr "Acción"
 
-#: ../obmenu:765
+#: ../obmenu:797
 msgid "Execute"
 msgstr "Ejecutar"
 
-#: ../obmenu:784
+#: ../obmenu:816
 msgid "Error: Obmenu can presently open only one file at a time."
 msgstr "Error: Obmenu puede actualmente abrir solo un archive a vez."
 
-#: ../obmenu:785
+#: ../obmenu:817
 msgid "       Only the first specified will be opened."
 msgstr "       Solo el primero será abierto."
 
@@ -189,59 +162,71 @@ msgstr "Ay_uda"
 msgid "_About"
 msgstr "_Sobre"
 
-#: ../obmenu.ui:111 ../obmenu.ui:349
+#: ../obmenu.ui:111 ../obmenu.ui:372
 msgid "Openbox Menu Editor"
 msgstr "Editor de Menús de Openbox"
 
 #: ../obmenu.ui:135
-msgid "Save the menu"
-msgstr "Guardar el menú"
+msgid "Open a menu file"
+msgstr "Abrir un archivo de menú"
 
-#: ../obmenu.ui:147
+#: ../obmenu.ui:142
+msgid "Save the menu file"
+msgstr "Guardar el archivo de menú"
+
+#: ../obmenu.ui:154
 msgid "New menu"
 msgstr "Nuevo menú"
 
-#: ../obmenu.ui:155
+#: ../obmenu.ui:162
 msgid "New item"
 msgstr "Nueva entrada"
 
-#: ../obmenu.ui:163
+#: ../obmenu.ui:170
 msgid "New separator"
-msgstr "Separador Nuevo"
+msgstr "Separador nuevo"
 
-#: ../obmenu.ui:176
+#: ../obmenu.ui:178
+msgid "New pipe"
+msgstr "Tubo nuevo"
+
+#: ../obmenu.ui:186
+msgid "New link"
+msgstr "Enlace nuevo"
+
+#: ../obmenu.ui:199
 msgid "Move up"
 msgstr "Ascender"
 
-#: ../obmenu.ui:183
+#: ../obmenu.ui:206
 msgid "Move down"
 msgstr "Descender"
 
-#: ../obmenu.ui:195
+#: ../obmenu.ui:218
 msgid "Removes a menu or an item"
 msgstr "Borra un menú o una entrada"
 
-#: ../obmenu.ui:224
+#: ../obmenu.ui:247
 msgid "_Label"
 msgstr "_Etiqueta"
 
-#: ../obmenu.ui:248
+#: ../obmenu.ui:271
 msgid "_ID"
 msgstr "_Identificador"
 
-#: ../obmenu.ui:272
+#: ../obmenu.ui:295
 msgid "_Action"
 msgstr "A_cción"
 
-#: ../obmenu.ui:304
+#: ../obmenu.ui:327
 msgid "E_xecute"
 msgstr "E_jecutar"
 
-#: ../obmenu.ui:328
+#: ../obmenu.ui:351
 msgid "..."
 msgstr "..."
 
-#: ../obmenu.ui:351
+#: ../obmenu.ui:374
 msgid ""
 "Thank you for using this software.\n"
 "     Send any feedback to m.kolme@gmail.com"
@@ -249,7 +234,7 @@ msgstr ""
 "Gracias por usar este programa.\n"
 "     Me enviar comentarios a m.kolme@gmail.com"
 
-#: ../obmenu.ui:353
+#: ../obmenu.ui:376
 msgid ""
 "    Obmenu: Openbox Menu Editor\n"
 "        Copyright (C) 2005-2006  Manuel Colmenero\n"
@@ -292,11 +277,11 @@ msgstr ""
 "Foundation\n"
 "       Inc. 51 Franklin Street, 5º Piso, Boston, MA 02110-1301, USA."
 
-#: ../obmenu.ui:370
+#: ../obmenu.ui:393
 msgid "Website"
 msgstr "Sitio web"
 
 #. TRANSLATORS: Replace this string with your names, one name per line.
-#: ../obmenu.ui:372
+#: ../obmenu.ui:395
 msgid "translator-credits"
 msgstr "translator-credits"
