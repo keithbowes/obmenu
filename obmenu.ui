@@ -131,8 +131,15 @@
               <class name="toolbar"/>
             </style>
             <child>
+              <object class="GtkButton" id="open_toolbutton">
+                <property name="tooltip-text" translatable="yes">Open a menu file</property>
+                <property name="icon-name">document-open</property>
+                <signal name="clicked" handler="open"/>
+              </object>
+            </child>
+            <child>
               <object class="GtkButton" id="save_toolbutton">
-                <property name="tooltip-text" translatable="yes">Save the menu</property>
+                <property name="tooltip-text" translatable="yes">Save the menu file</property>
                 <property name="icon-name">document-save</property>
                 <signal name="clicked" handler="save"/>
               </object>

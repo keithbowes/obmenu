@@ -186,7 +186,7 @@ class App(Gtk.Application):
 		else:
 			self.clear_view()
 
-	def open(self, params, data):
+	def open(self, params, data=None):
 		if self.sth_changed:
 			self.confirm(_("Changes in %s will be lost. Continue?") % (self.menu_path), "open")
 		else:
