@@ -421,7 +421,9 @@ class App(Gtk.Application):
 
 		self.menu.createMenu(menu, _("New Menu"), nmid, n)
 		self.menu.createItem(nmid, _("New Item"), "Execute", _("command"))
-		if not found: self.createTree(None, None)
+		if not found:
+			self.createTree(None, None)
+			self.treeview.emit("activate", 0)
 		if found:
 			# FIXME: Show the menu with its item without collapsing and expanding the parent
 			parent = row.get_parent()
