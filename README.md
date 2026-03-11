@@ -49,10 +49,6 @@ versions) and can't be fixed by me, so please no bug reports about them.
 3. There are no scrollbar steppers.
 4. You must double click or press Enter on a treeview item to activate it. It's
    not automatically activated by tabbing or arrow keys (or single click).
-5. New list models (representing menus) are created only when the parent is
-   expanded, so therefore to create new menus, I collapse and then re-expand
-   the parent row. This can cause other expanded rows under the parent row to
-   collapse.
 
 ## CHANGELOG
 

@@ -412,12 +412,6 @@ class App(Gtk.Application):
 			n = 0
 
 		nmid="%s-%d%d%d" % (menu, random.randint(0,99), time.gmtime()[4], time.gmtime()[5])
-		hijo = GObject.Object()
-		hijo.data = [_("New Menu"), "menu", "", "", menu, nmid]
-		hijo.model = Gio.ListStore()
-
-		if found:
-			store_model.insert(row_position + 1, hijo)
 
 		self.menu.createMenu(menu, _("New Menu"), nmid, n)
 		self.menu.createItem(nmid, _("New Item"), "Execute", _("command"))
@@ -425,10 +419,10 @@ class App(Gtk.Application):
 			self.createTree(None, None)
 			self.treeview.emit("activate", 0)
 		if found:
-			# FIXME: Show the menu with its item without collapsing and expanding the parent
-			parent = row.get_parent()
-			parent.set_expanded(False)
-			parent.set_expanded(True)
+			hijo = GObject.Object()
+			hijo.data = [_("New Menu"), "menu", "", "", menu, nmid]
+			hijo.model = store_model
+			store_model.insert(row_position + 1 , hijo)
 			model.set_selected(position + 1)
 			self.treeview.emit("activate", (position + 1))
 
