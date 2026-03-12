@@ -56,7 +56,7 @@ class App(Gtk.Application):
 			hijo.model = model
 
 	def create_list_model(self, item, user_data, param=None):
-		(label, tipe, action, execute, parent, mid) = item.data
+		(label, tipe, action, execute, menu, mid) = item.data
 		if tipe == "menu" and self.menu.getMenu(mid) and action == "":
 			model = Gio.ListStore()
 			self.createTree(model, mid)
@@ -67,10 +67,8 @@ class App(Gtk.Application):
 		# treemodel.iter(label, type, [action], [execute], parent, [menu-id])
 		root = Gio.ListStore()
 		self.treemodel = Gtk.TreeListModel.new(root, False, False, self.create_list_model, None, None)
-		selection_model = Gtk.SingleSelection()
+		selection_model = self.builder.get_object("treeview_model")
 		selection_model.set_model(self.treemodel)
-		self.treeview.set_model(selection_model)
-		self.treeview.set_single_click_activate(False)
 
 	# Sets the state of "menu modified"
 	# Refreshes the window's title
@@ -338,10 +336,8 @@ class App(Gtk.Application):
 		n = position - 1
 		ex = self.execute_entry.get_text()
 		if tipe == "item":
-			print("Setting item to %s" % ex)
 			self.menu.setItemProps(menu, n, label, aaa, ex)
 		elif tipe == "menu":
-			print("Setting menu to %s" % ex)
 			self.menu.setMenuExecute(menu, mid, ex)
 
 		(found, found_pos) = store_model.find(ite)
@@ -355,12 +351,13 @@ class App(Gtk.Application):
 		dlg = self.ask_for_path(_("Select File"), Gtk.FileChooserAction.OPEN, self.on_search_clicked)
 
 	# treeview clicked signal
-	def treeview_changed(self, column_view, position):
-		model = column_view.get_model()
+	def treeview_changed(self, model, position, n_items, user_data=None):
+		# The position argument can give the wrong position
+		position = model.get_selected()
 		row = model.get_item(position)
 		ite = row.get_item()
 		if not ite: return
-		(label, tipe, action, exe, parent, mid) = ite.data
+		(label, tipe, action, exe, menu, mid) = ite.data
 
 		self.auto_change = True
 
@@ -417,14 +414,13 @@ class App(Gtk.Application):
 		self.menu.createItem(nmid, _("New Item"), "Execute", _("command"))
 		if not found:
 			self.createTree(None, None)
-			self.treeview.emit("activate", 0)
+			self.treeview_changed(model, 0, 0, None)
 		if found:
 			hijo = GObject.Object()
 			hijo.data = [_("New Menu"), "menu", "", "", menu, nmid]
 			hijo.model = store_model
 			store_model.insert(row_position + 1 , hijo)
 			model.set_selected(position + 1)
-			self.treeview.emit("activate", (position + 1))
 
 		self.label_entry.select_region(0, -1)
 		self.label_entry.grab_focus()
@@ -454,7 +450,6 @@ class App(Gtk.Application):
 		store_model.insert(row_position + 1, new)
 		model.set_selected(position + 1)
 
-		self.treeview.emit("activate", (position + 1))
 		self.label_entry.select_region(0, -1)
 		self.label_entry.grab_focus()
 
@@ -482,7 +477,6 @@ class App(Gtk.Application):
 		(found, row_position) = store_model.find(ite)
 		store_model.insert(row_position + 1, new)
 		model.set_selected(position + 1)
-		self.treeview.emit("activate", (position + 1))
 
 		self.treeview.grab_focus()
 
@@ -513,7 +507,6 @@ class App(Gtk.Application):
 		store_model.insert(row_position + 1, new)
 
 		model.set_selected(position + 1)
-		self.treeview.emit("activate", (position + 1))
 		self.id_entry.select_region(0, -1)
 		self.id_entry.grab_focus()
 
@@ -543,7 +536,6 @@ class App(Gtk.Application):
 		store_model.insert(row_position + 1, new)
 
 		model.set_selected(position + 1)
-		self.treeview.emit("activate", (position + 1))
 		self.label_entry.select_region(0, -1)
 		self.label_entry.grab_focus()
 
@@ -717,14 +709,13 @@ class App(Gtk.Application):
 		row = item.get_item()
 		row.set_expanded(False)
 
-		child = item.get_child()
-		if isinstance(child, Gtk.TreeExpander):
-			expander = child
+		if data == 0:
+			expander = item.get_child()
 			label = expander.get_child()
 			expander.set_list_row(row)
 			expander.set_child(label)
-		elif isinstance(child, Gtk.Label):
-			label = child
+		else:
+			label = item.get_child()
 		label.set_text(row.get_item().data[data])
 
 	# Application activation
@@ -766,34 +757,29 @@ class App(Gtk.Application):
 		factory = Gtk.SignalListItemFactory()
 		factory.connect("setup", self.setup_listitem_cb, 0)
 		factory.connect("bind", self.bind_listitem_cb, 0)
-		column = Gtk.ColumnViewColumn.new(dgettext(self.gtk_domain, "Label"), factory)
-		column.set_resizable(True)
-		column.set_expand(True)
-		self.treeview.append_column(column)
+		column = self.builder.get_object("label_column")
+		column.set_title(dgettext(self.gtk_domain, "Label"))
+		column.set_factory(factory)
 
 		factory = Gtk.SignalListItemFactory()
 		factory.connect("setup", self.setup_listitem_cb, 1)
 		factory.connect("bind", self.bind_listitem_cb, 1)
-		column = Gtk.ColumnViewColumn.new(dgettext(self.gtk_domain, "Type"), factory)
-		column.set_resizable(True)
-		column.set_expand(True)
-		self.treeview.append_column(column)
+		column = self.builder.get_object("type_column")
+		column.set_title(dgettext(self.gtk_domain, "Type"))
+		column.set_factory(factory)
 
 		factory = Gtk.SignalListItemFactory()
 		factory.connect("setup", self.setup_listitem_cb, 2)
 		factory.connect("bind", self.bind_listitem_cb, 2)
-		column = Gtk.ColumnViewColumn.new(dgettext(self.gtk_domain, "Action"), factory)
-		column.set_resizable(True)
-		column.set_expand(True)
-		self.treeview.append_column(column)
+		column = self.builder.get_object("action_column")
+		column.set_title(dgettext(self.gtk_domain, "action"))
+		column.set_factory(factory)
 
 		factory = Gtk.SignalListItemFactory()
 		factory.connect("setup", self.setup_listitem_cb, 3)
 		factory.connect("bind", self.bind_listitem_cb, 3)
-		column = Gtk.ColumnViewColumn.new(_("Execute"), factory)
-		column.set_resizable(True)
-		column.set_expand(True)
-		self.treeview.append_column(column)
+		column = self.builder.get_object("execute_column")
+		column.set_factory(factory)
 
 		# Some states of the app
 		self.auto_change = False
@@ -801,6 +787,10 @@ class App(Gtk.Application):
 
 		# Create the menu tree
 		self.createTree(None, None)
+
+		model = self.treeview.get_model()
+		if model.get_n_items() > 0:
+			self.treeview_changed(model, 0, 0, None)
 
 		# Let's roll!
 		self.add_window(self.appwindow)
@@ -819,7 +809,7 @@ class App(Gtk.Application):
 		import obmenu_version
 		self.appid = "io.sourceforge.obmenu"
 		self.version = obmenu_version.VERSION
-		Gtk.Application.__init__(self, application_id=self.appid,
+		super().__init__(application_id=self.appid,
 				flags=Gio.ApplicationFlags.HANDLES_OPEN | Gio.ApplicationFlags.NON_UNIQUE)
 
 if __name__ == "__main__":

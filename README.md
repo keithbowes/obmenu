@@ -5,18 +5,14 @@ Obmenu is a menu editor for Openbox and Wayland Openbox clones (like
 [LabWC](https://github.com/labwc/labwc/)) written in Python. It allows you to
 edit menus in an intuitive way.
 
+This is a fork of [the original Obmenu](http://obmenu.sourceforge.net/), updated for modern environments.
+
 ## REQUIREMENTS
 
-  [Python](http://python.org) >= 3.8,
-  [PyGObject](https://pygobject.readthedocs.io) >= 3.40,
-  [GTK](http://gtk.org/) >= 4.10 with GLib >= 2.64,
-  [build](https://pypi.org/project/build/) (for building) and [pip](https://pypi.org/project/pip/) (for installing) Python modules
-
-  It should work with [PyPy](http://pypy.org), but there are no guarantees.
-  If you use PyPy, you'll need the equivalents of the Python versions specified
-  above.
-
-  You no longer need pygtk and pyglade, required by [the original Obmenu](http://obmenu.sourceforge.net/).
+* [Python](http://python.org) >= 3.8,
+* [PyGObject](http://pygobject.gnome.org) >= 3.40,
+* [GTK](http://gtk.org/) >= 4.12 with GLib >= 2.64,
+* The Python modules [build](https://pypi.org/project/build/) (optional, for building) and [pip](https://pypi.org/project/pip/) (optional, for installing)
 
 ## INSTALLATION
 
@@ -38,6 +34,9 @@ file) to use Obmenu without installing it:
 * The New menu item just deletes the current menu structure. This is a leftover
   from Manuel Colmenero's version. In the future, my hope is to implement
   spawning new windows, but there are blockers to doing this immediately.
+* You have to press Tab twice to be able to expand the root menu, even though
+  it's selected. This is obviously not a problem if you're using a pointing
+  device.
 
 ### GTK 4 LIMITATIONS
 
@@ -47,8 +46,7 @@ versions) and can't be fixed by me, so please no bug reports about them.
 1. There are no menu icons.
 2. There's no text for toolbar icons.
 3. There are no scrollbar steppers.
-4. You must double click or press Enter on a treeview item to activate it. It's
-   not automatically activated by tabbing or arrow keys (or single click).
+4. Tabbing behaves slightly differently.
 
 ## CHANGELOG
 

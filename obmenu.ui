@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface domain="obmenu">
-  <requires lib="gtk" version="4.10"/>
+  <requires lib="gtk" version="4.12"/>
   <menu id="menubar">
     <submenu>
       <attribute name="label" translatable="yes">_File</attribute>
@@ -233,7 +233,38 @@
                 <property name="vscrollbar-policy">always</property>
                 <property name="child">
                   <object class="GtkColumnView" id="treeview">
-                    <signal name="activate" handler="treeview_changed"/>
+                    <property name="model">
+                      <object class="GtkSingleSelection" id="treeview_model">
+                        <signal name="selection-changed" handler="treeview_changed" />
+                      </object>
+                    </property>
+                    <property name="single-click-activate">0</property>
+                    <property name="tab-behavior">item</property>
+                    <child>
+                      <object class="GtkColumnViewColumn" id="label_column">
+                        <property name="expand">1</property>
+                        <property name="resizable">1</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkColumnViewColumn" id="type_column">
+                        <property name="expand">1</property>
+                        <property name="resizable">1</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkColumnViewColumn" id="action_column">
+                        <property name="expand">1</property>
+                        <property name="resizable">1</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkColumnViewColumn" id="execute_column">
+                        <property name="expand">1</property>
+                        <property name="resizable">1</property>
+                        <property name="title" translatable="yes">Execute</property>
+                      </object>
+                    </child>
                   </object>
                 </property>
               </object>
