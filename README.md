@@ -1,18 +1,29 @@
 # OBMENU
 
-Obmenu is a menu editor for Openbox and Wayland Openbox clones (like
-[Waybox](https://github.com/wizbright/waybox) or
-[LabWC](https://github.com/labwc/labwc/)) written in Python. It allows you to
-edit menus in an intuitive way.
+Obmenu is a menu editor for Openbox written in Python. It allows you to edit menus in an intuitive way.
 
 This is a fork of [the original Obmenu](http://obmenu.sourceforge.net/), updated for modern environments.
 
+For modern environments, you can use a Wayland Openbox clone like
+[Waybox](https://github.com/wizbright/waybox) or [LabWC](https://github.com/labwc/labwc/). You can
+also use [my
+script](https://raw.githubusercontent.com/keithbowes/waybox/refs/heads/master/data/menu) to use a
+menu file wherever [Rofi](https://davatorium.github.io/rofi/) by setting the `WB_MENU_XML`
+environment variable to your menu.xml file and then running `rofi -show menu:menu`.
+
+
 ## REQUIREMENTS
 
-* [Python](http://python.org) >= 3.8,
-* [PyGObject](http://pygobject.gnome.org) >= 3.40,
-* [GTK](http://gtk.org/) >= 4.12 with GLib >= 2.64,
-* The Python modules [build](https://pypi.org/project/build/) (optional, for building) and [pip](https://pypi.org/project/pip/) (optional, for installing)
+* [Python](http://python.org) >= 3.8
+* [PyGObject](http://pygobject.gnome.org) >= 3.40
+* [GTK](http://gtk.org/) >= 4.12
+
+You can run Obmenu from the directory without installing, but if you want to install it, you'll need the following Python modules:
+
+* [build](https://pypi.org/project/build/)
+* [pip](https://pypi.org/project/pip/)
+
+If you don't meet the requirements, you might be able to use an older version. See [CHANGES.md](CHANGES.md) for the requirements of older versions.
 
 ## INSTALLATION
 
@@ -47,43 +58,6 @@ versions) and can't be fixed by me, so please no bug reports about them.
 2. There's no text for toolbar icons.
 3. There are no scrollbar steppers.
 4. Tabbing behaves slightly differently.
-
-## CHANGELOG
-
-### 1.2.0 (FUTURE)
-
-- Removal of GTK 3 support.
-- Replaced the deprecated GtkTreeView, GtkComboBox, and GtkMessageDialog with GtkColumnView, GtkDropdown, and GtkAlertDialog.
-- Removal of the deprecated use of setup.py from the command line.
-
-### 1.1.2
-
-- Bug fixes.
-
-### 1.1.1
-
-- Bug fixes.
-
-### 1.1
-
-- Translation framework.
-- Keyboard mnemonics for the various fields.
-- Modernized GTK 3 support.
-- GTK 4 support.
-
-### 1.0.1
-
-- Waybox/GTK+ 3/Python 3 support.
-
-### 1.0
-
-- Automatically reconfigures Openbox
-- Create and modify pipe menus. Pipe menus are a way of creating menus
-  dynamically. For more info, visit Openbox documentation.
-- The same with "link" menus, which are references to other menus by their IDs.
-  That way you can reproduce a menu in several places of your file.
-- Lots of GUI enhancements
-- Multi-file support (New, Open, Save, ...)
 
 ## CREDITS
 
