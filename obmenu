@@ -55,7 +55,7 @@ class App(Gtk.Application):
 				model.append(hijo)
 			hijo.model = model
 
-	def create_list_model(self, item, user_data, param=None):
+	def create_list_model(self, item, user_data):
 		(label, tipe, action, execute, menu, mid) = item.data
 		if tipe == "menu" and self.menu.getMenu(mid) and action == "":
 			model = Gio.ListStore()
@@ -66,7 +66,7 @@ class App(Gtk.Application):
 	def initTree(self):
 		# treemodel.iter(label, type, [action], [execute], parent, [menu-id])
 		root = Gio.ListStore()
-		self.treemodel = Gtk.TreeListModel.new(root, False, False, self.create_list_model, None, None)
+		self.treemodel = Gtk.TreeListModel.new(root, False, False, self.create_list_model, None)
 		selection_model = self.builder.get_object("treeview_model")
 		selection_model.set_model(self.treemodel)
 
@@ -146,14 +146,18 @@ class App(Gtk.Application):
 			self.menu.saveMenu(self.menu_path)
 			self._sth_changed(False)
 
-	def on_search_clicked(self, dialog, response):
-		if response == Gtk.ResponseType.OK:
-			self.execute_entry.set_text(dialog.get_file().get_path())
-		dialog.destroy()
+	def on_search_clicked(self, dialog, res):
+		try:
+			file = dialog.open_finish(res)
+			self.execute_entry.set_text(file.peek_path())
+		except:
+			pass
 
-	def get_selected_filename(self, source_object, res, data):
-		(dlg, action, cb) = data
-		if action == Gtk.FileChooserAction.OPEN:
+	def get_selected_filename(self, dlg, res, data):
+		(action, cb) = data
+		if not cb is None:
+			cb(dlg, res)
+		elif action == Gtk.FileChooserAction.OPEN:
 			try:
 				self.menu_path = dlg.open_finish(res).get_path()
 			except:
@@ -165,15 +169,13 @@ class App(Gtk.Application):
 				self.menu_path = None
 		if cb is None:
 			self.on_file_chosen(dlg, action)
-		else:
-			cb(dlg, action)
 
 	def ask_for_path(self, title, action, cb=None):
 			dlg = Gtk.FileDialog()
 			if action == Gtk.FileChooserAction.OPEN:
-				dlg.open(self.appwindow, None, self.get_selected_filename, (dlg, action, cb))
+				dlg.open(self.appwindow, None, self.get_selected_filename, (action, cb))
 			elif action == Gtk.FileChooserAction.SAVE:
-				dlg.save(self.appwindow, None, self.get_selected_filename, (dlg, action, cb))
+				dlg.save(self.appwindow, None, self.get_selected_filename, (action, cb))
 			dlg.set_title(title)
 
 	#  New file clicked
@@ -592,6 +594,7 @@ class App(Gtk.Application):
 		if not row: return
 		ite = row.get_item()
 		if not ite: return
+		self._sth_changed(True)
 		(label, tipe, action, exe, menu, mid) = list(ite.data)
 		store_model = ite.model
 
@@ -606,7 +609,6 @@ class App(Gtk.Application):
 		else:
 			self.menu.removeItem(menu, found_pos)
 		self.clear_fields()
-		self._sth_changed(True)
 
 	def hide_about(self, widget):
 		widget.set_visible(False)
@@ -739,7 +741,7 @@ class App(Gtk.Application):
 			# No files specified on the command line
 			#
 			# If the GSettings schema isn't installed, don't go kaboom
-			if Gio.SettingsSchemaSource.lookup(Gio.SettingsSchemaSource.get_default(), self.appid, False):
+			if Gio.SettingsSchemaSource.lookup(Gio.SettingsSchemaSource.get_default(), self.appid, True):
 				self.settings = Gio.Settings.new(self.appid)
 				self.menu_path = GLib.Variant.get_string(self.settings.get_value("last-opened-menu"))
 
@@ -772,7 +774,7 @@ class App(Gtk.Application):
 		factory.connect("setup", self.setup_listitem_cb, 2)
 		factory.connect("bind", self.bind_listitem_cb, 2)
 		column = self.builder.get_object("action_column")
-		column.set_title(dgettext(self.gtk_domain, "action"))
+		column.set_title(dgettext(self.gtk_domain, "Action"))
 		column.set_factory(factory)
 
 		factory = Gtk.SignalListItemFactory()
