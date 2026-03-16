@@ -718,7 +718,10 @@ class App(Gtk.Application):
 			expander.set_child(label)
 		else:
 			label = item.get_child()
-		label.set_text(row.get_item().data[data])
+
+		text = row.get_item().data[data]
+		if text != "":
+			label.set_text(_(text))
 
 	# Application activation
 	def do_activate(self):
@@ -808,6 +811,9 @@ class App(Gtk.Application):
 
 	# Application init
 	def __init__(self):
+		# Types and actions that should be translated in the frontend but not the backend:
+		self.actions = [_("Link"), _("Pipemenu"), _("Execute"), _("Reconfigure"), _("Restart"), _("Exit")]
+		self.types = [_("item"), _("menu"), _("separator")]
 		import obmenu_version
 		self.appid = "io.sourceforge.obmenu"
 		self.version = obmenu_version.VERSION

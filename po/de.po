@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Obmenu 1.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-10 16:34-0400\n"
-"PO-Revision-Date: 2026-03-10 16:54-0400\n"
+"POT-Creation-Date: 2026-03-15 21:15-0400\n"
+"PO-Revision-Date: 2026-03-15 21:05-0400\n"
 "Last-Translator: Keith Bowes <keith@localhost>\n"
 "Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
 "Language: de\n"
@@ -21,11 +21,11 @@ msgstr ""
 msgid "PyGObject 3.40.0 or higher is required"
 msgstr "PyGObject 3.40.0 oder höher ist nötig"
 
-#: ../obmenu:99
+#: ../obmenu:97
 msgid "Untitled"
 msgstr "Titellos"
 
-#: ../obmenu:111 ../obmenu:192
+#: ../obmenu:109 ../obmenu:192
 msgid "Open"
 msgstr "Öffnen"
 
@@ -42,49 +42,81 @@ msgstr "Speichern wie"
 msgid "There are unsaved changes. Exit anyway?"
 msgstr "Es gibt ungespeicherte Änderungen. Trotzdem beenden?"
 
-#: ../obmenu:355
+#: ../obmenu:353
 msgid "Select File"
 msgstr "Datei wählen"
 
-#: ../obmenu:416 ../obmenu:422
+#: ../obmenu:415 ../obmenu:422
 msgid "New Menu"
 msgstr "Neues Menü"
 
-#: ../obmenu:423 ../obmenu:452 ../obmenu:455
+#: ../obmenu:416 ../obmenu:446 ../obmenu:449
 msgid "New Item"
 msgstr "Neuer Eintrag"
 
-#: ../obmenu:423 ../obmenu:452 ../obmenu:455 ../obmenu:541 ../obmenu:543
+#: ../obmenu:416 ../obmenu:446 ../obmenu:449 ../obmenu:532 ../obmenu:534
 msgid "command"
 msgstr "Befehl"
 
-#: ../obmenu:541 ../obmenu:543
+#: ../obmenu:532 ../obmenu:534
 msgid "New Pipe"
 msgstr "Neuer Rohr"
 
-#: ../obmenu:773
+#: ../obmenu:766
 msgid "Label"
 msgstr "Etikett"
 
-#: ../obmenu:781
+#: ../obmenu:773
 msgid "Type"
 msgstr "Art"
 
-#: ../obmenu:789
+#: ../obmenu:780
 msgid "Action"
 msgstr "Aktion"
 
-#: ../obmenu:797
-msgid "Execute"
-msgstr "Ausführen"
-
-#: ../obmenu:816
+#: ../obmenu:807
 msgid "Error: Obmenu can presently open only one file at a time."
 msgstr "Fehler: Jetzt kann Obmenu nur eine Datei gleichzeitig öffnen."
 
-#: ../obmenu:817
+#: ../obmenu:808
 msgid "       Only the first specified will be opened."
 msgstr "       Nur die erste spezifizierte wird geöffnet werden"
+
+#: ../obmenu:815
+msgid "Link"
+msgstr "Link"
+
+#: ../obmenu:815
+msgid "Pipemenu"
+msgstr "Rohrmenü"
+
+#: ../obmenu:815 ../obmenu.ui:265
+msgid "Execute"
+msgstr "Ausführen"
+
+#: ../obmenu:815
+msgid "Reconfigure"
+msgstr "Wiedereinstellen"
+
+#: ../obmenu:815
+msgid "Restart"
+msgstr "Wiederstarten"
+
+#: ../obmenu:815
+msgid "Exit"
+msgstr "Ausgehen"
+
+#: ../obmenu:816
+msgid "item"
+msgstr "Eintrag"
+
+#: ../obmenu:816
+msgid "menu"
+msgstr "Menü"
+
+#: ../obmenu:816
+msgid "separator"
+msgstr "Separator"
 
 #: ../obmenu.ui:6
 msgid "_File"
@@ -162,7 +194,7 @@ msgstr "_Hilfe"
 msgid "_About"
 msgstr "_Über"
 
-#: ../obmenu.ui:111 ../obmenu.ui:372
+#: ../obmenu.ui:111 ../obmenu.ui:410
 msgid "Openbox Menu Editor"
 msgstr "Openbox Menueditor"
 
@@ -206,27 +238,27 @@ msgstr "Unten wegen"
 msgid "Removes a menu or an item"
 msgstr "Entfernt ein Menü oder einen Eintrag"
 
-#: ../obmenu.ui:247
+#: ../obmenu.ui:282
 msgid "_Label"
 msgstr "_Etikett"
 
-#: ../obmenu.ui:271
+#: ../obmenu.ui:306
 msgid "_ID"
 msgstr "Be_zeichnung"
 
-#: ../obmenu.ui:295
+#: ../obmenu.ui:330
 msgid "_Action"
 msgstr "_Aktion"
 
-#: ../obmenu.ui:327
+#: ../obmenu.ui:364
 msgid "E_xecute"
 msgstr "Aus_führen"
 
-#: ../obmenu.ui:351
+#: ../obmenu.ui:389
 msgid "..."
 msgstr "..."
 
-#: ../obmenu.ui:374
+#: ../obmenu.ui:412
 msgid ""
 "Thank you for using this software.\n"
 "     Send any feedback to m.kolme@gmail.com"
@@ -234,7 +266,7 @@ msgstr ""
 "Danke für diese Software benutzen.\n"
 "     Nachrichten an m.kolme@gmail.com schicken"
 
-#: ../obmenu.ui:376
+#: ../obmenu.ui:414
 msgid ""
 "    Obmenu: Openbox Menu Editor\n"
 "        Copyright (C) 2005-2006  Manuel Colmenero\n"
@@ -276,11 +308,11 @@ msgstr ""
 "       Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston,\n"
 "       MA 02110, USA."
 
-#: ../obmenu.ui:393
+#: ../obmenu.ui:431
 msgid "Website"
 msgstr "Website"
 
 #. TRANSLATORS: Replace this string with your names, one name per line.
-#: ../obmenu.ui:395
+#: ../obmenu.ui:433
 msgid "translator-credits"
 msgstr "translator-credits"

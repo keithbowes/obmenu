@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Obmenu 1.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-10 16:34-0400\n"
-"PO-Revision-Date: 2026-03-10 16:52-0400\n"
+"POT-Creation-Date: 2026-03-15 21:15-0400\n"
+"PO-Revision-Date: 2026-03-15 21:08-0400\n"
 "Last-Translator: Keith Bowes <keith@localhost>\n"
 "Language-Team: Spanish <es@tp.org.es>\n"
 "Language: es\n"
@@ -21,11 +21,11 @@ msgstr ""
 msgid "PyGObject 3.40.0 or higher is required"
 msgstr "PyGObject 3.40.0 o más alta es requerido"
 
-#: ../obmenu:99
+#: ../obmenu:97
 msgid "Untitled"
 msgstr "Sin título"
 
-#: ../obmenu:111 ../obmenu:192
+#: ../obmenu:109 ../obmenu:192
 msgid "Open"
 msgstr "Abrir"
 
@@ -42,49 +42,81 @@ msgstr "Guardar como..."
 msgid "There are unsaved changes. Exit anyway?"
 msgstr "Hay cambios no guardados. Salir de todos modos?"
 
-#: ../obmenu:355
+#: ../obmenu:353
 msgid "Select File"
 msgstr "Elegir Archivo"
 
-#: ../obmenu:416 ../obmenu:422
+#: ../obmenu:415 ../obmenu:422
 msgid "New Menu"
 msgstr "Nuevo Menú"
 
-#: ../obmenu:423 ../obmenu:452 ../obmenu:455
+#: ../obmenu:416 ../obmenu:446 ../obmenu:449
 msgid "New Item"
 msgstr "Nueva Entrada"
 
-#: ../obmenu:423 ../obmenu:452 ../obmenu:455 ../obmenu:541 ../obmenu:543
+#: ../obmenu:416 ../obmenu:446 ../obmenu:449 ../obmenu:532 ../obmenu:534
 msgid "command"
 msgstr "comando"
 
-#: ../obmenu:541 ../obmenu:543
+#: ../obmenu:532 ../obmenu:534
 msgid "New Pipe"
 msgstr "Tubo Nuevo"
 
-#: ../obmenu:773
+#: ../obmenu:766
 msgid "Label"
 msgstr "Etiqueta"
 
-#: ../obmenu:781
+#: ../obmenu:773
 msgid "Type"
 msgstr "Tipo"
 
-#: ../obmenu:789
+#: ../obmenu:780
 msgid "Action"
 msgstr "Acción"
 
-#: ../obmenu:797
-msgid "Execute"
-msgstr "Ejecutar"
-
-#: ../obmenu:816
+#: ../obmenu:807
 msgid "Error: Obmenu can presently open only one file at a time."
 msgstr "Error: Obmenu puede actualmente abrir solo un archive a vez."
 
-#: ../obmenu:817
+#: ../obmenu:808
 msgid "       Only the first specified will be opened."
 msgstr "       Solo el primero será abierto."
+
+#: ../obmenu:815
+msgid "Link"
+msgstr "Enlace"
+
+#: ../obmenu:815
+msgid "Pipemenu"
+msgstr "Tubo"
+
+#: ../obmenu:815 ../obmenu.ui:265
+msgid "Execute"
+msgstr "Ejecutar"
+
+#: ../obmenu:815
+msgid "Reconfigure"
+msgstr "Reconfigurar"
+
+#: ../obmenu:815
+msgid "Restart"
+msgstr "Reanudar"
+
+#: ../obmenu:815
+msgid "Exit"
+msgstr "Salir"
+
+#: ../obmenu:816
+msgid "item"
+msgstr "entrada"
+
+#: ../obmenu:816
+msgid "menu"
+msgstr "menú"
+
+#: ../obmenu:816
+msgid "separator"
+msgstr "separador"
 
 #: ../obmenu.ui:6
 msgid "_File"
@@ -162,7 +194,7 @@ msgstr "Ay_uda"
 msgid "_About"
 msgstr "_Sobre"
 
-#: ../obmenu.ui:111 ../obmenu.ui:372
+#: ../obmenu.ui:111 ../obmenu.ui:410
 msgid "Openbox Menu Editor"
 msgstr "Editor de Menús de Openbox"
 
@@ -206,27 +238,27 @@ msgstr "Descender"
 msgid "Removes a menu or an item"
 msgstr "Borra un menú o una entrada"
 
-#: ../obmenu.ui:247
+#: ../obmenu.ui:282
 msgid "_Label"
 msgstr "_Etiqueta"
 
-#: ../obmenu.ui:271
+#: ../obmenu.ui:306
 msgid "_ID"
 msgstr "_Identificador"
 
-#: ../obmenu.ui:295
+#: ../obmenu.ui:330
 msgid "_Action"
 msgstr "A_cción"
 
-#: ../obmenu.ui:327
+#: ../obmenu.ui:364
 msgid "E_xecute"
 msgstr "E_jecutar"
 
-#: ../obmenu.ui:351
+#: ../obmenu.ui:389
 msgid "..."
 msgstr "..."
 
-#: ../obmenu.ui:374
+#: ../obmenu.ui:412
 msgid ""
 "Thank you for using this software.\n"
 "     Send any feedback to m.kolme@gmail.com"
@@ -234,7 +266,7 @@ msgstr ""
 "Gracias por usar este programa.\n"
 "     Me enviar comentarios a m.kolme@gmail.com"
 
-#: ../obmenu.ui:376
+#: ../obmenu.ui:414
 msgid ""
 "    Obmenu: Openbox Menu Editor\n"
 "        Copyright (C) 2005-2006  Manuel Colmenero\n"
@@ -277,11 +309,11 @@ msgstr ""
 "Foundation\n"
 "       Inc. 51 Franklin Street, 5º Piso, Boston, MA 02110-1301, USA."
 
-#: ../obmenu.ui:393
+#: ../obmenu.ui:431
 msgid "Website"
 msgstr "Sitio web"
 
 #. TRANSLATORS: Replace this string with your names, one name per line.
-#: ../obmenu.ui:395
+#: ../obmenu.ui:433
 msgid "translator-credits"
 msgstr "translator-credits"

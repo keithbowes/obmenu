@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Obmenu 1.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-10 16:34-0400\n"
-"PO-Revision-Date: 2026-03-10 16:44-0400\n"
+"POT-Creation-Date: 2026-03-15 21:15-0400\n"
+"PO-Revision-Date: 2026-03-15 21:18-0400\n"
 "Last-Translator: Keith Bowes <keith@localhost>\n"
 "Language-Team: Esperanto <translation-team-eo@lists.sourceforge.net>\n"
 "Language: eo\n"
@@ -21,11 +21,11 @@ msgstr ""
 msgid "PyGObject 3.40.0 or higher is required"
 msgstr "PyGObject 3.40.0 aŭ pli alta estas postulata"
 
-#: ../obmenu:99
+#: ../obmenu:97
 msgid "Untitled"
 msgstr "Sennoma"
 
-#: ../obmenu:111 ../obmenu:192
+#: ../obmenu:109 ../obmenu:192
 msgid "Open"
 msgstr "Malfermi"
 
@@ -42,49 +42,81 @@ msgstr "Konservi kiel..."
 msgid "There are unsaved changes. Exit anyway?"
 msgstr "Ekzistas nekonservitajn ŝanĝojn. Ĉu senkonsidere fini?"
 
-#: ../obmenu:355
+#: ../obmenu:353
 msgid "Select File"
 msgstr "Elekti dosieron"
 
-#: ../obmenu:416 ../obmenu:422
+#: ../obmenu:415 ../obmenu:422
 msgid "New Menu"
 msgstr "Nova menuo"
 
-#: ../obmenu:423 ../obmenu:452 ../obmenu:455
+#: ../obmenu:416 ../obmenu:446 ../obmenu:449
 msgid "New Item"
 msgstr "Nova ero"
 
-#: ../obmenu:423 ../obmenu:452 ../obmenu:455 ../obmenu:541 ../obmenu:543
+#: ../obmenu:416 ../obmenu:446 ../obmenu:449 ../obmenu:532 ../obmenu:534
 msgid "command"
 msgstr "komando"
 
-#: ../obmenu:541 ../obmenu:543
+#: ../obmenu:532 ../obmenu:534
 msgid "New Pipe"
 msgstr "Nova tubo"
 
-#: ../obmenu:773
+#: ../obmenu:766
 msgid "Label"
 msgstr "Etikedo"
 
-#: ../obmenu:781
+#: ../obmenu:773
 msgid "Type"
 msgstr "Tipo"
 
-#: ../obmenu:789
+#: ../obmenu:780
 msgid "Action"
 msgstr "Ago"
 
-#: ../obmenu:797
-msgid "Execute"
-msgstr "Plenumi"
-
-#: ../obmenu:816
+#: ../obmenu:807
 msgid "Error: Obmenu can presently open only one file at a time."
 msgstr "Eraro: Obmenu nune povas fermi nur unu dosieron samtempe."
 
-#: ../obmenu:817
+#: ../obmenu:808
 msgid "       Only the first specified will be opened."
 msgstr "       Nur la unua specifita fermiĝos."
+
+#: ../obmenu:815
+msgid "Link"
+msgstr "Ligilo"
+
+#: ../obmenu:815
+msgid "Pipemenu"
+msgstr "Tubo-menuo"
+
+#: ../obmenu:815 ../obmenu.ui:265
+msgid "Execute"
+msgstr "Plenumi"
+
+#: ../obmenu:815
+msgid "Reconfigure"
+msgstr "Reagordi"
+
+#: ../obmenu:815
+msgid "Restart"
+msgstr "Restartigi"
+
+#: ../obmenu:815
+msgid "Exit"
+msgstr "Fini"
+
+#: ../obmenu:816
+msgid "item"
+msgstr "ero"
+
+#: ../obmenu:816
+msgid "menu"
+msgstr "menuo"
+
+#: ../obmenu:816
+msgid "separator"
+msgstr "apartigilo"
 
 #: ../obmenu.ui:6
 msgid "_File"
@@ -162,7 +194,7 @@ msgstr "_Helpo"
 msgid "_About"
 msgstr "_Pri"
 
-#: ../obmenu.ui:111 ../obmenu.ui:372
+#: ../obmenu.ui:111 ../obmenu.ui:410
 msgid "Openbox Menu Editor"
 msgstr "Menuo-redaktilo por Openbox"
 
@@ -206,27 +238,27 @@ msgstr "Movi malsupren"
 msgid "Removes a menu or an item"
 msgstr "Forigas menuon aŭ eron"
 
-#: ../obmenu.ui:247
+#: ../obmenu.ui:282
 msgid "_Label"
 msgstr "_Etikedo"
 
-#: ../obmenu.ui:271
+#: ../obmenu.ui:306
 msgid "_ID"
 msgstr "_Identigilo"
 
-#: ../obmenu.ui:295
+#: ../obmenu.ui:330
 msgid "_Action"
 msgstr "_Ago"
 
-#: ../obmenu.ui:327
+#: ../obmenu.ui:364
 msgid "E_xecute"
 msgstr "_Plenumi"
 
-#: ../obmenu.ui:351
+#: ../obmenu.ui:389
 msgid "..."
 msgstr "..."
 
-#: ../obmenu.ui:374
+#: ../obmenu.ui:412
 msgid ""
 "Thank you for using this software.\n"
 "     Send any feedback to m.kolme@gmail.com"
@@ -234,7 +266,7 @@ msgstr ""
 "Dankon pro la uzo de ĉi tiu programo.\n"
 "    Sendu komentojn al mi ĉe m.kolme@gmail.com"
 
-#: ../obmenu.ui:376
+#: ../obmenu.ui:414
 msgid ""
 "    Obmenu: Openbox Menu Editor\n"
 "        Copyright (C) 2005-2006  Manuel Colmenero\n"
@@ -278,11 +310,11 @@ msgstr ""
 "                   Boston, MA 02111-1307\n"
 "                   USA"
 
-#: ../obmenu.ui:393
+#: ../obmenu.ui:431
 msgid "Website"
 msgstr "TTT-ejo"
 
 #. TRANSLATORS: Replace this string with your names, one name per line.
-#: ../obmenu.ui:395
+#: ../obmenu.ui:433
 msgid "translator-credits"
 msgstr "translator-credits"
