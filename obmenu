@@ -646,13 +646,17 @@ class App(Gtk.Application):
 		bindtextdomain("obmenu", textdomaindir)
 		self.gtk_domain = "gtk%d0" % Gtk.get_major_version()
 
-		signals = {
+		app_signals = {
 			"new": self.new,
+			"reconfigure": self.reconfigure_openbox,
+			"quit": self.mnu_quit,
+			"about": self.show_about,
+			"hide_about": self.hide_about,
+			"exit": self.exit }
+		win_signals = {
 			"open": self.open,
 			"save": self.save,
 			"save.as": self.save_as,
-			"reconfigure": self.reconfigure_openbox,
-			"quit": self.mnu_quit,
 			"label_changed": self.change_label,
 			"id_changed": self.change_id,
 			"action_changed": self.change_action,
@@ -666,17 +670,28 @@ class App(Gtk.Application):
 			"add.link": self.new_link,
 			"remove": self.remove,
 			"up": self.up,
-			"down": self.down,
-			"about": self.show_about,
-			"hide_about": self.hide_about,
-			"exit": self.exit }
-		for signal in signals:
-			action = Gio.SimpleAction.new(signal, None)
-			action.connect("activate", signals[signal])
-			self.add_action(action)
+			"down": self.down }
 
-		self.builder = Gtk.Builder(signals)
+		self.builder = Gtk.Builder({**app_signals, **win_signals})
 		self.builder.add_from_file(self.datapath + "/obmenu.ui")
+
+		# Set the basics for GTK
+		self.appwindow = self.builder.get_object("appwindow")
+		self.treeview = self.builder.get_object("treeview")
+		self.label_entry = self.builder.get_object("label_entry")
+		self.action_combo = self.builder.get_object("action_combo")
+		self.execute_entry = self.builder.get_object("execute_entry")
+		self.execute_srch = self.builder.get_object("execute_search_button")
+		self.id_entry = self.builder.get_object("id_entry")
+
+		for signal in app_signals:
+			action = Gio.SimpleAction.new(signal, None)
+			action.connect("activate", app_signals[signal])
+			self.add_action(action)
+		for signal in win_signals:
+			action = Gio.SimpleAction.new(signal, None)
+			action.connect("activate", win_signals[signal])
+			self.appwindow.add_action(action)
 
 		accels = {
 			"app.new": ["<Control>n"],
@@ -725,15 +740,6 @@ class App(Gtk.Application):
 
 	# Application activation
 	def do_activate(self):
-		# Set the basics for GTK
-		self.appwindow = self.builder.get_object("appwindow")
-		self.treeview = self.builder.get_object("treeview")
-		self.label_entry = self.builder.get_object("label_entry")
-		self.action_combo = self.builder.get_object("action_combo")
-		self.execute_entry = self.builder.get_object("execute_entry")
-		self.execute_srch = self.builder.get_object("execute_search_button")
-		self.id_entry = self.builder.get_object("id_entry")
-
 		self.menu = obxml.Obmenu()
 		self.menu_path = ""
 		self.settings = None
