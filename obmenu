@@ -680,19 +680,19 @@ class App(Gtk.Application):
 
 		accels = {
 			"app.new": ["<Control>n"],
-			"app.open": ["<Control>o"],
-			"app.save": ["<Control>s"],
-			"app.save.as": ["<Control><Shift>s"],
+			"win.open": ["<Control>o"],
+			"win.save": ["<Control>s"],
+			"win.save.as": ["<Control><Shift>s"],
 			"app.reconfigure": ["<Control>c"],
 			"app.quit": ["<Control>q"],
-			"app.up": ["<Control>Up"],
-			"app.down": ["<Control>Down"],
-			"app.add.menu": ["<Control>m"],
-			"app.add.item": ["<Control>i"],
-			"app.add.separator": ["<Control>r"],
-			"app.add.pipe": ["<Control>p"],
-			"app.add.link": ["<Control>l"],
-			"app.remove": ["Delete"],
+			"win.up": ["<Control>Up"],
+			"win.down": ["<Control>Down"],
+			"win.add.menu": ["<Control>m"],
+			"win.add.item": ["<Control>i"],
+			"win.add.separator": ["<Control>r"],
+			"win.add.pipe": ["<Control>p"],
+			"win.add.link": ["<Control>l"],
+			"win.remove": ["Delete"],
 			"app.about": ["F1"]
 		}
 		for accel in accels:

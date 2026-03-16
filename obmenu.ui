@@ -12,17 +12,17 @@
         </item>
         <item>
           <attribute name="label" translatable="yes">_Open</attribute>
-          <attribute name="action">app.open</attribute>
+          <attribute name="action">win.open</attribute>
           <attribute name="icon">document-open</attribute>
         </item>
         <item>
           <attribute name="label" translatable="yes">_Save</attribute>
-          <attribute name="action">app.save</attribute>
+          <attribute name="action">win.save</attribute>
           <attribute name="icon">document-save</attribute>
         </item>
         <item>
           <attribute name="label" translatable="yes">Save _As</attribute>
-          <attribute name="action">app.save.as</attribute>
+          <attribute name="action">win.save.as</attribute>
           <attribute name="icon">document-save-as</attribute>
         </item>
       </section>
@@ -46,12 +46,12 @@
       <section>
         <item>
           <attribute name="label" translatable="yes">Move _up</attribute>
-          <attribute name="action">app.up</attribute>
+          <attribute name="action">win.up</attribute>
           <attribute name="icon">go-up</attribute>
         </item>
         <item>
           <attribute name="label" translatable="yes">Move dow_n</attribute>
-          <attribute name="action">app.down</attribute>
+          <attribute name="action">win.down</attribute>
           <attribute name="icon">go-down</attribute>
         </item>
       </section>
@@ -62,27 +62,27 @@
           <section>
             <item>
               <attribute name="label" translatable="yes">_Menu</attribute>
-              <attribute name="action">app.add.menu</attribute>
+              <attribute name="action">win.add.menu</attribute>
               <attribute name="icon">folder-new</attribute>
             </item>
             <item>
               <attribute name="label" translatable="yes">_Item</attribute>
-              <attribute name="action">app.add.item</attribute>
+              <attribute name="action">win.add.item</attribute>
               <attribute name="icon">system-run</attribute>
             </item>
             <item>
               <attribute name="label" translatable="yes">_Separator</attribute>
-              <attribute name="action">app.add.separator</attribute>
+              <attribute name="action">win.add.separator</attribute>
               <attribute name="icon">text-x-generic</attribute>
             </item>
             <item>
               <attribute name="label" translatable="yes">_Pipe Menu</attribute>
-              <attribute name="action">app.add.pipe</attribute>
+              <attribute name="action">win.add.pipe</attribute>
               <attribute name="icon">document-share</attribute>
             </item>
             <item>
               <attribute name="label" translatable="yes">_Link</attribute>
-              <attribute name="action">app.add.link</attribute>
+              <attribute name="action">win.add.link</attribute>
               <attribute name="icon">insert-link</attribute>
             </item>
           </section>
@@ -91,7 +91,7 @@
       <section>
         <item>
           <attribute name="label" translatable="yes">_Delete</attribute>
-          <attribute name="action">app.remove</attribute>
+          <attribute name="action">win.remove</attribute>
           <attribute name="icon">remove</attribute>
         </item>
       </section>
