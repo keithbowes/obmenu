@@ -58,7 +58,7 @@ def clasifica(lista, humbral):
 				n = 0
 		if n != 0:
 			lgrupos.append( ( "%s-%s" % (primera, k), grupo) )
-		return lgrupos
+	return lgrupos
 
 menu = obxml.Obmenu()
 menu.newPipe()

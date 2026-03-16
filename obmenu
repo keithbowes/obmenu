@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #
 #  Openbox Menu Editor
 #
@@ -29,7 +29,7 @@ except:
 	from gettext import textdomain, bindtextdomain, dgettext, gettext as _
 
 if gi.version_info < (3, 40, 0):
-	print(_("PyGObject 3.40.0 or higher is required"), file=sys.err)
+	print(_("PyGObject 3.40.0 or higher is required"), file=sys.stderr)
 	exit(1)
 
 gi.require_version('Gtk', '4.0')
@@ -636,8 +636,8 @@ class App(Gtk.Application):
 					break
 			if not self.datapath:
 				# These will be untranslated, as things weren't installed correctly
-				print("ERROR: the data files were not found!", file=sys.err)
-				print("       check that everything was installed all right", file=sys.err)
+				print("ERROR: the data files were not found!", file=sys.stderr)
+				print("       check that everything was installed all right", file=sys.stderr)
 				sys.exit(1)
 
 		if not (textdomaindir := os.getenv("TEXTDOMAINDIR")):
@@ -810,8 +810,8 @@ class App(Gtk.Application):
 	# Callback called when command-line arguments are provided
 	def do_open(self, files, n_files, hint):
 		if n_files > 1:
-			print(_("Error: Obmenu can presently open only one file at a time."), file=sys.err)
-			print(_("       Only the first specified will be opened."), file=sys.err)
+			print(_("Error: Obmenu can presently open only one file at a time."), file=sys.stderr)
+			print(_("       Only the first specified will be opened."), file=sys.stderr)
 		self.menu_file = files[0]
 		self.do_activate()
 

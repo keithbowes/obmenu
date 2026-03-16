@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 #
 #  Openbox Menu Editor 1.0 beta
 #
@@ -358,5 +358,6 @@ class Obmenu:
 		self.newMenu()
 
 if __name__ == "__main__":
-	print("This is a module. Use obmenu instead.")
+	import sys
+	print("This is a module. Use obmenu instead.", file=sys.stderr)
 	exit(0)
