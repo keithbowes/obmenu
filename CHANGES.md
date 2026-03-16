@@ -2,6 +2,17 @@
 
 This document summarizes the changes between the versions of Obmenu.
 
+## Versioning policy
+
+I follow a &lt;major&gt;.&lt;minor&gt;.&lt;micro&gt; versioning scheme.
+&lt;micro&gt; represents minor changes not perceptible to an end user, unless that end user had experienced bugs fixed in the new version.
+&lt;minor&gt; represents new features or more often replacements for GTK deprecations that cause a perceptible difference in the UI.
+I'm not sure what would constitute bumping &lt;major&gt;.
+
+About required dependencies, the policy is not to release a new version until the requirements are at least two years old. Fixes can be backported in the meantime.
+This is consistent with Manuel Colmenero's first version, released 2005-12-15, which required at least Python 2.3, which was released 2003-07-29.
+This is also consistent with the GTK developers' advice to wait 18 months after a new GTK version is released before porting to it.
+
 ## 1.2.0 (FUTURE)
 
 - Removal of GTK 3 support.
@@ -62,4 +73,4 @@ This document summarizes the changes between the versions of Obmenu.
 ## 0.9.2 (2005-12-15)
 
 - Manuel Colmenero's first published version.
-- Requires [Python](http://python.org) 2.3 or better, [pygtk](http://pygtk.org), and pyglade
+- Requires [Python](http://python.org) 2.3 or better, [pygtk](http://pygtk.org), and pyglade.
