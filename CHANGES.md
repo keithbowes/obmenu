@@ -7,18 +7,19 @@ This document summarizes the changes between the versions of Obmenu.
 I follow a &lt;major&gt;.&lt;minor&gt;.&lt;micro&gt; versioning scheme.
 &lt;micro&gt; represents minor changes not perceptible to an end user, unless that end user had experienced bugs fixed in the new version.
 &lt;minor&gt; represents new features or more often replacements for GTK deprecations that cause a perceptible difference in the UI.
-I'm not sure what would constitute bumping &lt;major&gt;.
+I'm not sure what reason there would be for bumping &lt;major&gt;.
 
 About required dependencies, the policy is not to release a new version until the requirements are at least two years old. Fixes can be backported in the meantime.
 This is consistent with Manuel Colmenero's first version, released 2005-12-15, which required at least Python 2.3, which was released 2003-07-29.
 This is also consistent with the GTK developers' advice to wait 18 months after a new GTK version is released before porting to it.
 
-## 1.2.0 (FUTURE)
+## 1.2.0 (2026-03-17)
 
 - Removal of GTK 3 support.
 - Replaced the deprecated GtkTreeView, GtkComboBox, and GtkMessageDialog widgets with GtkColumnView, GtkDropdown, and GtkAlertDialog.
 - Removal of the [deprecated direct invocation of setup.py](https://blog.ganssle.io/articles/2021/10/setup-py-deprecated.html) from the command line.
 - Bug fixes.
+- Added Open, New Pipe, and New Link items to the toolbar.
 - Bumped the required GTK version to 4.x >= 4.12.
 - Bumped the required PyGObject version to 3.40.0 or higher.
 - Bumped the required Python version to 3.x >= 3.8.
