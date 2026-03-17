@@ -18,27 +18,39 @@ environment variable to your menu.xml file and then running `rofi -show menu:men
 * [PyGObject](http://pygobject.gnome.org) >= 3.40
 * [GTK](http://gtk.org/) >= 4.12
 
-You can run Obmenu from the directory without installing, but if you want to install it, you'll need the following Python modules:
-
-* [build](https://pypi.org/project/build/)
-* [pip](https://pypi.org/project/pip/)
-
 If you don't meet the requirements, you might be able to use an older version. See [CHANGES.md](CHANGES.md) for the requirements of older versions.
 
 ## INSTALLATION
 
-Type this command in a shell:
+To install, you'll need either [Meson](http://mesonbuild.com/) >= 0.57 or [muon](http://muon.build/) >= 0.4.0.
 
-`make install-user`
+To install:
+```
+meson setup build
+meson compile -C build
+sudo meson install -C build
+```
 
-or to install system-wide:
+Using muon instead of Meson:
+```
+muon setup build
+muon samu -C build
+sudo muon samu -C build install
+```
 
-`sudo make install`
+To install without the pipe menus:
+```
+meson setup -Dinstall-pipes=false build
+```
 
-To just install the GSettings schema (required to remember the last opened menu
-file) to use Obmenu without installing it:
+or the equivalent command with muon.
 
-`sudo make install-schema`
+To install without root access:
+```
+meson setup -Dprefix=$HOME/.local build
+```
+
+or equivalent.
 
 ## KNOWN ISSUES
 

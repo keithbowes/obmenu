@@ -1,0 +1,3 @@
+option('install-docs', type: 'boolean', value: true, description: 'Whether to install the documentation')
+option('install-pipes', type: 'boolean', value: true, description: 'Whether to install the pipe scripts')
+option('install-schemas', type: 'boolean', value: true, description: 'Whether to install the GLib schemas')

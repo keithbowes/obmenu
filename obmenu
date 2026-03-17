@@ -20,22 +20,16 @@
 
 import gi, obxml, random, time, os, sys
 
-try:
-	import locale
-	from locale import textdomain, bindtextdomain, dgettext, gettext as _
-	locale.setlocale(locale.LC_ALL, "")
-except:
-	import gettext
-	from gettext import textdomain, bindtextdomain, dgettext, gettext as _
-
-if gi.version_info < (3, 40, 0):
-	print(_("PyGObject 3.40.0 or higher is required"), file=sys.stderr)
-	exit(1)
+import locale
+from locale import textdomain, bindtextdomain, dgettext, gettext as _
+locale.setlocale(locale.LC_ALL, "")
 
 gi.require_version('Gtk', '4.0')
 from gi.repository import Gtk, Gio, GLib, GObject
 
 class App(Gtk.Application):
+	version = '@VERSION@'
+
 	# Recursively creates the treeview model
 	def createTree(self, model, menuid):
 		if model is None:
@@ -623,25 +617,13 @@ class App(Gtk.Application):
 		Gtk.Application.do_startup(self)
 
 		# Look for the data files!
-		if os.path.isfile("obmenu.ui"):
+		self.datapath = '@datadir@'
+		if not os.path.lexists(self.datapath):
 			# They're here.. looks like a pre-installation execution
 			self.datapath = os.getcwd()
-		else:
-			self.datapath = ""
-			data_dirs = [os.path.dirname(__file__) + "/../share", GLib.get_user_data_dir()]
-			data_dirs += GLib.get_system_data_dirs()
-			for data_dir in data_dirs:
-				if os.path.isfile(os.path.abspath("%s/obmenu/obmenu.ui" % data_dir)):
-					self.datapath = os.path.abspath("%s/obmenu" % data_dir)
-					break
-			if not self.datapath:
-				# These will be untranslated, as things weren't installed correctly
-				print("ERROR: the data files were not found!", file=sys.stderr)
-				print("       check that everything was installed all right", file=sys.stderr)
-				sys.exit(1)
 
 		if not (textdomaindir := os.getenv("TEXTDOMAINDIR")):
-			textdomaindir = os.path.abspath(os.path.dirname(__file__) + "/../share/locale")
+			textdomaindir = '@localedir@'
 		textdomain("obmenu")
 		bindtextdomain("obmenu", textdomaindir)
 		self.gtk_domain = "gtk%d0" % Gtk.get_major_version()
@@ -820,9 +802,7 @@ class App(Gtk.Application):
 		# Types and actions that should be translated in the frontend but not the backend:
 		self.actions = [_("Link"), _("Pipemenu"), _("Execute"), _("Reconfigure"), _("Restart"), _("Exit")]
 		self.types = [_("item"), _("menu"), _("separator")]
-		import obmenu_version
 		self.appid = "io.sourceforge.obmenu"
-		self.version = obmenu_version.VERSION
 		super().__init__(application_id=self.appid,
 				flags=Gio.ApplicationFlags.HANDLES_OPEN | Gio.ApplicationFlags.NON_UNIQUE)
 
