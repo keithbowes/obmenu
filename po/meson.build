@@ -1,4 +1,4 @@
 i18n = import('i18n')
 i18n.gettext(
-  meson.project_name().to_lower()
+  meson.project_name().to_lower(),
   )

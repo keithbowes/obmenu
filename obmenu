@@ -35,19 +35,17 @@ class App(Gtk.Application):
 		if model is None:
 			model = self.treemodel.get_model()
 		for it in self.menu.getMenu(menuid):
+			hijo = GObject.Object()
+			hijo.model = model
 			if it["type"] == "item":
-				hijo = GObject.Object()
 				hijo.data = [it["label"], "item", it["action"], it["execute"], it["parent"], ""]
 				model.append(hijo)
 			elif it["type"] == "separator":
-				hijo = GObject.Object()
 				hijo.data = ["", "separator", "", "", it["parent"], ""]
 				model.append(hijo)
 			elif it["type"] == "menu":
-				hijo = GObject.Object()
 				hijo.data = [it["label"], "menu", it["action"], it["execute"], it["parent"], it["id"]]
 				model.append(hijo)
-			hijo.model = model
 
 	def create_list_model(self, item, user_data):
 		(label, tipe, action, execute, menu, mid) = item.data
@@ -71,7 +69,7 @@ class App(Gtk.Application):
 		if op: s = "(*)"
 		else: s = ""
 		if self.menu_path:
-			self.appwindow.set_title("Obmenu: %s %s" % (self.menu_path, s))
+			self.appwindow.set_title(f"Obmenu: {self.menu_path} {s}")
 		else:
 			self.appwindow.set_title("Obmenu")
 
@@ -140,48 +138,46 @@ class App(Gtk.Application):
 			self.menu.saveMenu(self.menu_path)
 			self._sth_changed(False)
 
-	def on_search_clicked(self, dialog, res):
-		try:
-			file = dialog.open_finish(res)
-			self.execute_entry.set_text(file.peek_path())
-		except:
-			pass
-
 	def get_selected_filename(self, dlg, res, data):
-		(action, cb) = data
-		if not cb is None:
-			cb(dlg, res)
-		elif action == Gtk.FileChooserAction.OPEN:
-			try:
-				self.menu_path = dlg.open_finish(res).get_path()
-			except:
-				self.menu_path = None
-		elif action == Gtk.FileChooserAction.SAVE:
-			try:
-				self.menu_path = dlg.save_finish(res).get_path()
-			except:
-				self.menu_path = None
-		if cb is None:
-			self.on_file_chosen(dlg, action)
+		(action, action_type) = data
+		match action_type:
+			case "open-menu":
+				try:
+					self.menu_path = dlg.open_finish(res).get_path()
+				except:
+					self.menu_path = None
+				self.on_file_chosen(dlg, action)
+			case "save-menu":
+				try:
+					self.menu_path = dlg.save_finish(res).get_path()
+				except:
+					self.menu_path = None
+				self.on_file_chosen(dlg, action)
+			case "search-command":
+				try:
+					file = dlg.open_finish(res)
+					self.execute_entry.set_text(file.peek_path())
+				except:
+					pass
 
-	def ask_for_path(self, title, action, cb=None):
+	def ask_for_path(self, title, action, action_type=None):
 			dlg = Gtk.FileDialog()
 			if action == Gtk.FileChooserAction.OPEN:
-				dlg.open(self.appwindow, None, self.get_selected_filename, (action, cb))
+				dlg.open(self.appwindow, None, self.get_selected_filename, (action, action_type or "open-menu"))
 			elif action == Gtk.FileChooserAction.SAVE:
-				dlg.save(self.appwindow, None, self.get_selected_filename, (action, cb))
+				dlg.save(self.appwindow, None, self.get_selected_filename, (action, action_type or "save-menu"))
 			dlg.set_title(title)
 
 	#  New file clicked
 	def new(self, params, data):
 		if self.sth_changed:
-			self.confirm(_("Changes in %s will be lost. Continue?") % (self.menu_path), "new")
+			self.confirm(_("Changes in {} will be lost. Continue?").format(self.menu_path), "new")
 		else:
 			self.clear_view()
 
 	def open(self, params, data=None):
 		if self.sth_changed:
-			self.confirm(_("Changes in %s will be lost. Continue?") % (self.menu_path), "open")
+			self.confirm(_("Changes in {} will be lost. Continue?").format(self.menu_path), "open")
 		else:
 			self.ask_for_path(_("Open"), Gtk.FileChooserAction.OPEN)
 
@@ -200,10 +196,16 @@ class App(Gtk.Application):
 		self.ask_for_path(_("Save as..."), Gtk.FileChooserAction.SAVE)
 
 	def reconfigure_openbox(self, param, data):
-		import signal
-		lines = os.popen("pgrep -x openbox").read().splitlines()
-		if lines:
-			os.kill(int(lines[0]), signal.SIGUSR2)
+		# Openbox
+		if os.getenv("OPENBOX_PID"):
+			import signal, subprocess
+			sp = subprocess.run(["pgrep", "-x", "openbox"], capture_output=True, text=True)
+			lines = sp.stdout.splitlines()
+			if lines:
+				os.kill(int(lines[0]), signal.SIGUSR2)
+		# LabWC
+		elif os.getenv("LABWC_PID"):
+			os.system("labwc --reconfigure")
 
 	# quit signal
 	def exit (self, bt):
@@ -211,6 +213,7 @@ class App(Gtk.Application):
 			self.settings.set_value("last-opened-menu", GLib.Variant.new_string(self.menu_path))
 		if self.sth_changed:
 			self.confirm(_("There are unsaved changes. Exit anyway?"), "exit")
+			return True
 		else:
 			self.quit()
 
@@ -344,7 +347,7 @@ class App(Gtk.Application):
 
 	# button [...] clicked signal
 	def search_clicked(self, arg):
-		dlg = self.ask_for_path(_("Select File"), Gtk.FileChooserAction.OPEN, self.on_search_clicked)
+		dlg = self.ask_for_path(_("Select File"), Gtk.FileChooserAction.OPEN, "search-command")
 
 	# treeview clicked signal
 	def treeview_changed(self, model, position, n_items, user_data=None):
@@ -404,7 +407,7 @@ class App(Gtk.Application):
 			menu = None
 			n = 0
 
-		nmid="%s-%d%d%d" % (menu, random.randint(0,99), time.gmtime()[4], time.gmtime()[5])
+		nmid=f"{menu}-{random.randint(0,99)}{time.gmtime()[4]}{time.gmtime()[5]}"
 
 		self.menu.createMenu(menu, _("New Menu"), nmid, n)
 		self.menu.createItem(nmid, _("New Item"), "Execute", _("command"))
@@ -491,7 +494,7 @@ class App(Gtk.Application):
 		store_model = ite.model
 
 		n = position
-		nmid="link-%d%d%d" % (random.randint(0,99), time.gmtime()[4], time.gmtime()[5])
+		nmid=f"link-{random.randint(0,99)}{time.gmtime()[4]}{time.gmtime()[5]}"
 
 		self.menu.createLink(menu, nmid, n)
 
@@ -521,7 +524,7 @@ class App(Gtk.Application):
 		store_model = ite.model
 
 		n = position
-		nmid="pipe-%d%d%d" % (random.randint(0,99), time.gmtime()[4], time.gmtime()[5])
+		nmid=f"pipe-{random.randint(0,99)}{time.gmtime()[4]}{time.gmtime()[5]}"
 
 		self.menu.createPipe(menu, nmid, _("New Pipe"), _("command"), n)
 		new = GObject.Object()
@@ -626,7 +629,7 @@ class App(Gtk.Application):
 			textdomaindir = '@localedir@'
 		textdomain("obmenu")
 		bindtextdomain("obmenu", textdomaindir)
-		self.gtk_domain = "gtk%d0" % Gtk.get_major_version()
+		self.gtk_domain = f"gtk{Gtk.get_major_version()}0"
 
 		app_signals = {
 			"new": self.new,

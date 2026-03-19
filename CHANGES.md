@@ -16,6 +16,7 @@ This is also consistent with the GTK developers' advice to wait 18 months after 
 ## FUTURE
 
 - Migrated from setup.py to the Meson build system.
+- Bumped the required Python version to 3.x >= 3.10.
 
 ## 1.2.0 (2026-03-17)
 

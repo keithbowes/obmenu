@@ -8,13 +8,13 @@ For modern environments, you can use a Wayland Openbox clone like
 [Waybox](https://github.com/wizbright/waybox) or [LabWC](https://github.com/labwc/labwc/). You can
 also use [my
 script](https://raw.githubusercontent.com/keithbowes/waybox/refs/heads/master/data/menu) to use a
-menu file wherever [Rofi](https://davatorium.github.io/rofi/) by setting the `WB_MENU_XML`
-environment variable to your menu.xml file and then running `rofi -show menu:menu`.
+menu file wherever [Rofi](https://davatorium.github.io/rofi/) is available by setting the
+`WB_MENU_XML` environment variable to your menu.xml file and then running `rofi -show menu:menu`.
 
 
 ## REQUIREMENTS
 
-* [Python](http://python.org) >= 3.8
+* [Python](http://python.org) >= 3.10
 * [PyGObject](http://pygobject.gnome.org) >= 3.40
 * [GTK](http://gtk.org/) >= 4.12
 

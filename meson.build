@@ -11,9 +11,7 @@ gnome = import('gnome')
 python = import('python')
 
 py = python.find_installation('python3', modules: ['gi', 'locale', 'os', 'random', 'sys', 'time'], required: true)
-if py.language_version().version_compare('<3.8')
-    error('Python >= 3.8 is required')
-endif
+find_program('python3', version: '>=3.10')
 
 app_id = 'io.sourceforge.obmenu'
 appfiles = files(app_id + '.desktop')
@@ -37,7 +35,7 @@ install_data(
 
 install_data(
   data,
-  install_dir: get_option('prefix') /get_option('datadir') / meson.project_name().to_lower(),
+  install_dir: get_option('prefix') / get_option('datadir') / meson.project_name().to_lower(),
   install_mode: 'rw-r--r--',
   )
 
