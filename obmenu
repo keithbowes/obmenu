@@ -24,10 +24,11 @@ import locale
 from locale import textdomain, bindtextdomain, dgettext, gettext as _
 locale.setlocale(locale.LC_ALL, "")
 
+gi.require_version('Adw', '1')
 gi.require_version('Gtk', '4.0')
-from gi.repository import Gtk, Gio, GLib, GObject
+from gi.repository import Adw, Gio, GLib, GObject, Gtk
 
-class App(Gtk.Application):
+class App(Adw.Application):
 	version = '@VERSION@'
 
 	# Recursively creates the treeview model
@@ -92,7 +93,7 @@ class App(Gtk.Application):
 
 	def on_confirm(self, dialog, result, data):
 		button = dialog.choose_finish(result)
-		if button != dialog.get_cancel_button():
+		if button == "yes":
 			if dialog.confirm_action == "exit":
 				app.quit()
 			elif dialog.confirm_action == "new":
@@ -111,11 +112,13 @@ class App(Gtk.Application):
 				self.clear_fields()
 
 	def confirm(self, message, action):
-		dlg = Gtk.AlertDialog()
+		dlg = Adw.AlertDialog()
 		dlg.confirm_action = action
-		dlg.set_message(message)
-		dlg.set_buttons([dgettext(self.gtk_domain, '_No'), dgettext(self.gtk_domain, '_Yes')])
-		dlg.set_cancel_button(0)
+		dlg.set_body(message)
+		dlg.add_response("no", dgettext(self.gtk_domain, "_No"))
+		dlg.add_response("yes", dgettext(self.gtk_domain, "_Yes"))
+		dlg.set_default_response("no")
+		dlg.set_close_response("no")
 		dlg.choose(self.appwindow, None, self.on_confirm, None)
 
 	def on_file_chosen(self, dialog, action):
@@ -614,10 +617,10 @@ class App(Gtk.Application):
 	def show_about(self, param, data):
 		aboutdialog = self.builder.get_object("aboutdialog")
 		aboutdialog.set_version(self.version)
-		aboutdialog.set_visible(True)
+		aboutdialog.present()
 
 	def do_startup(self):
-		Gtk.Application.do_startup(self)
+		Adw.Application.do_startup(self)
 
 		# Look for the data files!
 		self.datapath = '@datadir@'

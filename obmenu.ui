@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface domain="obmenu">
   <requires lib="gtk" version="4.12"/>
+  <requires lib="libadwaita" version="1.5"/>
   <menu id="menubar">
     <submenu>
       <attribute name="label" translatable="yes">_File</attribute>
@@ -107,7 +108,7 @@
       </section>
     </submenu>
   </menu>
-  <object class="GtkApplicationWindow" id="appwindow">
+  <object class="AdwApplicationWindow" id="appwindow">
     <property name="title" translatable="yes">Openbox Menu Editor</property>
     <property name="default-width">500</property>
     <property name="default-height">500</property>
@@ -116,6 +117,13 @@
     <child>
       <object class="GtkBox" id="main_layout_box">
         <property name="orientation">vertical</property>
+        <child>
+              <object class="AdwHeaderBar">
+                <property name="show-title">1</property>
+                <property name="show-end-title-buttons">1</property>
+                <property name="show-start-title-buttons">1</property>
+              </object>
+        </child>
         <child>
           <object class="GtkPopoverMenuBar">
             <property name="menu-model">menubar</property>
@@ -405,10 +413,10 @@
       </object>
     </child>
   </object>
-  <object class="GtkAboutDialog" id="aboutdialog">
-    <property name="destroy-with-parent">1</property>
+  <object class="AdwAboutDialog" id="aboutdialog">
+    <property name="can-close">1</property>
     <property name="name" translatable="yes">Openbox Menu Editor</property>
-    <property name="program-name">Obmenu</property>
+    <property name="application-name">Obmenu</property>
     <property name="comments" translatable="yes">Thank you for using this software.
      Send any feedback to m.kolme@gmail.com</property>
     <property name="license" translatable="yes">    Obmenu: Openbox Menu Editor
@@ -428,10 +436,9 @@
         along with this program; if not, write to the Free Software
         Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA</property>
     <property name="website">http://obmenu.sourceforge.net/</property>
-    <property name="website-label" translatable="yes">Website</property>
-    <property name="authors">Manuel Colmenero &lt;m.kolme@gmail.com&gt;</property>
+    <property name="developers">Manuel Colmenero &lt;m.kolme@gmail.com&gt;</property>
     <property name="translator-credits" translatable="yes" comments="TRANSLATORS: Replace this string with your names, one name per line.">translator-credits</property>
-    <property name="logo">icons/mnu48.png</property>
-    <signal name="close-request" handler="hide_about"/>
+    <property name="application-icon">obmenu</property>
+    <signal name="close-attempt" handler="hide_about"/>
   </object>
 </interface>

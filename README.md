@@ -17,6 +17,7 @@ menu file wherever [Rofi](https://davatorium.github.io/rofi/) is available by se
 * [Python](http://python.org) >= 3.10
 * [PyGObject](http://pygobject.gnome.org) >= 3.40
 * [GTK](http://gtk.org/) >= 4.12
+* [libadwaita](https://gnome.pages.gitlab.gnome.org/libadwaita/) >= 1.5
 
 If you don't meet the requirements, you might be able to use an older version. See [CHANGES.md](CHANGES.md) for the requirements of older versions.
 

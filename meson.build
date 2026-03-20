@@ -4,8 +4,9 @@ project(
   meson_version: '>=0.57'
   )
 
-dependency('pygobject-3.0', version: '>=3.40.0')
 dependency('gtk4', version: '>=4.12')
+dependency('libadwaita-1', version: '>=1.5')
+dependency('pygobject-3.0', version: '>=3.40.0')
 
 gnome = import('gnome')
 python = import('python')
@@ -49,7 +50,8 @@ endif
 
 install_data(
   icons,
-  install_dir: get_option('prefix') / get_option('datadir') / meson.project_name().to_lower() / 'icons',
+  install_dir: get_option('prefix') / get_option('datadir') / 'icons',
+  rename: ['obmenu16.png', 'obmenu48.png'],
   install_mode: 'rw-r--r--',
   )
 
