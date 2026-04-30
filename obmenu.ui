@@ -109,20 +109,20 @@
     </submenu>
   </menu>
   <object class="AdwApplicationWindow" id="appwindow">
-    <property name="title" translatable="yes">Openbox Menu Editor</property>
+    <property name="title" translatable="1">Openbox Menu Editor</property>
     <property name="default-width">500</property>
     <property name="default-height">500</property>
-    <property name="icon-name"></property>
+    <property name="icon-name">obmenu16</property>
     <signal name="close-request" handler="exit"/>
     <child>
       <object class="GtkBox" id="main_layout_box">
         <property name="orientation">vertical</property>
         <child>
-              <object class="AdwHeaderBar">
-                <property name="show-title">1</property>
-                <property name="show-end-title-buttons">1</property>
-                <property name="show-start-title-buttons">1</property>
-              </object>
+          <object class="AdwToolbarView">
+            <child type="top">
+              <object class="AdwHeaderBar"/>
+            </child>
+          </object>
         </child>
         <child>
           <object class="GtkPopoverMenuBar">
@@ -140,14 +140,14 @@
             </style>
             <child>
               <object class="GtkButton" id="open_toolbutton">
-                <property name="tooltip-text" translatable="yes">Open a menu file</property>
+                <property name="tooltip-text" translatable="1">Open a menu file</property>
                 <property name="icon-name">document-open</property>
                 <signal name="clicked" handler="open"/>
               </object>
             </child>
             <child>
               <object class="GtkButton" id="save_toolbutton">
-                <property name="tooltip-text" translatable="yes">Save the menu file</property>
+                <property name="tooltip-text" translatable="1">Save the menu file</property>
                 <property name="icon-name">document-save</property>
                 <signal name="clicked" handler="save"/>
               </object>
@@ -159,7 +159,7 @@
             </child>
             <child>
               <object class="GtkButton" id="new_menu_toolbutton">
-                <property name="tooltip-text" translatable="yes">New menu</property>
+                <property name="tooltip-text" translatable="1">New menu</property>
                 <property name="use-underline">1</property>
                 <property name="icon-name">folder-new</property>
                 <signal name="clicked" handler="add.menu"/>
@@ -167,7 +167,7 @@
             </child>
             <child>
               <object class="GtkButton" id="new_item_toolbutton">
-                <property name="tooltip-text" translatable="yes">New item</property>
+                <property name="tooltip-text" translatable="1">New item</property>
                 <property name="use-underline">1</property>
                 <property name="icon-name">system-run</property>
                 <signal name="clicked" handler="add.item"/>
@@ -175,7 +175,7 @@
             </child>
             <child>
               <object class="GtkButton" id="new_separator_toolbutton">
-                <property name="tooltip-text" translatable="yes">New separator</property>
+                <property name="tooltip-text" translatable="1">New separator</property>
                 <property name="use-underline">1</property>
                 <property name="icon-name">text-x-generic</property>
                 <signal name="clicked" handler="add.separator"/>
@@ -183,7 +183,7 @@
             </child>
             <child>
               <object class="GtkButton" id="new_pipe_toolbutton">
-                <property name="tooltip-text" translatable="yes">New pipe</property>
+                <property name="tooltip-text" translatable="1">New pipe</property>
                 <property name="use-underline">1</property>
                 <property name="icon-name">document-share</property>
                 <signal name="clicked" handler="add.pipe"/>
@@ -191,7 +191,7 @@
             </child>
             <child>
               <object class="GtkButton" id="new_link_toolbutton">
-                <property name="tooltip-text" translatable="yes">New link</property>
+                <property name="tooltip-text" translatable="1">New link</property>
                 <property name="use-underline">1</property>
                 <property name="icon-name">insert-link</property>
                 <signal name="clicked" handler="add.link"/>
@@ -204,14 +204,14 @@
             </child>
             <child>
               <object class="GtkButton" id="move_up_toolbutton">
-                <property name="tooltip-text" translatable="yes">Move up</property>
+                <property name="tooltip-text" translatable="1">Move up</property>
                 <property name="icon-name">go-up</property>
                 <signal name="clicked" handler="up"/>
               </object>
             </child>
             <child>
               <object class="GtkButton" id="move_down_toolbutton">
-                <property name="tooltip-text" translatable="yes">Move down</property>
+                <property name="tooltip-text" translatable="1">Move down</property>
                 <property name="icon-name">go-down</property>
                 <signal name="clicked" handler="down"/>
               </object>
@@ -223,7 +223,7 @@
             </child>
             <child>
               <object class="GtkButton" id="remove_toolbutton">
-                <property name="tooltip-text" translatable="yes">Removes a menu or an item</property>
+                <property name="tooltip-text" translatable="1">Removes a menu or an item</property>
                 <property name="icon-name">remove</property>
                 <signal name="clicked" handler="remove"/>
               </object>
@@ -243,10 +243,9 @@
                   <object class="GtkColumnView" id="treeview">
                     <property name="model">
                       <object class="GtkSingleSelection" id="treeview_model">
-                        <signal name="selection-changed" handler="treeview_changed" />
+                        <signal name="selection-changed" handler="treeview_changed"/>
                       </object>
                     </property>
-                    <property name="single-click-activate">0</property>
                     <property name="tab-behavior">item</property>
                     <child>
                       <object class="GtkColumnViewColumn" id="label_column">
@@ -270,7 +269,7 @@
                       <object class="GtkColumnViewColumn" id="execute_column">
                         <property name="expand">1</property>
                         <property name="resizable">1</property>
-                        <property name="title" translatable="yes">Execute</property>
+                        <property name="title" translatable="1">Execute</property>
                       </object>
                     </child>
                   </object>
@@ -287,7 +286,7 @@
                 <property name="margin-bottom">5</property>
                 <child>
                   <object class="GtkLabel" id="label_label">
-                    <property name="label" translatable="yes">_Label</property>
+                    <property name="label" translatable="1">_Label</property>
                     <property name="use-underline">1</property>
                     <property name="mnemonic-widget">label_entry</property>
                     <property name="xalign">0</property>
@@ -300,7 +299,6 @@
                 <child>
                   <object class="GtkEntry" id="label_entry">
                     <property name="sensitive">0</property>
-                    <property name="text" translatable="yes"></property>
                     <signal name="changed" handler="label_changed"/>
                     <layout>
                       <property name="column-span">10</property>
@@ -311,7 +309,7 @@
                 </child>
                 <child>
                   <object class="GtkLabel" id="id_label">
-                    <property name="label" translatable="yes">_ID</property>
+                    <property name="label" translatable="1">_ID</property>
                     <property name="use-underline">1</property>
                     <property name="mnemonic-widget">id_entry</property>
                     <property name="xalign">0</property>
@@ -324,7 +322,6 @@
                 <child>
                   <object class="GtkEntry" id="id_entry">
                     <property name="sensitive">0</property>
-                    <property name="text" translatable="yes"></property>
                     <signal name="changed" handler="id_changed"/>
                     <layout>
                       <property name="column-span">10</property>
@@ -335,7 +332,7 @@
                 </child>
                 <child>
                   <object class="GtkLabel" id="action_label">
-                    <property name="label" translatable="yes">_Action</property>
+                    <property name="label" translatable="1">_Action</property>
                     <property name="use-underline">1</property>
                     <property name="mnemonic-widget">action_combo</property>
                     <property name="xalign">0</property>
@@ -369,7 +366,7 @@
                 </child>
                 <child>
                   <object class="GtkLabel" id="execute_label">
-                    <property name="label" translatable="yes">E_xecute</property>
+                    <property name="label" translatable="1">E_xecute</property>
                     <property name="use-underline">1</property>
                     <property name="mnemonic-widget">execute_entry</property>
                     <property name="xalign">0</property>
@@ -385,7 +382,6 @@
                       <object class="GtkEntry" id="execute_entry">
                         <property name="hexpand">1</property>
                         <property name="sensitive">0</property>
-                        <property name="text" translatable="yes"></property>
                         <signal name="changed" handler="execute_changed"/>
                       </object>
                     </child>
@@ -394,7 +390,7 @@
                         <property name="halign">center</property>
                         <property name="margin-start">3</property>
                         <property name="sensitive">0</property>
-                        <property name="label" translatable="yes">...</property>
+                        <property name="label" translatable="1">...</property>
                         <property name="use-underline">1</property>
                         <signal name="clicked" handler="search_clicked"/>
                       </object>
@@ -415,11 +411,11 @@
   </object>
   <object class="AdwAboutDialog" id="aboutdialog">
     <property name="can-close">1</property>
-    <property name="name" translatable="yes">Openbox Menu Editor</property>
+    <property name="name" translatable="1">Openbox Menu Editor</property>
     <property name="application-name">Obmenu</property>
-    <property name="comments" translatable="yes">Thank you for using this software.
+    <property name="comments" translatable="1">Thank you for using this software.
      Send any feedback to m.kolme@gmail.com</property>
-    <property name="license" translatable="yes">    Obmenu: Openbox Menu Editor
+    <property name="license" translatable="1">    Obmenu: Openbox Menu Editor
         Copyright (C) 2005-2006  Manuel Colmenero
 
         This program is free software; you can redistribute it and/or modify
@@ -437,8 +433,8 @@
         Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA</property>
     <property name="website">http://obmenu.sourceforge.net/</property>
     <property name="developers">Manuel Colmenero &lt;m.kolme@gmail.com&gt;</property>
-    <property name="translator-credits" translatable="yes" comments="TRANSLATORS: Replace this string with your names, one name per line.">translator-credits</property>
-    <property name="application-icon">obmenu</property>
+    <property name="translator-credits" translatable="1" comments="TRANSLATORS: Replace this string with your names, one name per line.">translator-credits</property>
+    <property name="application-icon">obmenu48</property>
     <signal name="close-attempt" handler="hide_about"/>
   </object>
 </interface>

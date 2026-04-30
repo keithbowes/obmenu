@@ -21,7 +21,7 @@
 import gi, obxml, random, time, os, sys
 
 import locale
-from locale import textdomain, bindtextdomain, dgettext, gettext as _
+from locale import textdomain, bindtextdomain, gettext as _
 locale.setlocale(locale.LC_ALL, "")
 
 gi.require_version('Adw', '1')
@@ -115,8 +115,8 @@ class App(Adw.Application):
 		dlg = Adw.AlertDialog()
 		dlg.confirm_action = action
 		dlg.set_body(message)
-		dlg.add_response("no", dgettext(self.gtk_domain, "_No"))
-		dlg.add_response("yes", dgettext(self.gtk_domain, "_Yes"))
+		dlg.add_response("no", _("_No"))
+		dlg.add_response("yes", _("_Yes"))
 		dlg.set_default_response("no")
 		dlg.set_close_response("no")
 		dlg.choose(self.appwindow, None, self.on_confirm, None)
@@ -632,7 +632,6 @@ class App(Adw.Application):
 			textdomaindir = '@localedir@'
 		textdomain("obmenu")
 		bindtextdomain("obmenu", textdomaindir)
-		self.gtk_domain = f"gtk{Gtk.get_major_version()}0"
 
 		app_signals = {
 			"new": self.new,
@@ -757,21 +756,21 @@ class App(Adw.Application):
 		factory.connect("setup", self.setup_listitem_cb, 0)
 		factory.connect("bind", self.bind_listitem_cb, 0)
 		column = self.builder.get_object("label_column")
-		column.set_title(dgettext(self.gtk_domain, "Label"))
+		column.set_title(_("Label"))
 		column.set_factory(factory)
 
 		factory = Gtk.SignalListItemFactory()
 		factory.connect("setup", self.setup_listitem_cb, 1)
 		factory.connect("bind", self.bind_listitem_cb, 1)
 		column = self.builder.get_object("type_column")
-		column.set_title(dgettext(self.gtk_domain, "Type"))
+		column.set_title(_("Type"))
 		column.set_factory(factory)
 
 		factory = Gtk.SignalListItemFactory()
 		factory.connect("setup", self.setup_listitem_cb, 2)
 		factory.connect("bind", self.bind_listitem_cb, 2)
 		column = self.builder.get_object("action_column")
-		column.set_title(dgettext(self.gtk_domain, "Action"))
+		column.set_title(_("Action"))
 		column.set_factory(factory)
 
 		factory = Gtk.SignalListItemFactory()

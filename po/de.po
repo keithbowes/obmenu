@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Obmenu 1.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-15 21:15-0400\n"
-"PO-Revision-Date: 2026-03-15 21:05-0400\n"
+"POT-Creation-Date: 2026-03-21 16:10-0400\n"
+"PO-Revision-Date: 2026-03-21 16:16-0400\n"
 "Last-Translator: Keith Bowes <keith@localhost>\n"
 "Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
 "Language: de\n"
@@ -17,248 +17,251 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../obmenu:32
-msgid "PyGObject 3.40.0 or higher is required"
-msgstr "PyGObject 3.40.0 oder höher ist nötig"
-
-#: ../obmenu:97
+#: obmenu:90
 msgid "Untitled"
 msgstr "Titellos"
 
-#: ../obmenu:109 ../obmenu:192
+#: obmenu:102 obmenu:185
 msgid "Open"
 msgstr "Öffnen"
 
-#: ../obmenu:184 ../obmenu:190
-#, c-format
-msgid "Changes in %s will be lost. Continue?"
-msgstr "Änderungen in %s wird verloren werden. Fortsetzen?"
+#: obmenu:118
+msgid "_No"
+msgstr "_Nein"
 
-#: ../obmenu:199 ../obmenu:206
+#: obmenu:119
+msgid "_Yes"
+msgstr "_Ja"
+
+#: obmenu:177 obmenu:183
+msgid "Changes in {} will be lost. Continue?"
+msgstr "Änderungen in {} wird verloren werden. Fortsetzen?"
+
+#: obmenu:192 obmenu:199
 msgid "Save as..."
 msgstr "Speichern wie"
 
-#: ../obmenu:219
+#: obmenu:218
 msgid "There are unsaved changes. Exit anyway?"
 msgstr "Es gibt ungespeicherte Änderungen. Trotzdem beenden?"
 
-#: ../obmenu:353
+#: obmenu:353
 msgid "Select File"
 msgstr "Datei wählen"
 
-#: ../obmenu:415 ../obmenu:422
+#: obmenu:415 obmenu:422
 msgid "New Menu"
 msgstr "Neues Menü"
 
-#: ../obmenu:416 ../obmenu:446 ../obmenu:449
+#: obmenu:416 obmenu:446 obmenu:449
 msgid "New Item"
 msgstr "Neuer Eintrag"
 
-#: ../obmenu:416 ../obmenu:446 ../obmenu:449 ../obmenu:532 ../obmenu:534
+#: obmenu:416 obmenu:446 obmenu:449 obmenu:532 obmenu:534
 msgid "command"
 msgstr "Befehl"
 
-#: ../obmenu:532 ../obmenu:534
+#: obmenu:532 obmenu:534
 msgid "New Pipe"
 msgstr "Neuer Rohr"
 
-#: ../obmenu:766
+#: obmenu:759
 msgid "Label"
 msgstr "Etikett"
 
-#: ../obmenu:773
+#: obmenu:766
 msgid "Type"
 msgstr "Art"
 
-#: ../obmenu:780
+#: obmenu:773
 msgid "Action"
 msgstr "Aktion"
 
-#: ../obmenu:807
+#: obmenu:800
 msgid "Error: Obmenu can presently open only one file at a time."
 msgstr "Fehler: Jetzt kann Obmenu nur eine Datei gleichzeitig öffnen."
 
-#: ../obmenu:808
+#: obmenu:801
 msgid "       Only the first specified will be opened."
 msgstr "       Nur die erste spezifizierte wird geöffnet werden"
 
-#: ../obmenu:815
+#: obmenu:808
 msgid "Link"
 msgstr "Link"
 
-#: ../obmenu:815
+#: obmenu:808
 msgid "Pipemenu"
 msgstr "Rohrmenü"
 
-#: ../obmenu:815 ../obmenu.ui:265
+#: obmenu:808 obmenu.ui:273
 msgid "Execute"
 msgstr "Ausführen"
 
-#: ../obmenu:815
+#: obmenu:808
 msgid "Reconfigure"
 msgstr "Wiedereinstellen"
 
-#: ../obmenu:815
+#: obmenu:808
 msgid "Restart"
 msgstr "Wiederstarten"
 
-#: ../obmenu:815
+#: obmenu:808
 msgid "Exit"
 msgstr "Ausgehen"
 
-#: ../obmenu:816
+#: obmenu:809
 msgid "item"
 msgstr "Eintrag"
 
-#: ../obmenu:816
+#: obmenu:809
 msgid "menu"
 msgstr "Menü"
 
-#: ../obmenu:816
+#: obmenu:809
 msgid "separator"
 msgstr "Separator"
 
-#: ../obmenu.ui:6
+#: obmenu.ui:7
 msgid "_File"
 msgstr "_Datei"
 
-#: ../obmenu.ui:9
+#: obmenu.ui:10
 msgid "_New"
 msgstr "_Neu"
 
-#: ../obmenu.ui:14
+#: obmenu.ui:15
 msgid "_Open"
 msgstr "_Öffnen"
 
-#: ../obmenu.ui:19
+#: obmenu.ui:20
 msgid "_Save"
 msgstr "_Speichern"
 
-#: ../obmenu.ui:24
+#: obmenu.ui:25
 msgid "Save _As"
 msgstr "Speichern _unter"
 
-#: ../obmenu.ui:31
+#: obmenu.ui:32
 msgid "_Reconfigure Openbox"
 msgstr "_Openbox neu laden"
 
-#: ../obmenu.ui:38
+#: obmenu.ui:39
 msgid "_Quit"
 msgstr "_Beenden"
 
-#: ../obmenu.ui:45
+#: obmenu.ui:46
 msgid "_Edit"
 msgstr "_Bearbeiten"
 
-#: ../obmenu.ui:48
+#: obmenu.ui:49
 msgid "Move _up"
 msgstr "_Oben bewegen"
 
-#: ../obmenu.ui:53
+#: obmenu.ui:54
 msgid "Move dow_n"
 msgstr "_Unten bewegen"
 
-#: ../obmenu.ui:60
+#: obmenu.ui:61
 msgid "_Add"
 msgstr "_Zusätzen"
 
-#: ../obmenu.ui:64
+#: obmenu.ui:65
 msgid "_Menu"
 msgstr "_Menü"
 
-#: ../obmenu.ui:69
+#: obmenu.ui:70
 msgid "_Item"
 msgstr "_Eintrag"
 
-#: ../obmenu.ui:74
+#: obmenu.ui:75
 msgid "_Separator"
 msgstr "_Separator"
 
-#: ../obmenu.ui:79
+#: obmenu.ui:80
 msgid "_Pipe Menu"
 msgstr "_Rohrmenü"
 
-#: ../obmenu.ui:84
+#: obmenu.ui:85
 msgid "_Link"
 msgstr "_Link"
 
-#: ../obmenu.ui:93
+#: obmenu.ui:94
 msgid "_Delete"
 msgstr "_Entfernen"
 
-#: ../obmenu.ui:100
+#: obmenu.ui:101
 msgid "_Help"
 msgstr "_Hilfe"
 
-#: ../obmenu.ui:103
+#: obmenu.ui:104
 msgid "_About"
 msgstr "_Über"
 
-#: ../obmenu.ui:111 ../obmenu.ui:410
+#: obmenu.ui:112 obmenu.ui:415
 msgid "Openbox Menu Editor"
 msgstr "Openbox Menueditor"
 
-#: ../obmenu.ui:135
+#: obmenu.ui:143
 msgid "Open a menu file"
 msgstr "Eine Menüdatei öffnen"
 
-#: ../obmenu.ui:142
+#: obmenu.ui:150
 msgid "Save the menu file"
 msgstr "Die Menüdatei speichern"
 
-#: ../obmenu.ui:154
+#: obmenu.ui:162
 msgid "New menu"
 msgstr "Neues Menü"
 
-#: ../obmenu.ui:162
+#: obmenu.ui:170
 msgid "New item"
 msgstr "Neuer Eintrag"
 
-#: ../obmenu.ui:170
+#: obmenu.ui:178
 msgid "New separator"
 msgstr "Neuer Separator"
 
-#: ../obmenu.ui:178
+#: obmenu.ui:186
 msgid "New pipe"
 msgstr "Neuer Rohr"
 
-#: ../obmenu.ui:186
+#: obmenu.ui:194
 msgid "New link"
 msgstr "Neuer Link"
 
-#: ../obmenu.ui:199
+#: obmenu.ui:207
 msgid "Move up"
 msgstr "Oben wegen"
 
-#: ../obmenu.ui:206
+#: obmenu.ui:214
 msgid "Move down"
 msgstr "Unten wegen"
 
-#: ../obmenu.ui:218
+#: obmenu.ui:226
 msgid "Removes a menu or an item"
 msgstr "Entfernt ein Menü oder einen Eintrag"
 
-#: ../obmenu.ui:282
+#: obmenu.ui:290
 msgid "_Label"
 msgstr "_Etikett"
 
-#: ../obmenu.ui:306
+#: obmenu.ui:313
 msgid "_ID"
 msgstr "Be_zeichnung"
 
-#: ../obmenu.ui:330
+#: obmenu.ui:336
 msgid "_Action"
 msgstr "_Aktion"
 
-#: ../obmenu.ui:364
+#: obmenu.ui:370
 msgid "E_xecute"
 msgstr "Aus_führen"
 
-#: ../obmenu.ui:389
+#: obmenu.ui:394
 msgid "..."
 msgstr "..."
 
-#: ../obmenu.ui:412
+#: obmenu.ui:417
 msgid ""
 "Thank you for using this software.\n"
 "     Send any feedback to m.kolme@gmail.com"
@@ -266,7 +269,7 @@ msgstr ""
 "Danke für diese Software benutzen.\n"
 "     Nachrichten an m.kolme@gmail.com schicken"
 
-#: ../obmenu.ui:414
+#: obmenu.ui:419
 msgid ""
 "    Obmenu: Openbox Menu Editor\n"
 "        Copyright (C) 2005-2006  Manuel Colmenero\n"
@@ -308,11 +311,7 @@ msgstr ""
 "       Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston,\n"
 "       MA 02110, USA."
 
-#: ../obmenu.ui:431
-msgid "Website"
-msgstr "Website"
-
 #. TRANSLATORS: Replace this string with your names, one name per line.
-#: ../obmenu.ui:433
+#: obmenu.ui:437
 msgid "translator-credits"
 msgstr "translator-credits"
